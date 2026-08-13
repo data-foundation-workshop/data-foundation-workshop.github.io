@@ -58,6 +58,43 @@ blockquote {
   margin: 12px 40px 20px;
   line-height: 1.5;
 }
+.hero {
+  background: linear-gradient(135deg, #2b567f 0%, #336699 60%, #3d76ac 100%);
+  color: #fff;
+  padding: 46px 40px 40px;
+}
+.hero h1 {
+  margin: 0 0 6px;
+  font-size: 2.4em;
+  font-weight: 800;
+  letter-spacing: 0.5px;
+}
+.hero .hero-sub {
+  margin: 0 0 28px;
+  font-size: 1.05em;
+  color: #d8e6f4;
+  font-weight: 400;
+}
+.journey {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px;
+}
+.journey .step {
+  background: rgba(255,255,255,0.12);
+  border: 1px solid rgba(255,255,255,0.35);
+  border-radius: 20px;
+  padding: 7px 16px;
+  font-size: 0.92em;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.journey .arrow {
+  color: #bcd6ef;
+  font-size: 1.1em;
+  padding: 0 2px;
+}
 </style>
 </head>
 <body class="w3-content" style="max-width:1600px;">
@@ -74,9 +111,24 @@ blockquote {
   <!-- Header -->
   <header>
     <span class="w3-button w3-hide-large w3-xxlarge w3-hover-text-grey" onclick="w3_open()"><i class="fa fa-bars"></i></span>
-    <div class="w3-container">
-      <h1><b>Trusted Data Foundation with Informatica</b></h1>
-      <p>Hands-on Workshop</p>
+    <div class="hero">
+      <h1>Trusted Data Foundation with Informatica</h1>
+      <p class="hero-sub">Hands-on Workshop</p>
+      <div class="journey">
+        <span class="step">Messy data</span>
+        <span class="arrow"><i class="fa fa-long-arrow-right"></i></span>
+        <span class="step">Understand it</span>
+        <span class="arrow"><i class="fa fa-long-arrow-right"></i></span>
+        <span class="step">Clean it</span>
+        <span class="arrow"><i class="fa fa-long-arrow-right"></i></span>
+        <span class="step">Master it</span>
+        <span class="arrow"><i class="fa fa-long-arrow-right"></i></span>
+        <span class="step">Share it</span>
+        <span class="arrow"><i class="fa fa-long-arrow-right"></i></span>
+        <span class="step">Activate it</span>
+        <span class="arrow"><i class="fa fa-long-arrow-right"></i></span>
+        <span class="step">Govern &amp; secure it</span>
+      </div>
     </div>
   </header>
 
