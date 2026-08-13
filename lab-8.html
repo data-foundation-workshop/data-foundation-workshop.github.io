@@ -784,17 +784,6 @@ Unable to detect [CN_DBX_CV1].[hive_metastore] catalog type.</pre>
     <p>Do not change the metadata filter: the correct filter remained cv1_workshop_catalog.*.*, representing catalog.schema.table. The Informatica connection name must not be added to it.</p>
     <p>Do not change the SQL warehouse: the existing SQL warehouse and HTTP path worked after the catalog context was added.</p>
     <p>Do not change the Secure Agent runtime: the existing runtime environment cv1secureruntime01 worked.</p>
-
-    <h3>Recommended Lab 8 Part C wording</h3>
-    <h4>Databricks catalog-source configuration</h4>
-    <p>Create the Databricks catalog source using the existing Administrator connection. For the workshop: keep Metadata Extraction enabled; leave optional capabilities disabled; filter the scan to cv1_workshop_catalog.*.*; leave stakeholder assignment off; leave asset-group assignment off; leave scheduled execution off; save and run the source manually.</p>
-
-    <h4>Databricks Unity Catalog troubleshooting note</h4>
-    <p>In this workshop environment, MCC initially failed with "Unable to detect [connection].[hive_metastore] catalog type." The Databricks workspace used Unity Catalog and did not contain the legacy hive_metastore. Although the Administrator connection already specified Catalog Name = cv1_workshop_catalog, MCC did not establish that catalog as its JDBC session context. A scanner-specific clone of the connection was created, and the property ConnCatalog=cv1_workshop_catalog; was appended to the JDBC URL. The metadata extraction then completed successfully. Do not switch authentication types or point the connection to hive_metastore. Treat the ConnCatalog addition as an environment-specific workaround unless it is validated as necessary in another tenant.</p>
-
-    <h4>Architectural and security takeaway</h4>
-    <p>The scanner-specific clone was also the safer architectural choice. Instead of modifying the connection used by working CDI mappings (CN_DBX_CV1), a separate metadata-scanner connection was created (CN_DBX_CV1_MCC). This reduced the risk of breaking previous labs and reflects a useful production principle: integration-runtime connections and catalog-scanner connections may use the same platform identity and endpoint, but they can be managed independently when scanner-specific JDBC properties or privileges are required.</p>
-    <p>For a production implementation, the scanner identity should be limited to the metadata and catalogs it must discover. Profiling, classification and data-quality execution would require additional value-level access and should be granted separately from metadata-only extraction.</p>
   </div>
 
   <!-- Appendix B -->

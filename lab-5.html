@@ -167,21 +167,6 @@ pre {
     <h2>Goal of Lab 5</h2>
     <p>Use Informatica Customer 360 SaaS to identify records that belong to the same customer, merge the records we confirm as the same person, and create one trusted golden record while preserving the link back to every contributing source record.</p>
 
-<pre>Salesforce record   Databricks record
-        \             /
-         \           /
-          +--- MATCH ---+
-                |
-                v
-          MERGE decision
-                |
-                v
-          SURVIVORSHIP
-      which source value wins?
-                |
-                v
-          GOLDEN RECORD</pre>
-
     <blockquote><strong>In short:</strong> clean records from different systems go in; MDM determines which belong to the same customer and produces one trusted master record.</blockquote>
   </div>
 

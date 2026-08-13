@@ -82,6 +82,17 @@ pre {
   padding: 12px 20px;
   margin: 15px 0;
 }
+.flow-banner {
+  background: #eef3f9;
+  border: 1px solid #cddaea;
+  border-left: 4px solid #336699;
+  border-radius: 4px;
+  padding: 12px 18px;
+  margin: 15px 0;
+  font-weight: 700;
+  color: #24425f;
+  text-align: center;
+}
 .hero {
   background: linear-gradient(135deg, #2b567f 0%, #336699 60%, #3d76ac 100%);
   color: #fff;
@@ -195,65 +206,47 @@ pre {
   <!-- End-to-End Trusted Customer Data Architecture -->
   <div class="w3-container" style="margin-top:30px;margin-bottom:30px;">
     <h2>End-to-End Trusted Customer Data Architecture</h2>
-<pre>+-------------------------------------+-------------------------------+
-| 1. SOURCE SYSTEMS                   | 1. SOURCE SYSTEMS             |
-|                                     |                               |
-| Salesforce                          | Databricks                    |
-| Customer / CRM data                 | Engagement + transaction data |
-+=====================================+===============================+
-| &darr; LEAST-PRIVILEGE CONNECTIONS +      |                               |
-| CONTROLLED CREDENTIALS              |                               |
-+-------------------------------------+-------------------------------+
-| 2. INFORMATICA IDMC --- BUILD THE   |                               |
-| TRUSTED DATA FOUNDATION             |                               |
-|                                     |                               |
-| Profile the data &rarr; Define &amp; measure  |                               |
-| quality &rarr; Clean &amp; standardize &rarr;      |                               |
-| Master customer identity            |                               |
-| Outcome: trusted Golden Record +    |                               |
-| persistent MDM Business ID + source |                               |
-| traceability                        |                               |
-+-------------------------------------+-------------------------------+
-| &darr; PUBLISH ONLY THE MASTERED         |                               |
-| ATTRIBUTES EACH CONSUMER NEEDS      |                               |
-+-------------------------------------+-------------------------------+
-| 3. SALESFORCE DATA 360 --- PUT      |                               |
-| TRUSTED DATA TO USE                 |                               |
-|                                     |                               |
-| Trusted mastered identity from      |                               |
-| Informatica + Databricks behavioral |                               |
-| / transaction data through Zero     |                               |
-| Copy                                |                               |
-| Unified customer &rarr; Insights &rarr;       |                               |
-| Segments &rarr; Activation               |                               |
-+-------------------------------------+-------------------------------+
-| &darr;                                   |                               |
-+-------------------------------------+-------------------------------+
-| 4. BUSINESS CONSUMERS               |                               |
-|                                     |                               |
-| Salesforce applications &bull; Marketing |                               |
-| &bull; Analytics &bull; AI / agents           |                               |
-+-------------------------------------+-------------------------------+
-| SECURITY, PRIVACY &amp; GOVERNANCE      |                               |
-| ACROSS THE JOURNEY                  |                               |
-|                                     |                               |
-| Least privilege &bull; Secure            |                               |
-| connectivity &bull; Controlled           |                               |
-| credentials &bull; Data minimization &bull;   |                               |
-| Consent &amp; access controls &bull;         |                               |
-| Auditability                        |                               |
-+-------------------------------------+-------------------------------+
-| CDGC + MCC PROVIDE                  |                               |
-| CROSS-LANDSCAPE VISIBILITY          |                               |
-|                                     |                               |
-| Catalog &bull; Business meaning &bull; Source |                               |
-| traceability &bull; Lineage               |                               |
-+-------------------------------------+-------------------------------+
-| The flow shows where trust is       |                               |
-| established, how data is activated, |                               |
-| and which controls span the         |                               |
-| architecture.                       |                               |
-+-------------------------------------+-------------------------------+</pre>
+
+    <table class="workshop-table">
+      <tr><th colspan="2">1 &mdash; Source Systems</th></tr>
+      <tr><td><strong>Salesforce</strong></td><td>Customer / CRM data</td></tr>
+      <tr><td><strong>Databricks</strong></td><td>Engagement + transaction data</td></tr>
+    </table>
+
+    <div class="flow-banner">&darr; Least-privilege connections + controlled credentials</div>
+
+    <table class="workshop-table">
+      <tr><th>2 &mdash; Informatica IDMC &mdash; Build the Trusted Data Foundation</th></tr>
+      <tr><td>Profile the data &rarr; Define &amp; measure quality &rarr; Clean &amp; standardize &rarr; Master customer identity</td></tr>
+      <tr><td><strong>Outcome:</strong> trusted Golden Record + persistent MDM Business ID + source traceability</td></tr>
+    </table>
+
+    <div class="flow-banner">&darr; Publish only the mastered attributes each consumer needs</div>
+
+    <table class="workshop-table">
+      <tr><th>3 &mdash; Salesforce Data 360 &mdash; Put Trusted Data to Use</th></tr>
+      <tr><td>Trusted mastered identity from Informatica + Databricks behavioral / transaction data through Zero Copy</td></tr>
+      <tr><td>Unified customer &rarr; Insights &rarr; Segments &rarr; Activation</td></tr>
+    </table>
+
+    <div class="flow-banner">&darr;</div>
+
+    <table class="workshop-table">
+      <tr><th>4 &mdash; Business Consumers</th></tr>
+      <tr><td>Salesforce applications &bull; Marketing &bull; Analytics &bull; AI / agents</td></tr>
+    </table>
+
+    <table class="workshop-table">
+      <tr><th>Security, Privacy &amp; Governance Across the Journey</th></tr>
+      <tr><td>Least privilege &bull; Secure connectivity &bull; Controlled credentials &bull; Data minimization &bull; Consent &amp; access controls &bull; Auditability</td></tr>
+    </table>
+
+    <table class="workshop-table">
+      <tr><th>CDGC + MCC Provide Cross-Landscape Visibility</th></tr>
+      <tr><td>Catalog &bull; Business meaning &bull; Source traceability &bull; Lineage</td></tr>
+    </table>
+
+    <blockquote>The flow shows where trust is established, how data is activated, and which controls span the architecture.</blockquote>
   </div>
 
   <!-- Six Questions for a Production Security Review -->
