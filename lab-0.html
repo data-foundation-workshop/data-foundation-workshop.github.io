@@ -63,6 +63,13 @@ pre {
   white-space: pre-wrap;
   word-wrap: break-word;
 }
+.img-caption {
+  text-align: center;
+  color: #555;
+  font-style: italic;
+  margin: 12px 40px 20px;
+  line-height: 1.5;
+}
 .callout-important {
   background: #fff3cd;
   border-left: 4px solid #ffc107;
@@ -110,6 +117,7 @@ pre {
 
     <!-- Slide 6: IDMC Services -->
     <div class="w3-card w3-container w3-center w3-mobile"><img class="w3-image" src="img/slide6.jpeg" alt="IDMC Services overview"></div>
+    <p class="img-caption">The workshop uses several services within Informatica IDMC for different jobs: integration, data quality, MDM, metadata and governance. This screen establishes the platform landscape before we start working with the data; later labs move between these services as the customer-data journey progresses.</p>
     <p>&nbsp;</p>
 
     <p>The sample data is intentionally imperfect. Later labs need invalid emails, inconsistent phone formats, city/state/country variants, missing values, future dates, and a negative transaction so that profiling, rules, standardization, exception routing, and MDM have something real to work on.</p>
@@ -338,6 +346,7 @@ FROM cv1_workshop_catalog.cv1_workshop.transactions;</pre>
 
     <!-- Slide 7: Runtime -->
     <div class="w3-card w3-container w3-center w3-mobile"><img class="w3-image" src="img/slide7.jpeg" alt="IDMC Runtime Environments - Secure Agent Running"></div>
+    <p class="img-caption">The Secure Agent is the runtime that connects Informatica to systems such as Salesforce and Databricks and executes data-processing tasks. Here the workshop runtime and its Secure Agent are <strong>Running</strong>, confirming that the execution layer is available before we build profiles or mappings.</p>
     <p>&nbsp;</p>
 
     <details>
@@ -361,6 +370,7 @@ FROM cv1_workshop_catalog.cv1_workshop.transactions;</pre>
         <p>23. Save.</p>
         <!-- Slide 10: Project -->
         <div class="w3-card w3-container w3-center w3-mobile"><img class="w3-image" src="img/slide10.jpeg" alt="CV1_DATA_AI_WORKSHOP project in Data Integration"></div>
+        <p class="img-caption">CV1_DATA_AI_WORKSHOP is the project used to organize the reusable assets created across the workshop. <strong>This screenshot shows the project after later labs have populated it</strong> with dictionaries, cleansing assets, mappings and tasks; Lab 0 establishes the workspace itself.</p>
       </div>
     </details>
 
@@ -377,6 +387,7 @@ FROM cv1_workshop_catalog.cv1_workshop.transactions;</pre>
         <p>31. Save.</p>
         <!-- Slide 9: Connection Test -->
         <div class="w3-card w3-container w3-center w3-mobile"><img class="w3-image" src="img/slide9.jpeg" alt="Salesforce connection test successful"></div>
+        <p class="img-caption">A successful Salesforce connection test confirms that Informatica can authenticate and reach the source through the selected runtime. Testing the connection at the beginning separates basic connectivity problems from the profiling, quality and integration work that follows.</p>
         <div class="callout-important"><strong>Common failures:</strong> missing security token or Salesforce IP/session restrictions.</div>
       </div>
     </details>
@@ -395,6 +406,7 @@ FROM cv1_workshop_catalog.cv1_workshop.transactions;</pre>
         <p>40. Save.</p>
         <!-- Slide 8: Connections list -->
         <div class="w3-card w3-container w3-center w3-mobile"><img class="w3-image" src="img/slide8.jpeg" alt="IDMC Connections - CN_DBX_CV1, CN_SF_CV1"></div>
+        <p class="img-caption">The environment now has connections to both workshop source platforms, all using the configured runtime environment. These reusable connections are what later profiling and CDI mappings use to read Salesforce and Databricks data.</p>
         <div class="callout-important"><strong>Common failures:</strong> stopped SQL Warehouse, incorrect HTTP path, or expired PAT.</div>
       </div>
     </details>
