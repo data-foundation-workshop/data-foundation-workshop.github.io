@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Trusted Data Foundation Workshop</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<style>
+body,h1,h2,h3,h4,h5,h6 {font-family: "Raleway", sans-serif}
+body {font-size: 17px;}
+.accordion {
+  background: #336699;
+  border: 1px solid #F1F0FF;
+  border-radius: 5px;
+  font-weight: 700;
+  margin: 10px;
+  margin-bottom: 15px;
+  padding: 10px 20px;
+  cursor: pointer;
+  font-size: 130%;
+  color: white;
+}
+.accordionDrop {
+  padding: 0px 30px;
+}
+::-webkit-details-marker {
+  display: none;
+}
+table.workshop-table {
+  border-collapse: collapse;
+  width: 100%;
+  margin: 15px 0;
+}
+table.workshop-table th, table.workshop-table td {
+  border: 1px solid #ddd;
+  padding: 10px 14px;
+  text-align: left;
+}
+table.workshop-table th {
+  background: #336699;
+  color: white;
+}
+table.workshop-table tr:nth-child(even) {
+  background: #f9f9f9;
+}
+blockquote {
+  border-left: 4px solid #336699;
+  margin: 15px 0;
+  padding: 10px 20px;
+  background: #f5f8fc;
+}
+.img-caption {
+  text-align: center;
+  color: #555;
+  font-style: italic;
+  margin: 12px 40px 20px;
+  line-height: 1.5;
+}
+.hero {
+  background: linear-gradient(135deg, #2b567f 0%, #336699 60%, #3d76ac 100%);
+  color: #fff;
+  padding: 46px 40px 40px;
+}
+.hero h1 {
+  margin: 0 0 6px;
+  font-size: 2.4em;
+  font-weight: 800;
+  letter-spacing: 0.5px;
+}
+.hero .hero-sub {
+  margin: 0 0 28px;
+  font-size: 1.05em;
+  color: #d8e6f4;
+  font-weight: 400;
+}
+.journey {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px;
+}
+.journey .step {
+  background: rgba(255,255,255,0.12);
+  border: 1px solid rgba(255,255,255,0.35);
+  border-radius: 20px;
+  padding: 7px 16px;
+  font-size: 0.92em;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.journey .arrow {
+  color: #bcd6ef;
+  font-size: 1.1em;
+  padding: 0 2px;
+}
+</style>
+</head>
+<body class="w3-content" style="max-width:1600px;">
+
+<!-- Sidebar/menu -->
+<nav class="w3-sidebar w3-collapse w3-white w3-animate-left" style="z-index:3;width:300px;overflow-y:auto;padding-bottom:50px;" id="mySidebar"><br></nav>
+
+<!-- Overlay effect when opening sidebar on small screens -->
+<div class="w3-overlay w3-hide-large w3-animate-opacity" onclick="w3_close()" style="cursor:pointer" title="close side menu" id="myOverlay"></div>
+
+<!-- PAGE CONTENT -->
+<div class="w3-main" style="margin-left:300px;border-left:1px solid #000000;">
+
+  <!-- Header -->
+  <header>
+    <span class="w3-button w3-hide-large w3-xxlarge w3-hover-text-grey" onclick="w3_open()"><i class="fa fa-bars"></i></span>
+    <div class="hero">
+      <h1>Trusted Data Foundation with Informatica</h1>
+      <p class="hero-sub">An Interactive Journey</p>
+      <div class="journey">
+        <span class="step">Messy data</span>
+        <span class="arrow"><i class="fa fa-long-arrow-right"></i></span>
+        <span class="step">Understand it</span>
+        <span class="arrow"><i class="fa fa-long-arrow-right"></i></span>
+        <span class="step">Clean it</span>
+        <span class="arrow"><i class="fa fa-long-arrow-right"></i></span>
+        <span class="step">Master it</span>
+        <span class="arrow"><i class="fa fa-long-arrow-right"></i></span>
+        <span class="step">Share it</span>
+        <span class="arrow"><i class="fa fa-long-arrow-right"></i></span>
+        <span class="step">Activate it</span>
+        <span class="arrow"><i class="fa fa-long-arrow-right"></i></span>
+        <span class="step">Govern &amp; secure it</span>
+      </div>
+    </div>
+  </header>
+
+  <!-- About the Workshop -->
+  <div class="w3-container" style="margin-top:30px;margin-bottom:30px;">
+    <h2>About the Workshop</h2>
+
+    <p><strong>In this workshop, you follow customer data through the same journey many enterprises face.</strong> You start with messy customer records spread across systems such as Salesforce and Databricks. Using Informatica, you discover what data you have, agree on what "good" data should look like, measure its quality, standardize inconsistent values, and separate clean records from those that need attention. You then use MDM to determine which records across systems belong to the same customer and create a trusted golden record with a persistent enterprise ID and traceability back to its source systems.</p>
+
+    <p>From there, you see how that trusted customer identity can be shared with other systems through batch, APIs, or events, and how Salesforce Data 360 can combine it with behavioral and transaction data from Databricks to create unified profiles, insights, segments, and activation.</p>
+
+    <p><strong>Finally, you look at the same journey through a governance and security lens:</strong> who should be able to see or change the data, how to minimize unnecessary access and copying, how to preserve the original source data, how to catalog and trace data across systems, and how to make sure trusted customer data remains governed as it moves from source to activation.</p>
+
+    <p>By the end, you should understand how Informatica and Salesforce Data 360 fit together as an end-to-end approach for turning fragmented, poor-quality customer data into trusted, governed, activation-ready data.</p>
+
+    <p><strong>Our data journey:</strong> messy data &rarr; understand it &rarr; clean it &rarr; master it &rarr; share it &rarr; activate it &rarr; govern and secure it</p>
+
+    <blockquote>
+      <strong>Workshop Scope:</strong> The data profiling, quality, standardization, MDM, catalog and governance exercises are hands-on or live examples. Publishing patterns, Data 360 activation, and portions of end-to-end runtime lineage are explored architecturally.
+    </blockquote>
+
+    <!-- Slide 2: Journey Map -->
+    <div class="w3-card w3-container w3-center w3-mobile"><img class="w3-image" src="img/slide2.jpeg" alt="Customer Data Journey Map"></div>
+  </div>
+
+  <!-- Example Customer Data Journey Map -->
+  <div class="w3-container" style="margin-top:30px;margin-bottom:30px;">
+    <h2>Example Customer Data Journey Map</h2>
+
+    <details>
+      <summary class="accordion">Stage 1: Build the Trusted Data Foundation</summary>
+      <div class="accordionDrop">
+        <p><strong>Define Business Meaning & Governance (Lab 1):</strong> Establish the business vocabulary, policies, systems and processes that describe what the customer data means and how it should be governed.</p>
+        <p><strong>Prepare & Discover the Data (Labs 0, 2):</strong> Prepare connectivity to Salesforce and Databricks, then profile the raw data to understand its condition and identify quality problems without modifying the source records.</p>
+        <p><strong>Define & Measure Data Quality (Labs 3, 4A):</strong> Agree on what valid and standardized data should look like, implement reusable dictionaries and Rule Specifications, and measure the raw data against those standards.</p>
+        <p><strong>Clean & Standardize (Lab 4B):</strong> Use Informatica Cloud Data Integration (CDI) and Data Quality assets to standardize fixable values, validate records and route clean data to staging while sending failures to exception tables. The original source data remains unchanged.</p>
+        <p><strong>Master Customer Identity (Lab 5):</strong> Use Customer 360 to match records across Salesforce and Databricks, confirm merge decisions, apply survivorship and create a trusted Golden Record with a persistent MDM Business ID and traceability to its contributing source records.</p>
+        <p><strong>Choose a Publishing Pattern (Lab 6):</strong> Evaluate how mastered customer data should be made available to consumers using CDI batch publishing, Customer 360 APIs, CAI orchestration, or Business 360 Events/Egress. The appropriate pattern depends on volume, latency, initiator and operational requirements.</p>
+      </div>
+    </details>
+
+    <details>
+      <summary class="accordion">Stage 2: Integrate & Activate</summary>
+      <div class="accordionDrop">
+        <p><strong>Real-Time Operational Integration:</strong> Where the business requires it, introduce API-led patterns such as Search-Before-Create so operational applications can check trusted MDM identity before creating another customer. MuleSoft or Informatica CAI are possible orchestration technologies; this is a production extension rather than an implemented workshop exercise.</p>
+        <p><strong>Data 360 Activation (Lab 7):</strong> Send mastered customer identity from Informatica MDM to Salesforce Data 360 through an ingestion pattern, while federating Databricks engagement and transaction data through Zero Copy. Data 360 can then relate trusted identity to customer behavior for Unified Individuals, calculated insights, segmentation and activation.</p>
+      </div>
+    </details>
+
+    <details>
+      <summary class="accordion">Stage 3: Govern, Inspect & Adapt</summary>
+      <div class="accordionDrop">
+        <p><strong>Catalog & Lineage (Lab 8):</strong> Use Metadata Command Center (MCC) to discover metadata and Cloud Data Governance and Catalog (CDGC) to connect technical assets with common business meaning and inspect the lineage that is available.</p>
+        <p><strong>Stewardship & Human Review:</strong> Operationalize stewardship processes for ambiguous matches or other records requiring human judgment, with review thresholds and responsibilities defined by the organization's governance policy.</p>
+        <p><strong>Master Additional Domains:</strong> Extend the MDM approach to other appropriate enterprise domains such as Product, Location or Supplier.</p>
+        <p><strong>Enterprise Reference Data:</strong> Use Reference 360 to centrally manage shared reference data such as code lists, lookup values, hierarchies and crosswalks instead of maintaining inconsistent copies across applications.</p>
+      </div>
+    </details>
+
+    <details>
+      <summary class="accordion">Stage 4: Enterprise Scale & Advanced Controls</summary>
+      <div class="accordionDrop">
+        <p><strong>Data Security & Entitlement:</strong> Introduce Informatica Cloud Data Access Management (CDAM) to define metadata-driven access and protection policies and enforce appropriate controls across supported data platforms.</p>
+        <p><strong>Governed Data Self-Service:</strong> Introduce Informatica Cloud Data Marketplace so business users can discover governed data products, request access and have those requests fulfilled and tracked through governed processes.</p>
+        <p><strong>AI / Agent Consumption:</strong> Make trusted customer context available to enterprise AI experiences, combining mastered identity with the relevant Data 360 profile, behavioral and analytical context while continuing to apply the same governance and access controls.</p>
+      </div>
+    </details>
+
+    <!-- Slide 4: Platform Overview -->
+    <div class="w3-card w3-container w3-center w3-mobile" style="margin-top:20px;"><img class="w3-image" src="img/slide4.jpeg" alt="Informatica, MuleSoft, Data 360 Platform Overview"></div>
+    <p class="img-caption">In our workshop, Salesforce and Databricks provide the source customer data used by Informatica for quality, standardization and mastering. Informatica MDM creates the trusted customer identity and persistent MDM Business ID, which is written back to a Databricks staging table &mdash; and then brought into Salesforce Data 360. Separately, Databricks behavioral and transaction data provides the customer activity used for insights, segmentation and activation.</p>
+  </div>
+
+  <!-- Summary -->
+  <div class="w3-container" style="margin-top:30px;margin-bottom:30px;">
+    <h2>Summary</h2>
+
+    <p>The three platforms work together. <strong>Informatica establishes the trusted data foundation; MuleSoft provides controlled APIs, integration and orchestration; Data 360 brings trusted identity and enterprise context together for insights and activation.</strong> Security, privacy and governance span all three.</p>
+
+    <p><strong>In this workshop, we follow customer data from messy records spread across systems such as Salesforce and Databricks to a trusted customer identity.</strong></p>
+
+    <p>Informatica helps you understand the data, measure its quality, clean and standardize it, and master records from different systems into a trusted golden customer.</p>
+
+    <p>We then explore how Salesforce Data 360 can combine that trusted identity with behavioral and transaction data for insights, segmentation and activation.</p>
+
+    <p>Throughout the journey, security, privacy, governance, lineage and traceability are treated as part of the architecture rather than added at the end.</p>
+
+    <!-- Slide 3: Architecture Diagram -->
+    <div class="w3-card w3-container w3-center w3-mobile"><img class="w3-image" src="img/slide3.jpeg" alt="Workshop Architecture - Salesforce, Databricks, Informatica, Data 360"></div>
+  </div>
+
+  <!-- Workshop Labs at a Glance -->
+  <div class="w3-container" style="margin-top:30px;margin-bottom:30px;">
+    <h2>Workshop Labs at a Glance</h2>
+
+    <table class="workshop-table">
+      <tr><th>Lab</th><th>Title</th><th>Focus</th></tr>
+      <tr><td>0</td><td>Connect</td><td>Prepare the environment and securely connect Salesforce, Databricks, Informatica IDMC and Data 360.</td></tr>
+      <tr><td>1</td><td>Govern</td><td>Define the business meaning of the data &mdash; common terms, policies, systems and business processes.</td></tr>
+      <tr><td>2</td><td>Discover</td><td>Profile the raw Salesforce and Databricks data to understand what is actually there without changing anything.</td></tr>
+      <tr><td>3</td><td>Agree</td><td>Use profiling results to decide what "good" data should mean: what is valid, what should be standardized, what should be rejected.</td></tr>
+      <tr><td>4A</td><td>Measure</td><td>Turn agreed standards into reusable Informatica rules and dictionaries; apply them and produce measurable data-quality results.</td></tr>
+      <tr><td>4B</td><td>Standardize</td><td>Clean and standardize fixable values, validate, route clean to staging and failures to exception tables.</td></tr>
+      <tr><td>5</td><td>Master</td><td>Determine which records represent the same customer across systems and create a trusted golden record.</td></tr>
+      <tr><td>6</td><td>Publish</td><td>Explore how trusted master data should be made available &mdash; batch, APIs, events or egress.</td></tr>
+      <tr><td>7</td><td>Activate</td><td>Bring trusted customer identity into Salesforce Data 360 with Databricks behavioral data for insights and activation.</td></tr>
+      <tr><td>8</td><td>Catalog & Trace</td><td>Discover and catalog metadata, connect technical fields to business meaning, and inspect lineage.</td></tr>
+      <tr><td>9</td><td>Security Review</td><td>Review the architecture through a security, privacy and governance lens.</td></tr>
+    </table>
+  </div>
+
+  <!-- Appendix: Nomenclature -->
+  <div class="w3-container" style="margin-top:30px;margin-bottom:30px;">
+    <h2>Appendix: Nomenclature</h2>
+
+    <details>
+      <summary class="accordion">How the Pieces Fit Together</summary>
+      <div class="accordionDrop">
+        <p><strong>Profiling</strong> tells us what the data looks like. <strong>Data Quality</strong> determines whether it meets our standards and helps standardize it. <strong>MDM</strong> determines which records belong to the same customer and establishes the trusted customer identity.</p>
+        <p><strong>CDGC and MCC</strong> help us understand what the data means, where it exists, how it is governed, and how it moves across the landscape.</p>
+        <p><strong>Salesforce Data 360</strong> combines that trusted identity with customer activity and other data so it can be used for unified profiles, insights, segmentation, and activation.</p>
+      </div>
+    </details>
+
+    <details>
+      <summary class="accordion">Glossary: General</summary>
+      <div class="accordionDrop">
+        <p><strong>IDMC &mdash; Informatica Intelligent Data Management Cloud:</strong> The Informatica cloud platform that brings together the data integration, data quality, MDM, governance, catalog and related services used throughout this workshop.</p>
+        <p><strong>Secure Agent:</strong> The Informatica runtime installed in the customer environment that executes integration and data-processing work and provides controlled connectivity between IDMC and systems such as Salesforce and Databricks.</p>
+        <p><strong>CDI &mdash; Cloud Data Integration:</strong> The Informatica service used to build and run data pipelines; in this workshop CDI reads source data, applies cleansing and validation logic, and writes standardized records to staging or exception tables.</p>
+        <p><strong>CAI &mdash; Cloud Application Integration:</strong> The Informatica service used to build API- and process-oriented integrations where an application needs orchestration, logic or a reusable service around calls to systems such as MDM.</p>
+        <p><strong>Cloud Data Profiling:</strong> The Informatica capability used to inspect raw data and report facts such as nulls, distinct values, patterns, value distributions and minimum/maximum values without changing the data.</p>
+        <p><strong>Cloud Data Quality / CDQ:</strong> The Informatica capabilities used to define, measure and apply reusable data-quality and standardization logic.</p>
+        <p><strong>Rule Specification:</strong> A reusable Data Quality rule that tests whether data meets an agreed condition and returns a result such as pass/fail.</p>
+        <p><strong>Dictionary:</strong> A managed set of recognized or standardized values used by data-quality rules and cleansing logic.</p>
+        <p><strong>Cleanse Asset:</strong> A reusable Data Quality asset that actually transforms or standardizes values.</p>
+        <p><strong>CDI Mapping:</strong> A visual data pipeline that connects sources, transformations, rules, routing logic and targets.</p>
+        <p><strong>Router:</strong> A CDI transformation that sends records down different paths based on conditions.</p>
+      </div>
+    </details>
+
+    <details>
+      <summary class="accordion">Glossary: MDM and Customer 360</summary>
+      <div class="accordionDrop">
+        <p><strong>MDM &mdash; Master Data Management:</strong> The discipline and technology used to determine which records across systems represent the same real-world entity and to create a trusted master representation.</p>
+        <p><strong>Customer 360 SaaS:</strong> Informatica's MDM application for customer data; in this workshop it is where imported customer records are searched, matched, merged and inspected.</p>
+        <p><strong>Business 360 Console:</strong> The Informatica design and administration application used to configure the MDM model.</p>
+        <p><strong>Business Entity:</strong> The MDM definition of a business object being mastered, such as the Person entity used for customers.</p>
+        <p><strong>Source System:</strong> The system from which an MDM source record originated, such as Salesforce or Databricks.</p>
+        <p><strong>Match Model:</strong> The MDM configuration that defines how Informatica determines whether records might represent the same entity.</p>
+        <p><strong>Merge:</strong> The decision to combine records determined to represent the same customer.</p>
+        <p><strong>Survivorship:</strong> The rules that determine which source's value should become the trusted value when matched records differ.</p>
+        <p><strong>Golden Record:</strong> The trusted master representation produced by MDM after matching, merge and survivorship decisions.</p>
+        <p><strong>MDM Business ID:</strong> The persistent identifier assigned by Informatica MDM to the mastered business entity.</p>
+        <p><strong>Source Records:</strong> The original contributing records retained underneath a golden record for traceability.</p>
+        <p><strong>Business 360 Events:</strong> An event-driven integration option that can notify downstream consumers when mastered data changes.</p>
+        <p><strong>Business 360 Egress:</strong> A managed pattern for exporting mastered data from Business 360 for downstream consumption.</p>
+      </div>
+    </details>
+
+    <details>
+      <summary class="accordion">Glossary: Governance and Metadata</summary>
+      <div class="accordionDrop">
+        <p><strong>CDGC &mdash; Cloud Data Governance and Catalog:</strong> The Informatica service used to give data common business meaning, document policies and processes, discover technical assets and allow users to search and understand governed data.</p>
+        <p><strong>Business Term:</strong> A governed definition of a business concept that can be associated with different physical fields across systems.</p>
+        <p><strong>Policy:</strong> A governance statement documenting how data should be handled or governed.</p>
+        <p><strong>Technical Asset:</strong> A cataloged physical object such as a Salesforce object or field, Databricks table or column, or integration asset.</p>
+        <p><strong>MCC &mdash; Metadata Command Center:</strong> The Informatica service used to configure, run and monitor metadata discovery from systems such as Salesforce, Databricks and IDMC.</p>
+        <p><strong>Catalog Source:</strong> An MCC configuration that tells Informatica which system to scan and which metadata to discover.</p>
+        <p><strong>IDMC Metadata:</strong> Metadata about assets created inside Informatica itself, such as CDI mappings, which can be synchronized into the catalog.</p>
+        <p><strong>Lineage:</strong> The technical representation of how data moves or is transformed from one asset to another.</p>
+        <p><strong>SEED:</strong> The starting asset displayed in a lineage view.</p>
+      </div>
+    </details>
+
+    <details>
+      <summary class="accordion">Glossary: Salesforce Data 360</summary>
+      <div class="accordionDrop">
+        <p><strong>Salesforce Data 360:</strong> Salesforce's data platform for bringing customer identity, engagement and other enterprise data together for unified profiles, insights, segmentation and activation.</p>
+        <p><strong>Data 360 Ingestion API:</strong> The API pattern used to send trusted mastered customer identity from Informatica MDM directly into Salesforce Data 360.</p>
+        <p><strong>Zero Copy:</strong> A Data 360 integration pattern that allows data such as Databricks behavioral and transaction data to be used without creating another physical copy inside Data 360.</p>
+        <p><strong>DMO &mdash; Data Model Object:</strong> A standardized Data 360 data object used to represent concepts such as individuals, email addresses, phone numbers or identifiers.</p>
+        <p><strong>Party Identification:</strong> The Data 360 object used to carry the persistent Informatica MDM identifier.</p>
+        <p><strong>Identity Resolution:</strong> The Data 360 capability that relates source profile information and produces a unified representation of an individual.</p>
+        <p><strong>Unified Individual:</strong> The Data 360 representation of a person after identity resolution.</p>
+        <p><strong>Calculated Insight:</strong> A derived metric calculated from underlying data.</p>
+        <p><strong>Segment:</strong> A dynamically defined group of customers meeting specified criteria.</p>
+        <p><strong>Data Graph:</strong> A Data 360 structure that brings related profile, engagement, transaction and calculated data together.</p>
+        <p><strong>Activation:</strong> Using trusted and unified customer information in a downstream business process, audience, application or experience.</p>
+      </div>
+    </details>
+
+    <details>
+      <summary class="accordion">Appendix: Workshop Considerations</summary>
+      <div class="accordionDrop">
+        <p><strong>Real-Time & API Orchestration (CAI):</strong> Cloud Application Integration was turned off (Process Server disabled in the test environment). The workshop relies on CDI batch mappings rather than real-time, event-driven integrations or search-before-create APIs.</p>
+        <p><strong>Data Access Governance Enforcement (DAM):</strong> The Data Access Management Agent & Proxy were disabled. The architecture reads/writes data but does not enforce row-level filtering, dynamic column masking, or policy pushdown at the Databricks layer.</p>
+        <p><strong>Native Exception & Human Stewardship UI:</strong> Data quality exceptions are written directly to Databricks delta tables. Production deployments route exceptions to Informatica's native Human Task / Exception Management UI.</p>
+        <p><strong>Automated MDM Merge Workflows:</strong> MDM merges were triggered manually via the UI. Production environments run automated match/merge jobs that auto-consolidate high-confidence pairs and push ambiguous pairs to a Human Workflow Inbox.</p>
+        <p><strong>Enterprise Reference Data (Reference 360):</strong> Reference dictionaries were built directly inside CDQ via CSV imports instead of using Reference 360 for enterprise code-set management.</p>
+        <p><strong>Informatica Data Marketplace & Asset Profiling:</strong> The workshop uses standalone Cloud Data Profiling (CDP) instead of catalog-integrated profiling, and omits Data Marketplace.</p>
+        <p><strong>Production Egress Taskflows:</strong> Publishing from MDM to downstream systems was analyzed conceptually rather than built using native Business 360 Egress jobs or taskflows.</p>
+      </div>
+    </details>
+  </div>
+
+  <!-- Footer -->
+  <div class="w3-container">
+    <div class="w3-bar w3-black">
+      <a href="index.html" class="w3-bar-item w3-button"><i class="fa fa-home fa-fw w3-margin-right"></i>Introduction</a>
+      <a href="lab-0.html" class="w3-bar-item w3-button"><i class="fa fa-plug fa-fw w3-margin-right"></i>Lab 0</a>
+      <a href="lab-1.html" class="w3-bar-item w3-button"><i class="fa fa-book fa-fw w3-margin-right"></i>Lab 1</a>
+    </div>
+    <p>Trusted Data Foundation Workshop</p>
+  </div>
+
+  <p>&nbsp;</p>
+</div>
+
+<!-- Scripts -->
+<script src="nav.js"></script>
+<script>
+function w3_open() {
+  document.getElementById("mySidebar").style.display = "block";
+  document.getElementById("myOverlay").style.display = "block";
+}
+function w3_close() {
+  document.getElementById("mySidebar").style.display = "none";
+  document.getElementById("myOverlay").style.display = "none";
+}
+</script>
+</body>
+</html>

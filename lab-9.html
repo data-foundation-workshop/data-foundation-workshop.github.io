@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Lab 9 - Security &amp; Architecture Review</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<style>
+body,h1,h2,h3,h4,h5,h6 {font-family: "Raleway", sans-serif}
+body {font-size: 17px;}
+.accordion {
+  background: #336699;
+  border: 1px solid #F1F0FF;
+  border-radius: 5px;
+  font-weight: 700;
+  margin: 10px;
+  margin-bottom: 15px;
+  padding: 10px 20px;
+  cursor: pointer;
+  font-size: 130%;
+  color: white;
+}
+.accordionDrop {
+  padding: 0px 30px;
+}
+::-webkit-details-marker {
+  display: none;
+}
+table.workshop-table {
+  border-collapse: collapse;
+  width: 100%;
+  margin: 15px 0;
+}
+table.workshop-table th, table.workshop-table td {
+  border: 1px solid #ddd;
+  padding: 10px 14px;
+  text-align: left;
+}
+table.workshop-table th {
+  background: #336699;
+  color: white;
+}
+table.workshop-table tr:nth-child(even) {
+  background: #f9f9f9;
+}
+blockquote {
+  border-left: 4px solid #336699;
+  margin: 15px 0;
+  padding: 10px 20px;
+  background: #f5f8fc;
+}
+code, pre {
+  background: #f4f4f4;
+  padding: 2px 6px;
+  border-radius: 3px;
+  font-size: 95%;
+}
+pre {
+  padding: 15px;
+  overflow-x: auto;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+}
+.img-caption {
+  text-align: center;
+  color: #555;
+  font-style: italic;
+  margin: 12px 40px 20px;
+  line-height: 1.5;
+}
+.callout-important {
+  background: #fff3cd;
+  border-left: 4px solid #ffc107;
+  padding: 12px 20px;
+  margin: 15px 0;
+}
+.callout-tip {
+  background: #d1ecf1;
+  border-left: 4px solid #17a2b8;
+  padding: 12px 20px;
+  margin: 15px 0;
+}
+.hero {
+  background: linear-gradient(135deg, #2b567f 0%, #336699 60%, #3d76ac 100%);
+  color: #fff;
+  padding: 40px 40px 34px;
+}
+.hero .hero-eyebrow {
+  margin: 0 0 4px;
+  font-size: 0.85em;
+  font-weight: 700;
+  letter-spacing: 2px;
+  color: #bcd6ef;
+  text-transform: uppercase;
+}
+.hero h1 {
+  margin: 0 0 22px;
+  font-size: 2.2em;
+  font-weight: 800;
+}
+.journey {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px;
+}
+.journey .step {
+  background: rgba(255,255,255,0.12);
+  border: 1px solid rgba(255,255,255,0.35);
+  border-radius: 20px;
+  padding: 7px 16px;
+  font-size: 0.92em;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.journey .arrow {
+  color: #bcd6ef;
+  font-size: 1.1em;
+  padding: 0 2px;
+}
+</style>
+</head>
+<body class="w3-content" style="max-width:1600px;">
+
+<!-- Sidebar/menu -->
+<nav class="w3-sidebar w3-collapse w3-white w3-animate-left" style="z-index:3;width:300px;overflow-y:auto;padding-bottom:50px;" id="mySidebar"><br></nav>
+
+<!-- Overlay effect when opening sidebar on small screens -->
+<div class="w3-overlay w3-hide-large w3-animate-opacity" onclick="w3_close()" style="cursor:pointer" title="close side menu" id="myOverlay"></div>
+
+<!-- PAGE CONTENT -->
+<div class="w3-main" style="margin-left:300px;border-left:1px solid #000000;">
+
+  <!-- Header -->
+  <header>
+    <span class="w3-button w3-hide-large w3-xxlarge w3-hover-text-grey" onclick="w3_open()"><i class="fa fa-bars"></i></span>
+    <div class="hero">
+      <p class="hero-eyebrow">Lab 9</p>
+      <h1>Security &amp; Architecture Review</h1>
+      <div class="journey">
+        <span class="step">Who can access what</span>
+        <span class="arrow"><i class="fa fa-long-arrow-right"></i></span>
+        <span class="step">Cross system boundaries</span>
+        <span class="arrow"><i class="fa fa-long-arrow-right"></i></span>
+        <span class="step">Trust the data</span>
+        <span class="arrow"><i class="fa fa-long-arrow-right"></i></span>
+        <span class="step">Minimize exposure</span>
+        <span class="arrow"><i class="fa fa-long-arrow-right"></i></span>
+        <span class="step">Respect privacy</span>
+        <span class="arrow"><i class="fa fa-long-arrow-right"></i></span>
+        <span class="step">Prove what happened</span>
+      </div>
+    </div>
+  </header>
+
+  <!-- Intro -->
+  <div class="w3-container" style="margin-top:30px;margin-bottom:30px;">
+    <p>The Salesforce data platform provides a complete end-to-end trust architecture &mdash; from source-data quality and governed identity, through controlled integration and lineage, to privacy-aware activation in Salesforce.</p>
+
+    <p>The advantage is not one magical security feature. It is that security and governance follow the data from start to finish - as it is checked, cleaned, mastered, moved, protected and finally activated in Data 360. Trust is maintained across the full customer-data lifecycle.</p>
+
+    <p>Informatica helps establish whether the data is valid, which records represent the same customer, where the data came from, and how it is governed.</p>
+
+    <p>Data 360 then controls how that trusted data is accessed, combined and activated in Salesforce, while zero-copy can reduce unnecessary replication of high-volume data.</p>
+
+    <p>The result is not simply a unified customer profile &mdash; it is a profile whose quality, identity, provenance, access and permitted use can all be governed.</p>
+
+    <p>We have now built the architecture. Let&rsquo;s review it the way a security architect would review a production design.</p>
+
+    <p>Informatica establishes the trusted data foundation: data quality, controlled integration, mastered identity, business meaning and traceability. Salesforce Data 360 puts that trusted data to use: combining mastered identity with customer activity for unified profiles, insights, segmentation and activation.</p>
+
+    <p>In this final lab, we review the architecture the way we would review a production design: Who can access the data? How does it cross system boundaries? How do we know it can be trusted? How do we minimize unnecessary exposure? How is privacy respected? And can we prove what happened?</p>
+  </div>
+
+  <!-- Security Perspectives -->
+  <div class="w3-container" style="margin-top:30px;margin-bottom:30px;">
+    <h2>Security Perspectives</h2>
+    <table class="workshop-table">
+      <tr><th>Lab</th><th>Security Perspective</th></tr>
+      <tr><td><strong>0 &mdash; Connect</strong></td><td><strong>Secure connectivity and identity start here.</strong> Connections should use dedicated, least-privilege identities; credentials should be centrally managed and rotated; runtimes should have only the network reach they require. Informatica&rsquo;s Secure Agent provides the controlled runtime connecting sources and targets. Production design also includes SSO/MFA, environment separation, network restrictions and credential lifecycle management.</td></tr>
+      <tr><td><strong>1 &mdash; Govern</strong></td><td><strong>Define governance before consuming the data.</strong> Business terms establish common meaning; policies establish ownership and intent. Policy requirements are enforced through the appropriate operational controls. Where needed, Informatica Data Access Management can add data-protection controls such as filtering, redaction and de-identification.</td></tr>
+      <tr><td><strong>2 &mdash; Profile</strong></td><td><strong>Understand sensitive and unreliable data before using it.</strong> Profiling reveals nulls, patterns, distributions and unexpected values that affect trust in the data. Because profiling can expose actual data values, access to profiling and its results should itself follow least-privilege principles.</td></tr>
+      <tr><td><strong>3 &mdash; Agree rules</strong></td><td><strong>Define controls from agreed standards, not individual assumptions.</strong> Business and technical teams agree what valid, acceptable and standardized mean before implementation. In production, rule ownership, review, change control and evidence of approval make those standards governable.</td></tr>
+      <tr><td><strong>4A &mdash; Measure</strong></td><td><strong>Make data integrity measurable.</strong> Scorecards turn agreed quality requirements into evidence that can be monitored over time. Data quality does not replace IAM, encryption or privacy controls; it strengthens trust in the information those controls protect.</td></tr>
+      <tr><td><strong>4B &mdash; Clean</strong></td><td><strong>Control the transformation boundary.</strong> Raw source data remains unchanged; clean records and exceptions are separated; mappings explicitly define what is read and where it is written. Source identities should have only the required read access and target identities only the required write access.</td></tr>
+      <tr><td><strong>5 &mdash; Master</strong></td><td><strong>Protect identity integrity.</strong> Incorrectly merging two different people can expose the wrong customer&rsquo;s information or drive incorrect downstream decisions. Match rules, human review where appropriate, survivorship, steward access, source provenance and merge history therefore become part of the security design. Customer 360 also supports read-only business-user access for inspection without editing.</td></tr>
+      <tr><td><strong>6 &mdash; Publish</strong></td><td><strong>Treat every egress as a trust boundary.</strong> Define who initiates movement, which credential is used, what fields leave MDM, who can retry or replay, and where audit evidence is recorded. Apply data minimization: publish only what the consumer needs, and keep API credentials in managed credential stores rather than code.</td></tr>
+      <tr><td><strong>7 &mdash; Activate</strong></td><td><strong>Minimize unnecessary copies and enforce privacy where data becomes actionable.</strong> Mastered identity is sent directly to Data 360 while high-volume behavioral data can remain in Databricks through Zero Copy. Source security still applies, and Data 360 adds Data Spaces, permission sets, access policies, consent handling and activation controls.</td></tr>
+      <tr><td><strong>8 &mdash; Catalog &amp; lineage</strong></td><td><strong>Security needs visibility.</strong> Metadata-only scanning is a least-privilege choice; catalog access should itself be controlled because metadata can reveal sensitive locations and structures. Lineage provides evidence of movement and impact, while gaps in lineage should be documented and investigated.</td></tr>
+    </table>
+  </div>
+
+  <!-- End-to-End Trusted Customer Data Architecture -->
+  <div class="w3-container" style="margin-top:30px;margin-bottom:30px;">
+    <h2>End-to-End Trusted Customer Data Architecture</h2>
+<pre>+-------------------------------------+-------------------------------+
+| 1. SOURCE SYSTEMS                   | 1. SOURCE SYSTEMS             |
+|                                     |                               |
+| Salesforce                          | Databricks                    |
+| Customer / CRM data                 | Engagement + transaction data |
++=====================================+===============================+
+| &darr; LEAST-PRIVILEGE CONNECTIONS +      |                               |
+| CONTROLLED CREDENTIALS              |                               |
++-------------------------------------+-------------------------------+
+| 2. INFORMATICA IDMC --- BUILD THE   |                               |
+| TRUSTED DATA FOUNDATION             |                               |
+|                                     |                               |
+| Profile the data &rarr; Define &amp; measure  |                               |
+| quality &rarr; Clean &amp; standardize &rarr;      |                               |
+| Master customer identity            |                               |
+| Outcome: trusted Golden Record +    |                               |
+| persistent MDM Business ID + source |                               |
+| traceability                        |                               |
++-------------------------------------+-------------------------------+
+| &darr; PUBLISH ONLY THE MASTERED         |                               |
+| ATTRIBUTES EACH CONSUMER NEEDS      |                               |
++-------------------------------------+-------------------------------+
+| 3. SALESFORCE DATA 360 --- PUT      |                               |
+| TRUSTED DATA TO USE                 |                               |
+|                                     |                               |
+| Trusted mastered identity from      |                               |
+| Informatica + Databricks behavioral |                               |
+| / transaction data through Zero     |                               |
+| Copy                                |                               |
+| Unified customer &rarr; Insights &rarr;       |                               |
+| Segments &rarr; Activation               |                               |
++-------------------------------------+-------------------------------+
+| &darr;                                   |                               |
++-------------------------------------+-------------------------------+
+| 4. BUSINESS CONSUMERS               |                               |
+|                                     |                               |
+| Salesforce applications &bull; Marketing |                               |
+| &bull; Analytics &bull; AI / agents           |                               |
++-------------------------------------+-------------------------------+
+| SECURITY, PRIVACY &amp; GOVERNANCE      |                               |
+| ACROSS THE JOURNEY                  |                               |
+|                                     |                               |
+| Least privilege &bull; Secure            |                               |
+| connectivity &bull; Controlled           |                               |
+| credentials &bull; Data minimization &bull;   |                               |
+| Consent &amp; access controls &bull;         |                               |
+| Auditability                        |                               |
++-------------------------------------+-------------------------------+
+| CDGC + MCC PROVIDE                  |                               |
+| CROSS-LANDSCAPE VISIBILITY          |                               |
+|                                     |                               |
+| Catalog &bull; Business meaning &bull; Source |                               |
+| traceability &bull; Lineage               |                               |
++-------------------------------------+-------------------------------+
+| The flow shows where trust is       |                               |
+| established, how data is activated, |                               |
+| and which controls span the         |                               |
+| architecture.                       |                               |
++-------------------------------------+-------------------------------+</pre>
+  </div>
+
+  <!-- Six Questions for a Production Security Review -->
+  <div class="w3-container" style="margin-top:30px;margin-bottom:30px;">
+    <h2>Six Questions for a Production Security Review</h2>
+
+    <p><strong>1. Who can access what?</strong><br>
+    Identity, SSO/MFA, service accounts, roles, permission sets, Data Spaces, source-system privileges and read-only access. Apply least privilege so people and integrations receive only the access required for their job.</p>
+
+    <p><strong>2. How does data cross system boundaries?</strong><br>
+    Use controlled runtimes and integration identities, secure API authentication, TLS, managed credentials, appropriate network controls and clear ownership of each integration.</p>
+
+    <p><strong>3. How do we know the data itself can be trusted?</strong><br>
+    Profiling &rarr; agreed quality rules &rarr; scorecards &rarr; standardization &rarr; exceptions &rarr; MDM matching, merge and survivorship. Security includes protecting the integrity of the information being used to make decisions.</p>
+
+    <p><strong>4. How do we minimize sensitive-data exposure?</strong><br>
+    Move only the attributes required by the consumer, avoid unnecessary copies, use Zero Copy where appropriate, restrict source and target access, and apply masking or other protection controls where needed.</p>
+
+    <p><strong>5. How is privacy respected when data is used?</strong><br>
+    Associate consent and privacy preferences with the correct customer identity and carry those requirements through segmentation, activation and downstream use.</p>
+
+    <p><strong>6. Can we prove what happened?</strong><br>
+    Use MDM source history, job and integration logs, catalog metadata, lineage, activation evidence and enterprise security monitoring to establish traceability and auditability.</p>
+  </div>
+
+  <!-- Security Responsibilities Across the Architecture -->
+  <div class="w3-container" style="margin-top:30px;margin-bottom:30px;">
+    <h2>Security Responsibilities Across the Architecture</h2>
+
+    <p>Security works as a set of complementary controls across the architecture:</p>
+
+    <p><strong>Data Quality protects data integrity.</strong> Access control separately determines who is permitted to see or change that data.</p>
+
+    <p><strong>MDM establishes trusted identity and provenance.</strong> Authorization remains the responsibility of the systems exposing and consuming that identity.</p>
+
+    <p><strong>Zero Copy reduces unnecessary replication.</strong> Source permissions, authentication, network security and Data 360 access controls still protect access to the underlying data.</p>
+
+    <p><strong>Governance policies establish business requirements.</strong> Those requirements are enforced through the appropriate operational security and data-management controls.</p>
+
+    <p><strong>Catalog and lineage provide visibility and traceability.</strong> Operational monitoring and security telemetry complement that visibility.</p>
+
+    <p><strong>Consent must influence actual use.</strong> Capturing a privacy preference matters only when segmentation, activation and downstream processes honor it.</p>
+  </div>
+
+  <!-- Illustrations -->
+  <div class="w3-container" style="margin-top:30px;margin-bottom:30px;">
+    <h2>Illustrations</h2>
+
+    <div class="w3-card w3-container w3-center w3-mobile"><img class="w3-image" src="img/slide50.jpeg" alt="Customer_Read_Only role with Read enabled"></div>
+    <p class="img-caption">The custom Customer_Read_Only role illustrates the principle directly: for the displayed API Center assets, <strong>Read</strong> is enabled while Create, Update, Delete, Run and Set Permission are not. The same least-privilege principle must be applied and tested separately across each Informatica service the workshop viewer needs to access.</p>
+    <p>&nbsp;</p>
+
+    <div class="w3-card w3-container w3-center w3-mobile"><img class="w3-image" src="img/slide51.jpeg" alt="Golden Person traceable to source records"></div>
+    <p class="img-caption">The golden Person remains traceable to the Salesforce sf-003 and Databricks ev-001 records that contributed to it. That matters for security and privacy because an incorrect identity merge can expose or act on the wrong person&rsquo;s information; the master should therefore be explainable rather than a black box.</p>
+    <p>&nbsp;</p>
+
+    <div class="w3-card w3-container w3-center w3-mobile"><img class="w3-image" src="img/slide52.jpeg" alt="Data 360 identity rule scoped to External MDM Identifier"></div>
+    <p class="img-caption">The Data 360 identity rule is scoped to an <strong>External MDM Identifier</strong> named Informatica C360 MDM ID and uses the Party Identification Number as an exact match. This preserves the identity decision already made in Informatica instead of independently fuzzy-matching the customer again in Data 360.</p>
+    <p>&nbsp;</p>
+
+    <div class="w3-card w3-container w3-center w3-mobile"><img class="w3-image" src="img/slide53.jpeg" alt="Preferred Email lineage view"></div>
+    <p class="img-caption">Governance and security need visibility into where important data exists and what relationships are known. The Preferred Email lineage view provides technical traceability for a governed data element, complementing access control and identity security with evidence about the data itself.</p>
+    <p>&nbsp;</p>
+  </div>
+
+  <!-- Summary -->
+  <div class="w3-container" style="margin-top:30px;margin-bottom:30px;">
+    <h2>Summary</h2>
+
+    <p>The goal in our data journey is not simply to produce a better customer record.</p>
+
+    <p>It is to produce customer data that the enterprise can trust, trace, protect and use responsibly from source through activation.</p>
+  </div>
+
+  <!-- Footer -->
+  <div class="w3-container">
+    <div class="w3-bar w3-black">
+      <a href="index.html" class="w3-bar-item w3-button"><i class="fa fa-home fa-fw w3-margin-right"></i>Introduction</a>
+      <a href="lab-8.html" class="w3-bar-item w3-button"><i class="fa fa-book fa-fw w3-margin-right"></i>Lab 8</a>
+      <a href="lab-9.html" class="w3-bar-item w3-button"><i class="fa fa-shield fa-fw w3-margin-right"></i>Lab 9</a>
+    </div>
+    <p>Trusted Data Foundation Workshop</p>
+  </div>
+
+  <p>&nbsp;</p>
+</div>
+
+<!-- Scripts -->
+<script src="nav.js"></script>
+<script>
+function w3_open() {
+  document.getElementById("mySidebar").style.display = "block";
+  document.getElementById("myOverlay").style.display = "block";
+}
+function w3_close() {
+  document.getElementById("mySidebar").style.display = "none";
+  document.getElementById("myOverlay").style.display = "none";
+}
+</script>
+</body>
+</html>

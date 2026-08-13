@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Lab 1 - Define Business Meaning &amp; Governance</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<style>
+body,h1,h2,h3,h4,h5,h6 {font-family: "Raleway", sans-serif}
+body {font-size: 17px;}
+.accordion {
+  background: #336699;
+  border: 1px solid #F1F0FF;
+  border-radius: 5px;
+  font-weight: 700;
+  margin: 10px;
+  margin-bottom: 15px;
+  padding: 10px 20px;
+  cursor: pointer;
+  font-size: 130%;
+  color: white;
+}
+.accordionDrop {
+  padding: 0px 30px;
+}
+::-webkit-details-marker {
+  display: none;
+}
+table.workshop-table {
+  border-collapse: collapse;
+  width: 100%;
+  margin: 15px 0;
+}
+table.workshop-table th, table.workshop-table td {
+  border: 1px solid #ddd;
+  padding: 10px 14px;
+  text-align: left;
+}
+table.workshop-table th {
+  background: #336699;
+  color: white;
+}
+table.workshop-table tr:nth-child(even) {
+  background: #f9f9f9;
+}
+blockquote {
+  border-left: 4px solid #336699;
+  margin: 15px 0;
+  padding: 10px 20px;
+  background: #f5f8fc;
+}
+code, pre {
+  background: #f4f4f4;
+  padding: 2px 6px;
+  border-radius: 3px;
+  font-size: 95%;
+}
+pre {
+  padding: 15px;
+  overflow-x: auto;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+}
+.img-caption {
+  text-align: center;
+  color: #555;
+  font-style: italic;
+  margin: 12px 40px 20px;
+  line-height: 1.5;
+}
+.callout-important {
+  background: #fff3cd;
+  border-left: 4px solid #ffc107;
+  padding: 12px 20px;
+  margin: 15px 0;
+}
+.callout-tip {
+  background: #d1ecf1;
+  border-left: 4px solid #17a2b8;
+  padding: 12px 20px;
+  margin: 15px 0;
+}
+.hero {
+  background: linear-gradient(135deg, #2b567f 0%, #336699 60%, #3d76ac 100%);
+  color: #fff;
+  padding: 40px 40px 34px;
+}
+.hero .hero-eyebrow {
+  margin: 0 0 4px;
+  font-size: 0.85em;
+  font-weight: 700;
+  letter-spacing: 2px;
+  color: #bcd6ef;
+  text-transform: uppercase;
+}
+.hero h1 {
+  margin: 0 0 22px;
+  font-size: 2.2em;
+  font-weight: 800;
+}
+.journey {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px;
+}
+.journey .step {
+  background: rgba(255,255,255,0.12);
+  border: 1px solid rgba(255,255,255,0.35);
+  border-radius: 20px;
+  padding: 7px 16px;
+  font-size: 0.92em;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.journey .arrow {
+  color: #bcd6ef;
+  font-size: 1.1em;
+  padding: 0 2px;
+}
+</style>
+</head>
+<body class="w3-content" style="max-width:1600px;">
+
+<!-- Sidebar/menu -->
+<nav class="w3-sidebar w3-collapse w3-white w3-animate-left" style="z-index:3;width:300px;overflow-y:auto;padding-bottom:50px;" id="mySidebar"><br></nav>
+
+<!-- Overlay effect when opening sidebar on small screens -->
+<div class="w3-overlay w3-hide-large w3-animate-opacity" onclick="w3_close()" style="cursor:pointer" title="close side menu" id="myOverlay"></div>
+
+<!-- PAGE CONTENT -->
+<div class="w3-main" style="margin-left:300px;border-left:1px solid #000000;">
+
+  <!-- Header -->
+  <header>
+    <span class="w3-button w3-hide-large w3-xxlarge w3-hover-text-grey" onclick="w3_open()"><i class="fa fa-bars"></i></span>
+    <div class="hero">
+      <p class="hero-eyebrow">Lab 1</p>
+      <h1>Define Business Meaning &amp; Governance</h1>
+      <div class="journey">
+        <span class="step">Understand object types</span>
+        <span class="arrow"><i class="fa fa-long-arrow-right"></i></span>
+        <span class="step">Create glossary domain</span>
+        <span class="arrow"><i class="fa fa-long-arrow-right"></i></span>
+        <span class="step">Define business terms</span>
+        <span class="arrow"><i class="fa fa-long-arrow-right"></i></span>
+        <span class="step">Create PII &amp; consent policy</span>
+        <span class="arrow"><i class="fa fa-long-arrow-right"></i></span>
+        <span class="step">Register systems</span>
+        <span class="arrow"><i class="fa fa-long-arrow-right"></i></span>
+        <span class="step">Register processes</span>
+      </div>
+    </div>
+  </header>
+
+  <!-- Where we are -->
+  <div class="w3-container" style="margin-top:30px;margin-bottom:30px;">
+    <h2>Where we are</h2>
+    <p>The workshop systems and sample data are already available. Before we inspect or change the data, we define the business vocabulary and governance context that will later be associated with the technical assets.</p>
+  </div>
+
+  <!-- Goal of Lab 1 -->
+  <div class="w3-container" style="margin-top:30px;margin-bottom:30px;">
+    <h2>Goal of Lab 1</h2>
+    <p>Create a small governance model in Cloud Data Governance and Catalog (CDGC) &mdash; Informatica&rsquo;s service for documenting what data means, which policies apply, which systems hold it, and which business/data processes use it.</p>
+
+    <div class="callout-important"><strong>Nothing happens to the source data in this lab:</strong> we create governance metadata only.</div>
+
+<pre>Business meaning
+Glossary terms
+|
++--&gt; Policy
++--&gt; Governed systems
++--&gt; Governed processes
+
+Later: technical fields and lineage are associated with this context</pre>
+
+    <blockquote>Define the vocabulary and governance context before we start changing the data.</blockquote>
+  </div>
+
+  <!-- What CDGC is doing in this workshop -->
+  <div class="w3-container" style="margin-top:30px;margin-bottom:30px;">
+    <h2>What CDGC is doing in this workshop</h2>
+    <table class="workshop-table">
+      <tr><th>CDGC object</th><th>Purpose</th></tr>
+      <tr><td>Glossary Domain</td><td>Groups related business terms.</td></tr>
+      <tr><td>Business Term</td><td>Defines a business concept such as Preferred Email or MDM Customer ID.</td></tr>
+      <tr><td>Policy</td><td>Documents a governance rule and its owner.</td></tr>
+      <tr><td>System</td><td>Represents a governed data-bearing platform such as Salesforce or Databricks.</td></tr>
+      <tr><td>Process</td><td>Represents a governed business/data process such as Cleanse and Standardize.</td></tr>
+    </table>
+
+    <p>Lab 8 returns to this governance layer after the technical assets exist. It catalogs Salesforce and Databricks metadata, brings CDI integration metadata into the catalog, associates a real business term with technical fields, and inspects lineage.</p>
+
+    <div class="callout-important">CDGC documents and connects governance context. It does not itself enforce Salesforce permissions, Databricks masking, consent rules, or runtime data-quality logic.</div>
+  </div>
+
+  <!-- What you will create -->
+  <div class="w3-container" style="margin-top:30px;margin-bottom:30px;">
+    <h2>What you will create</h2>
+    <table class="workshop-table">
+      <tr><th>Item</th><th>Count</th><th>Workshop purpose</th></tr>
+      <tr><td>Glossary Domain</td><td>1</td><td>Container for customer vocabulary.</td></tr>
+      <tr><td>Business Terms</td><td>7</td><td>Common business meaning across systems.</td></tr>
+      <tr><td>Policy</td><td>1</td><td>Document the customer PII and consent rule.</td></tr>
+      <tr><td>Governed Systems</td><td>4</td><td>Represent Salesforce, Databricks, Informatica MDM, and Data 360.</td></tr>
+      <tr><td>Governed Processes</td><td>5</td><td>Describe the main data journey from profiling through activation.</td></tr>
+    </table>
+  </div>
+
+  <!-- Pre-flight -->
+  <div class="w3-container" style="margin-top:30px;margin-bottom:30px;">
+    <h2>Pre-flight</h2>
+    <p>&bull; IDMC service selector shows Data Governance and Catalog.</p>
+    <p>&bull; You have authoring permission in CDGC.</p>
+    <p>&bull; The workshop environment exists. No source connection is used by the hands-on steps in this lab.</p>
+  </div>
+
+  <!-- Part A -->
+  <div class="w3-container" style="margin-top:30px;margin-bottom:30px;">
+    <h2>Part A &mdash; Open CDGC and understand the object types</h2>
+
+    <details>
+      <summary class="accordion">Why this part exists</summary>
+      <div class="accordionDrop">
+        <p>Before creating anything, confirm where governance assets are managed and which object type you are creating. Menu names can vary slightly by release, but the object concepts remain the same.</p>
+        <p>1. Open IDMC &rarr; service selector &rarr; Data Governance and Catalog.</p>
+        <p>2. Locate the areas for Glossary, Policies, Systems, Processes, Catalog, and Marketplace. Exact navigation labels may vary by tenant.</p>
+        <div class="callout-important">Follow the object names and end-state described in this lab if the navigation labels differ. Do not change the intended asset type.</div>
+      </div>
+    </details>
+
+    <details>
+      <summary class="accordion">Three CDGC concepts you may see but do not configure here</summary>
+      <div class="accordionDrop">
+        <table class="workshop-table">
+          <tr><th>Concept</th><th>Meaning</th><th>Why it is not part of the core exercise</th></tr>
+          <tr><td>Stakeholders</td><td>People associated with a governance asset, such as Owner, Steward, Subject Matter Expert, or Approver.</td><td>The workshop has one author; production deployments assign real named stakeholders.</td></tr>
+          <tr><td>Critical Data Element (CDE)</td><td>A flag identifying especially important or regulated data.</td><td>Useful at scale, but not needed to demonstrate the core object model.</td></tr>
+          <tr><td>Data Marketplace</td><td>Internal experience where business users discover governed data products/datasets and request access.</td><td>The workshop has no multi-user access-request workflow to demonstrate.</td></tr>
+        </table>
+      </div>
+    </details>
+  </div>
+
+  <!-- Part B -->
+  <div class="w3-container" style="margin-top:30px;margin-bottom:30px;">
+    <h2>Part B &mdash; Create the glossary domain</h2>
+
+    <details>
+      <summary class="accordion">Why this part exists</summary>
+      <div class="accordionDrop">
+        <p>A Glossary Domain groups related business terms in the catalog. In this workshop, one domain contains the customer vocabulary.</p>
+        <p>3. Navigate to Glossary &rarr; New &rarr; Glossary Domain, or the equivalent path in your tenant.</p>
+        <p>4. Name = CV1 Customer Data Domain.</p>
+        <p>5. Description = Workshop scope. Holds vocabulary for the customer entity across Salesforce CRM, Databricks lakehouse, Informatica MDM, and Data 360. Created for the CV1 Data + AI Workshop.</p>
+        <p>6. Owner / Steward = yourself.</p>
+        <p>7. Save.</p>
+        <blockquote><strong>End-state check:</strong> CV1 Customer Data Domain is visible and its description is saved.</blockquote>
+      </div>
+    </details>
+  </div>
+
+  <!-- Part C -->
+  <div class="w3-container" style="margin-top:30px;margin-bottom:30px;">
+    <h2>Part C &mdash; Create the seven business terms</h2>
+
+    <details>
+      <summary class="accordion">Why business terms matter</summary>
+      <div class="accordionDrop">
+        <p>Different systems can use different technical field names for the same business concept. A business term gives that concept one governed definition that people can search and reuse.</p>
+<pre>Salesforce field name   Databricks field name
+        \             /
+         \           /
+          +--&gt; Business Term &lt;--+
+             Preferred Email</pre>
+        <p>Create each term under Parent = CV1 Customer Data Domain. Leave Reference ID blank so CDGC assigns it.</p>
+        <table class="workshop-table">
+          <tr><th>Term</th><th>Definition</th></tr>
+          <tr><td>Customer</td><td>A real person who buys from the company. In this workshop, customer data begins in source systems, is mastered in Informatica MDM, and is activated in Salesforce Data 360.</td></tr>
+          <tr><td>MDM Customer ID</td><td>The persistent enterprise identifier assigned by Informatica MDM to a mastered customer. It is used downstream to anchor that trusted identity.</td></tr>
+          <tr><td>Preferred Email</td><td>The email address the business should use for the customer after validation and mastering.</td></tr>
+          <tr><td>Consent Status</td><td>The customer&rsquo;s marketing-contact consent state. Workshop values: Opted In, Opted Out, Unknown.</td></tr>
+          <tr><td>Lifetime Value</td><td>The aggregate value of valid customer transactions, calculated for downstream customer analysis and segmentation.</td></tr>
+          <tr><td>Loyalty Tier</td><td>The customer&rsquo;s loyalty-program tier: Gold, Silver, Bronze, or blank.</td></tr>
+          <tr><td>Unified Profile</td><td>The activation-ready customer representation in Salesforce Data 360, anchored on mastered identity and enriched with related engagement data.</td></tr>
+        </table>
+        <p>8. For each term: New &rarr; Business Term.</p>
+        <p>9. Enter Name and Description from the table.</p>
+        <p>10. Set Parent = CV1 Customer Data Domain.</p>
+        <p>11. Leave Reference ID blank and create/save.</p>
+        <blockquote><strong>Validation:</strong> open each term and confirm its Parent is CV1 Customer Data Domain and its description is present. Search for Customer and MDM to confirm the terms are discoverable.</blockquote>
+      </div>
+    </details>
+  </div>
+
+  <!-- Part D -->
+  <div class="w3-container" style="margin-top:30px;margin-bottom:30px;">
+    <h2>Part D &mdash; Create the customer PII and consent policy</h2>
+
+    <details>
+      <summary class="accordion">What the policy does</summary>
+      <div class="accordionDrop">
+        <p>A CDGC policy is the governed statement of a rule. It documents the rule and ownership; it does not execute the rule in the data path.</p>
+<pre>CDGC Policy
+documents: what rule should apply
+|
+v
+Operational systems
+enforce the rule where data is actually used</pre>
+        <p>12. New &rarr; Business Impact &rarr; Policy &rarr; Create.</p>
+        <p>13. Name = CV1 Customer PII and Consent Policy.</p>
+        <p>14. Parent = leave blank.</p>
+        <p>15. Description = Governs the collection, processing, retention, and use of personally identifiable customer information &mdash; Email, Phone, Address &mdash; and customer consent state across all governed systems. Marketing activation is permitted only when Consent Status = Opted In.</p>
+        <p>16. Reference ID = leave blank.</p>
+        <p>17. Policy Type = Data Standards.</p>
+        <p>18. Owner / Steward = yourself.</p>
+        <p>19. Create.</p>
+      </div>
+    </details>
+
+    <details>
+      <summary class="accordion">Relate the policy to terms</summary>
+      <div class="accordionDrop">
+        <p>20. Open the policy &rarr; Relationships &rarr; Add Relationships.</p>
+        <p>21. Select Customer, MDM Customer ID, Consent Status, and Preferred Email.</p>
+        <p>22. Continue to Assign Relationships.</p>
+        <p>23. Use the available Policy &rarr; Term relationship, shown as is Regulating in the tested tenant.</p>
+        <p>24. Finish.</p>
+        <div class="callout-important"><strong>Policy Type is metadata:</strong> it supports catalog organization and reporting; it does not change runtime enforcement.</div>
+        <p>In this workshop, Data 360 later applies the same consent intent in the activation segment. Nothing is automatically transmitted from the CDGC policy into Data 360.</p>
+      </div>
+    </details>
+  </div>
+
+  <!-- Part E -->
+  <div class="w3-container" style="margin-top:30px;margin-bottom:30px;">
+    <h2>Part E &mdash; Register the four governed systems</h2>
+
+    <details>
+      <summary class="accordion">Why systems are registered</summary>
+      <div class="accordionDrop">
+        <p>A governed System represents a platform that holds or processes data. Registering the systems gives governance users a business-readable inventory even before technical assets are bound to them.</p>
+        <table class="workshop-table">
+          <tr><th>System</th><th>Description</th></tr>
+          <tr><td>CV1 Salesforce CRM</td><td>Operational customer relationship management system. Source of customer identity attributes and consent state. Workshop object: CV1_Customer__c.</td></tr>
+          <tr><td>CV1 Databricks Lakehouse</td><td>Analytical lakehouse holding customer engagement events and transactions. Workshop schema: cv1_workshop_catalog.cv1_workshop.</td></tr>
+          <tr><td>CV1 Informatica MDM</td><td>Master data management system that resolves cross-source identity, applies survivorship, and produces the golden customer record with a persistent MDM Business ID.</td></tr>
+          <tr><td>CV1 Data 360</td><td>Salesforce activation platform that receives mastered identity, relates it to engagement/transaction data, and produces Unified Individual, insights, segments, and Data Graph context.</td></tr>
+        </table>
+        <p>For each system: New &rarr; Business Data &rarr; Systems &rarr; Create; enter the Name and Description above, set Owner = yourself, and Create.</p>
+        <blockquote><strong>End-state check:</strong> all four governed systems are searchable in CDGC.</blockquote>
+      </div>
+    </details>
+  </div>
+
+  <!-- Part F -->
+  <div class="w3-container" style="margin-top:30px;margin-bottom:30px;">
+    <h2>Part F &mdash; Register the five governed processes</h2>
+
+    <details>
+      <summary class="accordion">Why processes are registered</summary>
+      <div class="accordionDrop">
+        <p>A governed Process describes a meaningful data or business activity. It lets the catalog explain not only what systems and fields exist, but what work those assets support.</p>
+        <p>In the tested tenant, Process is created under New &rarr; Business Impact &rarr; Process. Leave Parent, Reference ID, and Duration blank unless your tenant requires them. Set Process Type = Process. Step Type can be Starting for Profile Raw Data, Ending for Activate Profile, and Common for the middle processes.</p>
+        <table class="workshop-table">
+          <tr><th>Process</th><th>Description</th></tr>
+          <tr><td>Profile Raw Data</td><td>Observe source-data condition without changing it. Inputs: Salesforce customer data and Databricks events/transactions. Output: statistical profile findings.</td></tr>
+          <tr><td>Cleanse and Standardize</td><td>Apply standardization and validation logic. Inputs: raw source data plus reference dictionaries. Outputs: per-source staging tables and exception tables.</td></tr>
+          <tr><td>Master Customer</td><td>Resolve records from different sources into trusted master identities using MDM match, merge, and survivorship. Output: golden record with persistent MDM Business ID and source traceability.</td></tr>
+          <tr><td>Publish Golden Record</td><td>Distribute or expose mastered identity to consuming systems using the publishing pattern appropriate to each consumer. For Data 360, the workshop uses direct API ingestion of the mastered profile.</td></tr>
+          <tr><td>Activate Profile</td><td>Combine mastered identity in Data 360 with Databricks engagement/transaction data to create Unified Individual, calculated insight, segment, and Data Graph context.</td></tr>
+        </table>
+        <p>Create all five processes and confirm they are searchable.</p>
+      </div>
+    </details>
+  </div>
+
+  <!-- End-of-lab validation -->
+  <div class="w3-container" style="margin-top:30px;margin-bottom:30px;">
+    <h2>End-of-lab validation</h2>
+    <p>&bull; CV1 Customer Data Domain exists.</p>
+    <p>&bull; Seven business terms exist under the domain.</p>
+    <p>&bull; CV1 Customer PII and Consent Policy exists and relates to the intended terms.</p>
+    <p>&bull; Four governed systems are searchable.</p>
+    <p>&bull; Five governed processes are searchable.</p>
+    <p>&bull; No data was written to Salesforce or Databricks.</p>
+  </div>
+
+  <!-- Illustrations -->
+  <div class="w3-container" style="margin-top:30px;margin-bottom:30px;">
+    <h2>Illustrations</h2>
+
+    <div class="w3-card w3-container w3-center w3-mobile"><img class="w3-image" src="img/slide12.jpeg" alt="Preferred Email business term search view"></div>
+    <p class="img-caption">Preferred Email is defined as a governed business term rather than leaving every system to interpret its own field name. The search view shows that the same business concept can be related to different technical assets, giving business and technical teams a common vocabulary.</p>
+    <p>&nbsp;</p>
+
+    <div class="w3-card w3-container w3-center w3-mobile"><img class="w3-image" src="img/slide13.jpeg" alt="Business term definition and ownership context"></div>
+    <p class="img-caption">The business term provides the plain-language definition and ownership context for the data. At this stage we are defining <strong>meaning and governance</strong>, not changing data or implementing MDM survivorship; later labs build the technical controls that support the definition.</p>
+    <p>&nbsp;</p>
+
+    <div class="w3-card w3-container w3-center w3-mobile"><img class="w3-image" src="img/slide14.jpeg" alt="CV1 Customer PII and Consent Policy related governed concepts"></div>
+    <p class="img-caption">The CV1 Customer PII and Consent Policy is related to governed concepts including Customer, Preferred Email, Consent Status and MDM Customer ID. This documents which important customer-data concepts fall under the policy; operational systems and processes still enforce the actual controls.</p>
+    <p>&nbsp;</p>
+  </div>
+
+  <!-- What did we get out of this lab? -->
+  <div class="w3-container" style="margin-top:30px;margin-bottom:30px;">
+    <h2>What did we get out of this lab?</h2>
+    <p>We created the business vocabulary and governance context for the workshop before changing any source data. The catalog now has governed definitions for customer concepts, one policy, the systems involved, and the processes that describe the data journey.</p>
+
+    <blockquote>We defined the vocabulary before we started changing the data.</blockquote>
+  </div>
+
+  <!-- What's next -->
+  <div class="w3-container" style="margin-top:30px;margin-bottom:30px;">
+    <h2>What&rsquo;s next</h2>
+    <p>Lab 2 moves from governance metadata to the source data itself. We profile Salesforce and Databricks to understand what is actually in the data before we define any custom validity rules.</p>
+    <p>Lab 8 later returns to CDGC after the technical assets exist. It discovers the Salesforce and Databricks assets, brings CDI metadata into the catalog, binds Preferred Email to real fields, and inspects lineage.</p>
+  </div>
+
+  <!-- Appendix A -->
+  <div class="w3-container" style="margin-top:30px;margin-bottom:30px;">
+    <h2>Appendix A &mdash; Glossary Domain versus business domain</h2>
+    <p>A business domain is a broad organizational subject area such as Sales, Service, Finance, or Risk. A Glossary Domain in CDGC is a catalog object used to group related business terms. In this lab, CV1 Customer Data Domain is the Glossary Domain.</p>
+  </div>
+
+  <!-- Appendix B -->
+  <div class="w3-container" style="margin-top:30px;margin-bottom:30px;">
+    <h2>Appendix B &mdash; Policy versus enforcement</h2>
+    <p>The CDGC policy is the human-readable governed statement of the rule and its owner. Operational platforms enforce the rule. For example, the Data 360 activation segment can require marketing consent before including a customer. CDGC documents the intent; Data 360 executes the segment logic.</p>
+    <p>In a production implementation, the same policy can also be associated with data-quality evidence, access controls, masking, API rules, and audit evidence. The policy still remains the governing statement rather than the runtime enforcement engine.</p>
+  </div>
+
+  <!-- Appendix C -->
+  <div class="w3-container" style="margin-top:30px;margin-bottom:30px;">
+    <h2>Appendix C &mdash; Production context</h2>
+    <p>&bull; Production glossaries contain many more terms, named stewards, review dates, and term relationships.</p>
+    <p>&bull; Critical Data Elements identify the subset of data that requires additional governance attention.</p>
+    <p>&bull; Registered processes can be connected to orchestration/run metadata for impact analysis.</p>
+    <p>&bull; Data Marketplace becomes useful when many internal users need to discover governed data and request access.</p>
+  </div>
+
+  <!-- Footer -->
+  <div class="w3-container">
+    <div class="w3-bar w3-black">
+      <a href="lab-0.html" class="w3-bar-item w3-button"><i class="fa fa-plug fa-fw w3-margin-right"></i>Lab 0</a>
+      <a href="lab-1.html" class="w3-bar-item w3-button"><i class="fa fa-book fa-fw w3-margin-right"></i>Lab 1</a>
+      <a href="lab-2.html" class="w3-bar-item w3-button"><i class="fa fa-search fa-fw w3-margin-right"></i>Lab 2</a>
+    </div>
+    <p>Trusted Data Foundation Workshop</p>
+  </div>
+
+  <p>&nbsp;</p>
+</div>
+
+<!-- Scripts -->
+<script src="nav.js"></script>
+<script>
+function w3_open() {
+  document.getElementById("mySidebar").style.display = "block";
+  document.getElementById("myOverlay").style.display = "block";
+}
+function w3_close() {
+  document.getElementById("mySidebar").style.display = "none";
+  document.getElementById("myOverlay").style.display = "none";
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,586 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Lab 6 - Choose How Consumers Use the Master</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<style>
+body,h1,h2,h3,h4,h5,h6 {font-family: "Raleway", sans-serif}
+body {font-size: 17px;}
+.accordion {
+  background: #336699;
+  border: 1px solid #F1F0FF;
+  border-radius: 5px;
+  font-weight: 700;
+  margin: 10px;
+  margin-bottom: 15px;
+  padding: 10px 20px;
+  cursor: pointer;
+  font-size: 130%;
+  color: white;
+}
+.accordionDrop {
+  padding: 0px 30px;
+}
+::-webkit-details-marker {
+  display: none;
+}
+table.workshop-table {
+  border-collapse: collapse;
+  width: 100%;
+  margin: 15px 0;
+}
+table.workshop-table th, table.workshop-table td {
+  border: 1px solid #ddd;
+  padding: 10px 14px;
+  text-align: left;
+}
+table.workshop-table th {
+  background: #336699;
+  color: white;
+}
+table.workshop-table tr:nth-child(even) {
+  background: #f9f9f9;
+}
+blockquote {
+  border-left: 4px solid #336699;
+  margin: 15px 0;
+  padding: 10px 20px;
+  background: #f5f8fc;
+}
+code, pre {
+  background: #f4f4f4;
+  padding: 2px 6px;
+  border-radius: 3px;
+  font-size: 95%;
+}
+pre {
+  padding: 15px;
+  overflow-x: auto;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+}
+.img-caption {
+  text-align: center;
+  color: #555;
+  font-style: italic;
+  margin: 12px 40px 20px;
+  line-height: 1.5;
+}
+.callout-important {
+  background: #fff3cd;
+  border-left: 4px solid #ffc107;
+  padding: 12px 20px;
+  margin: 15px 0;
+}
+.callout-tip {
+  background: #d1ecf1;
+  border-left: 4px solid #17a2b8;
+  padding: 12px 20px;
+  margin: 15px 0;
+}
+.hero {
+  background: linear-gradient(135deg, #2b567f 0%, #336699 60%, #3d76ac 100%);
+  color: #fff;
+  padding: 40px 40px 34px;
+}
+.hero .hero-eyebrow {
+  margin: 0 0 4px;
+  font-size: 0.85em;
+  font-weight: 700;
+  letter-spacing: 2px;
+  color: #bcd6ef;
+  text-transform: uppercase;
+}
+.hero h1 {
+  margin: 0 0 22px;
+  font-size: 2.2em;
+  font-weight: 800;
+}
+.journey {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px;
+}
+.journey .step {
+  background: rgba(255,255,255,0.12);
+  border: 1px solid rgba(255,255,255,0.35);
+  border-radius: 20px;
+  padding: 7px 16px;
+  font-size: 0.92em;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.journey .arrow {
+  color: #bcd6ef;
+  font-size: 1.1em;
+  padding: 0 2px;
+}
+</style>
+</head>
+<body class="w3-content" style="max-width:1600px;">
+
+<!-- Sidebar/menu -->
+<nav class="w3-sidebar w3-collapse w3-white w3-animate-left" style="z-index:3;width:300px;overflow-y:auto;padding-bottom:50px;" id="mySidebar"><br></nav>
+
+<!-- Overlay effect when opening sidebar on small screens -->
+<div class="w3-overlay w3-hide-large w3-animate-opacity" onclick="w3_close()" style="cursor:pointer" title="close side menu" id="myOverlay"></div>
+
+<!-- PAGE CONTENT -->
+<div class="w3-main" style="margin-left:300px;border-left:1px solid #000000;">
+
+  <!-- Header -->
+  <header>
+    <span class="w3-button w3-hide-large w3-xxlarge w3-hover-text-grey" onclick="w3_open()"><i class="fa fa-bars"></i></span>
+    <div class="hero">
+      <p class="hero-eyebrow">Lab 6</p>
+      <h1>Choose How Consumers Use the Master</h1>
+      <div class="journey">
+        <span class="step">CDI batch push</span>
+        <span class="arrow"><i class="fa fa-long-arrow-right"></i></span>
+        <span class="step">REST API lookup</span>
+        <span class="arrow"><i class="fa fa-long-arrow-right"></i></span>
+        <span class="step">CAI orchestration</span>
+        <span class="arrow"><i class="fa fa-long-arrow-right"></i></span>
+        <span class="step">Events &amp; Egress</span>
+        <span class="arrow"><i class="fa fa-long-arrow-right"></i></span>
+        <span class="step">Decision matrix</span>
+        <span class="arrow"><i class="fa fa-long-arrow-right"></i></span>
+        <span class="step">Security &amp; governance</span>
+      </div>
+    </div>
+  </header>
+
+  <!-- Intro -->
+  <div class="w3-container" style="margin-top:30px;margin-bottom:30px;">
+    <p><strong>Lab 6 &mdash; Integration Patterns for Publishing MDM Data</strong></p>
+    <p><em>v2 &mdash; Aug 8, 2026. Conceptual lab. Four ways to get mastered data out of Informatica Customer 360 SaaS, with use cases, tradeoffs, and a security and governance lens.</em></p>
+  </div>
+
+  <!-- Where we are -->
+  <div class="w3-container" style="margin-top:30px;margin-bottom:30px;">
+    <h2>Where we are</h2>
+    <p>Master Data Management (MDM) has created a trusted golden customer record by matching and merging source records that belong to the same person. That mastered record now lives inside Informatica Customer 360 SaaS.</p>
+    <p>Creating the golden record is only half of the architecture. Other systems still need to use it. A Salesforce application may need one customer immediately. A warehouse may need the full mastered population every night. A downstream system may need to know within seconds when MDM changes a customer.</p>
+  </div>
+
+  <!-- Goal of Lab 6 -->
+  <div class="w3-container" style="margin-top:30px;margin-bottom:30px;">
+    <h2>Goal of Lab 6</h2>
+    <p>Learn the main patterns for getting mastered data out of Informatica, and choose the pattern that matches the consumer's volume, timing, and ownership requirements.</p>
+    <blockquote><strong>In short:</strong> MDM creates the trusted customer. Lab 6 explains how other systems receive or retrieve that trusted data.</blockquote>
+  </div>
+
+  <!-- The decision in one picture -->
+  <div class="w3-container" style="margin-top:30px;margin-bottom:30px;">
+    <h2>The decision in one picture</h2>
+<pre>Need many or all mastered records on a schedule?
+-&gt; CDI batch push
+-&gt; Business 360 Egress for a production-managed bulk/delta pattern
+
+Need one customer right now?
+-&gt; Customer 360 REST API
+
+Need logic around that real-time lookup?
+-&gt; CAI orchestration
+
+Need downstream systems notified when MDM changes?
+-&gt; Business 360 Events</pre>
+  </div>
+
+  <!-- The four patterns at a glance -->
+  <div class="w3-container" style="margin-top:30px;margin-bottom:30px;">
+    <h2>The four patterns at a glance</h2>
+    <table class="workshop-table">
+      <tr><th>Pattern</th><th>Who initiates</th><th>Direction</th><th>Best fit</th></tr>
+      <tr><td>1. CDI batch push</td><td>Informatica</td><td>MDM &rarr; target</td><td>Bulk publishing of many or all masters on a schedule.</td></tr>
+      <tr><td>2. REST API lookup</td><td>Consumer</td><td>Consumer &rarr; MDM</td><td>On-demand access to one or a small number of golden records.</td></tr>
+      <tr><td>3. CAI orchestration</td><td>Consumer calls CAI</td><td>Consumer &rarr; CAI &rarr; MDM</td><td>Real-time access that needs search, decision logic, reshaping, or a stable service contract.</td></tr>
+      <tr><td>4. Business 360 Events / Egress</td><td>Informatica</td><td>MDM &rarr; target</td><td>Events for near-real-time change propagation; Egress for production-managed bulk and incremental publishing.</td></tr>
+    </table>
+
+    <h3>A simple way to remember the difference</h3>
+    <p>The four patterns answer different questions. CDI and Egress are about moving populations of mastered data. REST APIs are about retrieving a customer when a consumer needs one. CAI adds reusable logic around API-based access. Events notify downstream systems when MDM changes.</p>
+  </div>
+
+  <!-- Why this lab is conceptual -->
+  <div class="w3-container" style="margin-top:30px;margin-bottom:30px;">
+    <h2>Why this lab is conceptual</h2>
+    <p>The important skill is architectural selection, not reproducing one narrow implementation. Each pattern has a different initiator, latency model, volume profile, monitoring model, and security boundary. Those distinctions remain useful even when the exact product screens change.</p>
+  </div>
+
+  <!-- Pattern 1 -->
+  <div class="w3-container" style="margin-top:30px;margin-bottom:30px;">
+    <h2>Pattern 1 &mdash; CDI batch push</h2>
+    <p>CD Is typically used for <strong>scheduled, bulk batch data movement</strong> (e.g., syncing 1 million records to Databricks nightly).</p>
+    <p><strong>CDI (ETL/ELT):</strong> Optimized for <strong>bulk data processing</strong>. It can move 50 million rows efficiently using bulk APIs and "pushdown optimization" (translating mappings into raw SQL that executes inside Databricks).</p>
+    <p><strong>MuleSoft (ESB/API):</strong> Optimized for <strong>event-driven, row-by-row message routing</strong>. If you try to push 50 million rows through MuleSoft into a data warehouse, you will choke its memory, hit API rate limits, and fail.</p>
+
+    <h3>What problem does it solve?</h3>
+    <p>Use Cloud Data Integration (CDI) when Informatica needs to publish many or all mastered records to a target on a schedule.</p>
+<pre>Informatica Customer 360
+Golden records
+|
+| CDI mapping + Mapping Task
+v
+Target system
+Salesforce / Databricks / another downstream store</pre>
+
+    <h3>How it works</h3>
+    <p>CDI is Informatica's data-integration engine. A mapping reads mastered data, transforms or selects the required fields, and writes them to a target. A Mapping Task runs that mapping on a runtime environment, either on demand or on a schedule.</p>
+    <p>For MDM data, the source can be the Business 360 Flat Endpoint (FEP) connector or another supported source that exposes the mastered records. The target could be Salesforce for write-back, Databricks for an analytical mastered dataset, or another downstream platform.</p>
+
+    <h3>Sarah example</h3>
+    <p>At 2:00 AM, a CDI job reads the mastered Person population. For Sarah, it updates the Salesforce customer record with MDM metadata such as MDM_Customer_ID__c = MDM0000000002S, MDM_Master_Status__c = Active, and a last-synchronized timestamp. When users open Salesforce in the morning, the MDM identifier is already stored on the record.</p>
+    <p>A separate CDI flow could publish mastered data to another analytical target if the architecture requires it. For Lab 7 specifically, the golden customer is sent directly to Salesforce Data 360 through the Data 360 Ingestion API rather than being staged in Databricks.</p>
+
+    <h3>Use CDI batch push when</h3>
+    <p>&bull; You need to publish many or all master records.</p>
+    <p>&bull; The target can tolerate scheduled freshness such as nightly or hourly.</p>
+    <p>&bull; The target needs the mastered information stored locally for reports, workflows, or downstream processing.</p>
+    <p>&bull; The Informatica team should own scheduling, monitoring, retry, and audit.</p>
+    <p>&bull; Connectors exist for both the mastered source and the target.</p>
+
+    <h3>Do not choose it as the primary pattern when</h3>
+    <p>&bull; A user needs one customer's current golden record immediately.</p>
+    <p>&bull; You need search-before-create before a user saves a new record.</p>
+    <p>&bull; The volume is tiny and a batch job would add unnecessary overhead.</p>
+
+    <h3>Security and governance takeaway</h3>
+    <p>The source document notes that CDI credentials are stored in IDMC connections and that Mapping Task executions appear in Informatica job history. That gives the Informatica team a central operational record of scheduled publishing activity. For Secure Agent deployments, the document also notes the outbound HTTPS communication model.</p>
+    <blockquote><strong>Pattern 1 in one sentence:</strong> Informatica pushes a large set of mastered records to a target on a schedule.</blockquote>
+  </div>
+
+  <!-- Pattern 2 -->
+  <div class="w3-container" style="margin-top:30px;margin-bottom:30px;">
+    <h2>Pattern 2 &mdash; Consumer-initiated REST API lookup</h2>
+
+    <h3>What problem does it solve?</h3>
+    <p>Use the Customer 360 REST APIs when a consuming application needs a golden customer on demand rather than waiting for the next scheduled publish.</p>
+<pre>Salesforce / application / service
+|
+| HTTPS request
+v
+Informatica Customer 360 REST API
+|
+v
+One golden customer returned as JSON</pre>
+
+    <h3>How it works</h3>
+    <p>The consumer calls Informatica over HTTPS. The response contains the mastered customer fields, and the consumer decides whether to display the result, use it in logic, or store selected values locally.</p>
+    <p>Two API operations matter most in the source lab:</p>
+    <p>&bull; Search API &mdash; find the Person using an attribute such as email when the consumer does not yet know the MDM Business ID.</p>
+    <p>&bull; Retrieve by ID &mdash; retrieve the Person directly using the permanent MDM Business ID after it is known.</p>
+
+    <h3>Sarah example &mdash; read without storing</h3>
+    <p>A Salesforce service agent opens Sarah's record and invokes a 'Get Golden Customer' action. Salesforce calls Informatica using a Salesforce Named Credential. Informatica returns Sarah's mastered profile as JSON, and Salesforce displays it. Nothing is stored on the Salesforce record, so each request retrieves the current master.</p>
+
+    <h3>Sarah example &mdash; retrieve and persist the MDM ID</h3>
+    <p>The same API pattern can also persist the result. A Salesforce Flow can search Informatica when a Contact is created or updated, receive Sarah's MDM Business ID, and write MDM_Customer_ID__c = MDM0000000002S onto the Salesforce record.</p>
+    <blockquote><strong>Important distinction:</strong> A real-time API call does not mean the result must remain transient. The consumer can retrieve the value and store it. That can produce the same stored MDM-ID end state as a CDI push; the difference is who initiated the update and where the operational control lives.</blockquote>
+
+    <h3>Use REST API lookup when</h3>
+    <p>&bull; A consumer needs the current golden record immediately.</p>
+    <p>&bull; The consumer works with one or a small number of records at a time.</p>
+    <p>&bull; You need search-before-create.</p>
+    <p>&bull; The consuming platform should control when the lookup occurs.</p>
+    <p>&bull; The consumer wants to display mastered data without creating another local copy, or wants to persist only selected values such as the MDM ID.</p>
+
+    <h3>Do not choose it as the primary pattern when</h3>
+    <p>&bull; You need to publish hundreds of thousands or millions of mastered records.</p>
+    <p>&bull; The consumer would have to build its own change detection, pagination, retry, and bulk scheduling.</p>
+    <p>&bull; The interaction requires substantial multi-step orchestration; that is where CAI can help.</p>
+
+    <h3>Security and governance takeaway</h3>
+    <p>Because the consumer initiates the request, consumer-side credentials and logs become part of the audit trail. For Salesforce, the source lab uses Named Credentials / External Credentials rather than embedding secrets in Apex or Flow.</p>
+    <blockquote><strong>Pattern 2 in one sentence:</strong> The consuming application asks Informatica for the golden customer when it needs that customer.</blockquote>
+  </div>
+
+  <!-- Pattern 3 -->
+  <div class="w3-container" style="margin-top:30px;margin-bottom:30px;">
+    <h2>Pattern 3 &mdash; CAI orchestration</h2>
+    <p>CAI (Cloud Application Integration) is a workflow orchestration and API engine (Informatica's equivalent to MuleSoft or Dell Boomi). It can make outbound REST calls (like Apex callouts), host inbound REST endpoints, and execute multi-step logic (e.g., call System A, transform JSON, call System B, return response).</p>
+    <p>Note: CAI, another integration capability in Informatica is designed for transactional, real-time API calls (e.g., fetching 1 record on-demand).</p>
+
+    <h3>What problem does it solve?</h3>
+    <p>Use Cloud Application Integration (CAI) when real-time access requires more than one simple API call or when multiple consumers should use one stable business service.</p>
+<pre>Consumer
+|
+v
+CAI process
+search -&gt; decide -&gt; retrieve -&gt; reshape -&gt; return
+|
+v
+Customer 360 APIs</pre>
+
+    <h3>How it works</h3>
+    <p>CAI is Informatica's workflow and application-integration service. A CAI process can call Customer 360 APIs, apply decision logic, transform the response, call other services, handle errors, and return a controlled response to the caller.</p>
+    <p>The mastered data still comes from the Customer 360 APIs. CAI's purpose is to centralize the logic around those calls and expose a reusable operation to consumers.</p>
+
+    <h3>Sarah example</h3>
+    <p>Salesforce sends CAI a simple request containing Sarah's email. CAI searches Customer 360, handles zero, one, or multiple matches, retrieves the master when appropriate, optionally checks another service such as a preference center, and returns a Salesforce-friendly response.</p>
+<pre>Request: email = sarah.jenkins@gmail.com
+
+CAI:
+1. Search Customer 360
+2. Decide what to do with 0 / 1 / many matches
+3. Retrieve the master when appropriate
+4. Reshape the response
+5. Return one stable service response</pre>
+    <p>A consumer can call one operation such as GET_GOLDEN_CUSTOMER without needing to know Informatica's internal endpoint structure or Person model.</p>
+
+    <h3>Use CAI when</h3>
+    <p>&bull; The interaction has search, fallback, branching, or multiple-match logic.</p>
+    <p>&bull; You want to hide Informatica-specific API details behind a stable service contract.</p>
+    <p>&bull; Several consumers need the same operation.</p>
+    <p>&bull; You want centralized monitoring and governance of the service.</p>
+    <p>&bull; The process may also call other systems before returning the response.</p>
+
+    <h3>Do not choose it when</h3>
+    <p>&bull; A direct retrieve-by-MDM-ID call is enough; the REST API is simpler.</p>
+    <p>&bull; You need bulk publishing; use CDI or Egress.</p>
+    <p>&bull; The additional CAI runtime and operational footprint is not justified by the logic or governance need.</p>
+
+    <h3>Security and governance takeaway</h3>
+    <p>CAI centralizes the service contract and monitoring. The source lab also notes that CAI processes can be managed through Informatica API-management capabilities for lifecycle and governance. The tradeoff is an additional platform component to operate.</p>
+    <blockquote><strong>Pattern 3 in one sentence:</strong> The consumer still gets MDM data in real time, but CAI owns the multi-step logic and returns one controlled service response.</blockquote>
+  </div>
+
+  <!-- Pattern 4 -->
+  <div class="w3-container" style="margin-top:30px;margin-bottom:30px;">
+    <h2>Pattern 4 &mdash; Business 360 Events and Egress</h2>
+    <p>Pattern 4 contains two MDM-initiated production mechanisms. They solve different timing problems, so they should be understood separately.</p>
+
+    <h3>4A &mdash; Business 360 Events: notify downstream systems when MDM changes</h3>
+<pre>Customer 360 master changes
+|
+| Event
+v
+Downstream subscriber(s)
+receive the change near real time</pre>
+    <p>When a master record changes because of an update, merge, or delete, Business 360 can emit an event. A subscribed downstream service receives the notification without polling MDM on a schedule.</p>
+
+    <h4>Sarah example &mdash; Events</h4>
+    <p>At 10:15 AM, a support agent merges two customer records in Customer 360. Business 360 emits a Person-master change event. A downstream subscriber receives it and updates its local state. If Salesforce participates through an integration or event layer, it can react to the same change.</p>
+
+    <h4>Use Events when</h4>
+    <p>&bull; Downstream systems must react within seconds or minutes when MDM changes.</p>
+    <p>&bull; Polling or waiting for a nightly/hourly job is not acceptable.</p>
+    <p>&bull; Several subscribers may need to react to the same master-data change.</p>
+
+    <h3>4B &mdash; Business 360 Egress: production-managed bulk and delta publishing</h3>
+<pre>Business 360 Egress Job
+|
+v
+Taskflow / CDI mapping
+|
+v
+Target system(s)</pre>
+    <p>Egress uses Business 360's publishing controls around a CDI taskflow. The source lab describes the Business 360 Flat Endpoint (FEP) connector as the mastered-data source, with the egress job defining the extraction context.</p>
+    <p>The egress configuration can distinguish master versus source records, active versus deleted records, full versus incremental extraction, and the business-entity scope.</p>
+
+    <h4>Sarah example &mdash; Egress</h4>
+    <p>At 2:00 AM, an Egress job for the Person business entity runs an incremental extract of active master records. The taskflow then publishes the selected mastered data to its configured targets, with the run monitored from Business 360 Console.</p>
+    <p>For Salesforce Data 360, the revised Lab 7 architecture uses a direct publish to the Data 360 Ingestion API rather than staging golden records in Databricks. An Informatica-side scheduled process can therefore use the egress/CDI orchestration layer to deliver the mastered payload to that API.</p>
+
+    <h4>Use Egress when</h4>
+    <p>&bull; You need production-managed bulk or incremental publishing from Business 360.</p>
+    <p>&bull; Deletion state, full-versus-delta extraction, and centralized operational control matter.</p>
+    <p>&bull; The publishing process has moved beyond a small workshop mapping and needs a durable MDM operations model.</p>
+
+    <h3>Do not choose Pattern 4 when</h3>
+    <p>&bull; A consumer needs to ask for one customer on demand; use REST API or CAI.</p>
+    <p>&bull; The deployment is small enough that production egress administration would add more overhead than value.</p>
+
+    <h3>Security and governance takeaway</h3>
+    <p>Events provide a time-stamped record of master-data changes and downstream propagation. Egress centralizes scheduled publishing under Business 360 operational controls. The source lab also frames Egress as the more production-oriented form of MDM-initiated bulk publishing.</p>
+    <blockquote><strong>Pattern 4 in one sentence:</strong> Events propagate MDM changes quickly; Egress manages production bulk and incremental publishing.</blockquote>
+  </div>
+
+  <!-- Decision matrix -->
+  <div class="w3-container" style="margin-top:30px;margin-bottom:30px;">
+    <h2>Decision matrix &mdash; which pattern fits which situation?</h2>
+    <table class="workshop-table">
+      <tr><th>Situation</th><th>Recommended pattern</th><th>Why</th></tr>
+      <tr><td>Nightly refresh of a very large Salesforce population with current MDM IDs</td><td>CDI batch push or Egress</td><td>Bulk population. Scheduling, retry, and pagination belong in a managed publishing job.</td></tr>
+      <tr><td>Service agent opens Sarah and needs the current golden profile now</td><td>REST API</td><td>Single record, on demand, freshness matters.</td></tr>
+      <tr><td>New Salesforce lead: check whether the person already exists before saving</td><td>REST API or CAI</td><td>Use REST for a simple search. Use CAI when the search has fallback, multi-key, or branching logic.</td></tr>
+      <tr><td>Publish a daily mastered dataset to Databricks for BI/analytics</td><td>CDI or Egress</td><td>Databricks is the analytical destination; scheduled bulk publish fits.</td></tr>
+      <tr><td>Sarah's master is merged and downstream systems must react within seconds</td><td>Business 360 Events</td><td>Change propagation should be event-driven rather than scheduled.</td></tr>
+      <tr><td>Populate Salesforce Data 360 with the mastered customer population</td><td>Informatica-side scheduled publish using CDI/Egress orchestration to the Data 360 Ingestion API</td><td>Lab 7 uses direct API ingestion for golden identity; Databricks remains the zero-copy behavioral source.</td></tr>
+      <tr><td>Mobile app, portal, and Salesforce all need the same governed 'get golden customer' operation</td><td>CAI</td><td>One reusable service contract can hide Informatica-specific API details.</td></tr>
+      <tr><td>One-off lookup of a small list of customers</td><td>REST API, possibly batched</td><td>Small volume does not justify a standing bulk publishing job.</td></tr>
+      <tr><td>Salesforce needs the MDM ID stored permanently on the record</td><td>CDI push or REST API + persist</td><td>Either direction can create the same stored field; ownership and timing decide the pattern.</td></tr>
+    </table>
+  </div>
+
+  <!-- The most important architectural distinction -->
+  <div class="w3-container" style="margin-top:30px;margin-bottom:30px;">
+    <h2>The most important architectural distinction</h2>
+<pre>Informatica-initiated publishing
+CDI / Egress / Events
+-&gt; Informatica decides when data moves
+
+Consumer-initiated access
+REST API / CAI
+-&gt; the consuming application decides when it needs data</pre>
+    <p>That initiator determines where scheduling, credentials, retries, monitoring, and operational accountability primarily live.</p>
+  </div>
+
+  <!-- What did we get out of this lab? -->
+  <div class="w3-container" style="margin-top:30px;margin-bottom:30px;">
+    <h2>What did we get out of this lab?</h2>
+    <p>There is no single publishing mechanism that is correct for every consumer. The choice depends on how much data is moving, how quickly it must be available, and which platform should control the interaction.</p>
+<pre>Many records + schedule -&gt; CDI
+One customer + immediate need -&gt; REST API
+Real-time + business logic -&gt; CAI
+Master changed + notify now -&gt; Events
+Production bulk / delta -&gt; Egress</pre>
+    <p>The same enterprise can use several of these patterns at once. A nightly Informatica publish can keep Salesforce metadata fields synchronized while a service screen still performs a real-time API lookup for the freshest golden profile.</p>
+    <blockquote><strong>In short:</strong> Choose the publishing pattern from the consumer need, not from the product feature you happen to know best.</blockquote>
+  </div>
+
+  <!-- Security and governance considerations -->
+  <div class="w3-container" style="margin-top:30px;margin-bottom:30px;">
+    <h2>Security and governance considerations</h2>
+
+    <h3>1. Who initiates the flow?</h3>
+    <p>For CDI, Egress, and Events, Informatica initiates the movement. For REST and CAI, the consuming application initiates the request. That distinction determines where credentials are owned and where the first operational audit trail is expected.</p>
+
+    <h3>2. Keep credentials in managed platform stores</h3>
+    <p>The source lab places Informatica-side credentials in IDMC connections. For Salesforce consumers, it uses Named Credentials / External Credentials rather than embedding secrets in Apex code or Flow constants.</p>
+
+    <h3>3. Match monitoring to the pattern</h3>
+    <p>Bulk patterns are managed as jobs and can be monitored and retried as a publishing unit. Consumer-initiated patterns are request-oriented and fit naturally with application-side monitoring. Events add event-level delivery evidence.</p>
+
+    <h3>4. Plan capacity according to the access model</h3>
+    <p>REST and CAI are suited to per-record or small-volume access. CDI and Egress are suited to population-scale movement using the target's bulk capabilities where available.</p>
+
+    <h3>5. Publish only what the target needs</h3>
+    <p>Every pattern can limit the fields that leave MDM. Data minimization should be explicit in mappings, API responses, CAI reshaping, and Egress configuration.</p>
+
+    <h3>6. Preserve reversibility of source systems</h3>
+    <p>The source lab's write-back principle is conservative: when updating source systems such as Salesforce, publish MDM metadata such as business ID, master status, and synchronization status rather than overwriting the source system's raw business data. That keeps the MDM identity decision visible without turning the publishing process into an uncontrolled source-data correction mechanism.</p>
+    <blockquote><strong>Security summary:</strong> MDM is authoritative for mastered identity and metadata about that identity. Publishing should not automatically become permission to overwrite every business field in source systems.</blockquote>
+  </div>
+
+  <!-- Illustrations -->
+  <div class="w3-container" style="margin-top:30px;margin-bottom:30px;">
+    <h2>Illustrations</h2>
+
+    <div class="w3-card w3-container w3-center w3-mobile"><img class="w3-image" src="img/slide37.jpeg" alt="Lab 6 begins after MDM has established the customer identity"></div>
+    <p class="img-caption">Lab 6 begins after MDM has already established the customer identity. The question is no longer how to match Sarah; it is <strong>how another application should obtain or receive this trusted master</strong>, including the permanent MDM Business ID and the required mastered attributes.</p>
+    <p>&nbsp;</p>
+
+    <div class="w3-card w3-container w3-center w3-mobile"><img class="w3-image" src="img/slide38.jpeg" alt="Lab 4B Salesforce standardization mapping showing the CDI integration engine"></div>
+    <p class="img-caption">This is the <strong>Lab 4B Salesforce standardization mapping</strong>, not an MDM publishing flow. It is shown here only to make the CDI integration engine tangible: Lab 6 evaluates using the same service for scheduled or bulk publishing when that pattern fits the consumer requirement.</p>
+    <p>&nbsp;</p>
+
+    <div class="w3-card w3-container w3-center w3-mobile"><img class="w3-image" src="img/slide39.jpeg" alt="No single correct way to distribute master data"></div>
+    <p class="img-caption">There is no single correct way to distribute master data. Use <strong>CDI or Egress</strong> when many records must move on a schedule, a <strong>REST API</strong> when an application needs one customer now, <strong>CAI</strong> when orchestration is required around the call, and <strong>Events</strong> when downstream consumers need to react to changes.</p>
+    <p>&nbsp;</p>
+  </div>
+
+  <!-- What's next -->
+  <div class="w3-container" style="margin-top:30px;margin-bottom:30px;">
+    <h2>What's next</h2>
+    <p>Lab 7 takes one downstream consumer &mdash; Salesforce Data 360 &mdash; and applies the publishing decision to an activation architecture.</p>
+<pre>Informatica MDM
+Golden Customer
+|
+| Data 360 Ingestion API
+v
+Salesforce Data 360
+^
+| Zero-copy federation
+|
+Databricks engagement + transactions</pre>
+    <p>The golden customer is published directly from Informatica into Data 360. Databricks is used separately for zero-copy engagement and transaction data. Data 360 then combines trusted identity with behavior for Unified Individual, insights, segmentation, and downstream activation.</p>
+    <p>Lab 8 changes perspective again. It catalogs the Salesforce and Databricks technical assets, brings Informatica integration metadata into the governance catalog, associates technical fields with common business meaning, and inspects lineage.</p>
+    <blockquote><strong>The transition:</strong> Lab 6 chooses how mastered data is shared. Lab 7 activates it. Lab 8 makes the technical landscape understandable and governable.</blockquote>
+  </div>
+
+  <!-- Appendix A -->
+  <div class="w3-container" style="margin-top:30px;margin-bottom:30px;">
+    <h2>Appendix A &mdash; Technical details retained from the source lab</h2>
+    <p>The main body deliberately keeps the architecture easy to scan. This appendix retains lower-level details from the source Lab 6 for readers who need implementation or architecture-review depth.</p>
+
+    <h3>REST API lookup details</h3>
+    <p>&bull; Search API is used when the consumer does not yet know the MDM Business ID. The source lab's example searches Person by email and can return zero, one, or multiple candidates.</p>
+    <p>&bull; Retrieve-by-ID is used after the permanent MDM Business ID is known. The source lab treats this as safer than repeatedly searching on mutable or potentially shared attributes such as email.</p>
+    <p>&bull; A consumer can either display the returned master without storing it or persist selected values such as the MDM Business ID on its own record.</p>
+    <p>&bull; For small one-off lists, the source lab also notes that a batched REST approach or an existing Match and Export capability may be more appropriate than building a standing bulk-integration process.</p>
+
+    <h3>CAI implementation details</h3>
+    <p>The source lab describes CAI as a process running on Informatica's Process Server. A published CAI process can itself be exposed as an HTTPS endpoint. The CAI process can authenticate to Customer 360, search, branch on zero/one/multiple results, retrieve the full master, call another service, reshape the response, and return a stable contract.</p>
+    <p>Illustrative response retained from the source lab:</p>
+<pre>{
+"found": true,
+"mdmId": "MDM0000000002S",
+"firstName": "Sarah",
+"lastName": "Jenkens",
+"email": "sarah.jenkins@gmail.com",
+"consented": true
+}</pre>
+    <p>The source lab also notes that CAI processes can sit behind Informatica API-management capabilities for lifecycle, versioning, and formal service contracts. The tradeoff is the additional runtime and operational footprint.</p>
+
+    <h3>Business 360 Egress details</h3>
+    <p>The source lab describes Egress as a Business 360 operational wrapper around a CDI taskflow that reads mastered data through the Flat Endpoint (FEP) connector. Its value is the extraction context and MDM operations model rather than a different transformation engine.</p>
+    <table class="workshop-table">
+      <tr><th>Egress control</th><th>Source-lab example</th></tr>
+      <tr><td>Record scope</td><td>Master records rather than source records</td></tr>
+      <tr><td>State</td><td>Active, with the ability to account for deletion state</td></tr>
+      <tr><td>Extract style</td><td>Full or incremental / delta</td></tr>
+      <tr><td>Entity scope</td><td>Business entity such as Person</td></tr>
+      <tr><td>Execution</td><td>Taskflow / CDI mapping invoked and monitored through Business 360 Console</td></tr>
+    </table>
+
+    <h3>Monitoring and audit locations mentioned in the source lab</h3>
+    <table class="workshop-table">
+      <tr><th>Pattern</th><th>Primary monitoring / audit surface described</th></tr>
+      <tr><td>CDI batch push</td><td>IDMC Data Integration job history / My Jobs</td></tr>
+      <tr><td>Direct REST from Salesforce</td><td>Salesforce application logs, Flow/Apex error handling, field history as configured</td></tr>
+      <tr><td>CAI</td><td>CAI monitoring and Informatica API-management logs where used</td></tr>
+      <tr><td>Business 360 Egress</td><td>Business 360 Console job history</td></tr>
+      <tr><td>Business 360 Events</td><td>Event-level delivery / propagation records in the event integration path</td></tr>
+    </table>
+
+    <h3>Capacity model preserved from the source lab</h3>
+    <p>The source lab separates per-record access from population-scale movement. REST and CAI are positioned for on-demand interactions; CDI and Egress are positioned for high-volume publishing and can use target bulk APIs where available. Events address change propagation rather than population retrieval.</p>
+
+    <h3>Source-system write-back policy</h3>
+    <p>The source lab deliberately limits workshop write-back to MDM metadata fields such as business ID, master status, and synchronization status. It does not use publishing as permission to overwrite source-system business fields such as name, email, or phone. This makes the integration easier to reverse if an MDM merge or downstream publish must be corrected.</p>
+    <blockquote><strong>Preserved design principle:</strong> The publishing mechanism determines how mastered information moves. A separate data-governance decision determines which fields are allowed to move.</blockquote>
+  </div>
+
+  <!-- Footer -->
+  <div class="w3-container">
+    <div class="w3-bar w3-black">
+      <a href="index.html" class="w3-bar-item w3-button"><i class="fa fa-home fa-fw w3-margin-right"></i>Introduction</a>
+      <a href="lab-5.html" class="w3-bar-item w3-button"><i class="fa fa-arrow-left fa-fw w3-margin-right"></i>Lab 5</a>
+      <a href="lab-7.html" class="w3-bar-item w3-button"><i class="fa fa-arrow-right fa-fw w3-margin-right"></i>Lab 7</a>
+    </div>
+    <p>Trusted Data Foundation Workshop</p>
+  </div>
+
+  <p>&nbsp;</p>
+</div>
+
+<!-- Scripts -->
+<script src="nav.js"></script>
+<script>
+function w3_open() {
+  document.getElementById("mySidebar").style.display = "block";
+  document.getElementById("myOverlay").style.display = "block";
+}
+function w3_close() {
+  document.getElementById("mySidebar").style.display = "none";
+  document.getElementById("myOverlay").style.display = "none";
+}
+</script>
+</body>
+</html>

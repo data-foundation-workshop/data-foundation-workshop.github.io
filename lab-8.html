@@ -1,0 +1,839 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Lab 8 - Catalog, Govern & Trace the Landscape</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<style>
+body,h1,h2,h3,h4,h5,h6 {font-family: "Raleway", sans-serif}
+body {font-size: 17px;}
+.accordion {
+  background: #336699;
+  border: 1px solid #F1F0FF;
+  border-radius: 5px;
+  font-weight: 700;
+  margin: 10px;
+  margin-bottom: 15px;
+  padding: 10px 20px;
+  cursor: pointer;
+  font-size: 130%;
+  color: white;
+}
+.accordionDrop {
+  padding: 0px 30px;
+}
+::-webkit-details-marker {
+  display: none;
+}
+table.workshop-table {
+  border-collapse: collapse;
+  width: 100%;
+  margin: 15px 0;
+}
+table.workshop-table th, table.workshop-table td {
+  border: 1px solid #ddd;
+  padding: 10px 14px;
+  text-align: left;
+  vertical-align: top;
+}
+table.workshop-table th {
+  background: #336699;
+  color: white;
+}
+table.workshop-table tr:nth-child(even) {
+  background: #f9f9f9;
+}
+blockquote {
+  border-left: 4px solid #336699;
+  margin: 15px 0;
+  padding: 10px 20px;
+  background: #f5f8fc;
+}
+code, pre {
+  background: #f4f4f4;
+  padding: 2px 6px;
+  border-radius: 3px;
+  font-size: 95%;
+}
+pre {
+  padding: 15px;
+  overflow-x: auto;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+}
+.img-caption {
+  text-align: center;
+  color: #555;
+  font-style: italic;
+  margin: 12px 40px 20px;
+  line-height: 1.5;
+}
+.callout-important {
+  background: #fff3cd;
+  border-left: 4px solid #ffc107;
+  padding: 12px 20px;
+  margin: 15px 0;
+}
+.callout-tip {
+  background: #d1ecf1;
+  border-left: 4px solid #17a2b8;
+  padding: 12px 20px;
+  margin: 15px 0;
+}
+.hero {
+  background: linear-gradient(135deg, #2b567f 0%, #336699 60%, #3d76ac 100%);
+  color: #fff;
+  padding: 40px 40px 34px;
+}
+.hero .hero-eyebrow {
+  margin: 0 0 4px;
+  font-size: 0.85em;
+  font-weight: 700;
+  letter-spacing: 2px;
+  color: #bcd6ef;
+  text-transform: uppercase;
+}
+.hero h1 {
+  margin: 0 0 22px;
+  font-size: 2.2em;
+  font-weight: 800;
+}
+.journey {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px;
+}
+.journey .step {
+  background: rgba(255,255,255,0.12);
+  border: 1px solid rgba(255,255,255,0.35);
+  border-radius: 20px;
+  padding: 7px 16px;
+  font-size: 0.92em;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.journey .arrow {
+  color: #bcd6ef;
+  font-size: 1.1em;
+  padding: 0 2px;
+}
+.flow-banner {
+  background: #eef3f9;
+  border: 1px solid #cddaea;
+  border-left: 4px solid #336699;
+  border-radius: 4px;
+  padding: 12px 18px;
+  margin: 15px 0;
+  font-weight: 700;
+  color: #24425f;
+}
+</style>
+</head>
+<body class="w3-content" style="max-width:1600px;">
+
+<!-- Sidebar/menu -->
+<nav class="w3-sidebar w3-collapse w3-white w3-animate-left" style="z-index:3;width:300px;overflow-y:auto;padding-bottom:50px;" id="mySidebar"><br></nav>
+
+<!-- Overlay effect when opening sidebar on small screens -->
+<div class="w3-overlay w3-hide-large w3-animate-opacity" onclick="w3_close()" style="cursor:pointer" title="close side menu" id="myOverlay"></div>
+
+<!-- PAGE CONTENT -->
+<div class="w3-main" style="margin-left:300px;border-left:1px solid #000000;">
+
+  <!-- Header -->
+  <header>
+    <span class="w3-button w3-hide-large w3-xxlarge w3-hover-text-grey" onclick="w3_open()"><i class="fa fa-bars"></i></span>
+    <div class="hero">
+      <p class="hero-eyebrow">Lab 8</p>
+      <h1>Catalog, Govern &amp; Trace the Landscape</h1>
+      <div class="journey">
+        <span class="step">Discover assets</span>
+        <span class="arrow"><i class="fa fa-long-arrow-right"></i></span>
+        <span class="step">Add CDI integration metadata</span>
+        <span class="arrow"><i class="fa fa-long-arrow-right"></i></span>
+        <span class="step">Add business meaning</span>
+        <span class="arrow"><i class="fa fa-long-arrow-right"></i></span>
+        <span class="step">Inspect lineage</span>
+      </div>
+    </div>
+  </header>
+
+  <!-- Where this lab fits -->
+  <div class="w3-container" style="margin-top:30px;margin-bottom:30px;">
+    <h2>Where this lab fits</h2>
+    <p>An organization can have customer data in Salesforce, analytical data in Databricks, and integration pipelines moving data between them &mdash; yet still lack one place to answer basic governance questions: What technical assets exist? What do the fields mean? Which integration created a target table? How much of the data flow can we trace?</p>
+    <p>Lab 8 focuses on those questions. It does not change the business data. It catalogs the technical landscape, adds business meaning to technical fields, and inspects the lineage that is available.</p>
+
+    <h2>The specific technical flow used for the lineage exercise</h2>
+    <div class="flow-banner">Salesforce CV1_Customer__c &rarr; CDI CV1_M_01_STANDARDIZE_SF / Mapping Task &rarr; Databricks staging_sf_customer</div>
+    <p>The Salesforce and Databricks scans can discover the two ends of this flow. To understand the middle, the catalog also needs information about the Cloud Data Integration (CDI) mapping and task that moved and transformed the data. Part D explains how that information enters the catalog and why it is required for lineage.</p>
+
+    <h2>Goal</h2>
+    <p>Create a governed catalog view of the workshop landscape. You will discover Salesforce and Databricks metadata, add CDI mapping/task metadata, associate a common business term with related fields, and inspect how much of the technical data flow Informatica can trace.</p>
+
+    <blockquote>In short: identify what exists, define what it means, and trace how it moved.</blockquote>
+
+    <h2>Three Informatica capabilities used in this lab</h2>
+    <table class="workshop-table">
+      <tr><th>Capability</th><th>What it does in this lab</th></tr>
+      <tr><td>Metadata Command Center (MCC)</td><td>Configure, run, and monitor metadata discovery from systems such as Salesforce and Databricks.</td></tr>
+      <tr><td>Cloud Data Governance and Catalog (CDGC)</td><td>Search and govern the technical assets that were discovered; associate business terms; inspect lineage.</td></tr>
+      <tr><td>IDMC Metadata</td><td>Synchronize Informatica's own CDI mapping and task metadata into the catalog so the integration step can be cataloged and, when runtime metadata is connected, represented in lineage.</td></tr>
+    </table>
+
+    <h2>Lab structure</h2>
+    <p>Lab 8A is hands-on. You catalog Salesforce and Databricks, synchronize CDI metadata, associate the Preferred Email business term, and inspect lineage. Lab 8B is conceptual. It explains how data-quality evidence can also be surfaced in a governance context.</p>
+
+    <div class="callout-important"><strong>Environment-dependent lineage.</strong> Parts B&ndash;E were verified in the live workshop environment. In Part F, the persistent Mapping Task run is confirmed, but the final connected source &rarr; task &rarr; target graph in CDGC is still pending validation. The lab therefore teaches how to interpret full, partial, or seed-only lineage without claiming more than has been observed.</div>
+
+    <h2>What this lab does not do</h2>
+    <p>This lab does not configure Salesforce field-level security or Databricks Unity Catalog privileges; implement encryption, masking, or consent enforcement; prevent exfiltration; or replace security monitoring, audit, or threat detection. CDGC provides governance context and security visibility. Catalog access does not grant access to the underlying source data.</p>
+
+    <h2>Security principle used throughout</h2>
+    <p>The catalog scans are deliberately metadata-only: they discover schema and technical definitions without profiling customer values. Scanner identities should use least privilege, catalog access itself should be governed, and a missing lineage segment should be treated as an unverified area rather than evidence that no data flow exists.</p>
+
+    <h2>Prerequisites</h2>
+    <p>For this workshop environment: the Preferred Email business term already exists in CDGC; the CDI mapping CV1_M_01_STANDARDIZE_SF already exists; MCC and CDGC are entitled in the IDMC organization; Salesforce connection CN_SF_CV1 and Databricks connection CN_DBX_CV1 exist in Administrator; and runtime environment cv1secureruntime01 is available. Part C uses the validated scanner-specific Databricks connection CN_DBX_CV1_MCC.</p>
+    <p>If you are reading this lab independently, the important concept is simply that you need: (1) source systems to catalog, (2) a CDI integration whose metadata you want to trace, and (3) at least one business term to associate with a technical field.</p>
+  </div>
+
+  <!-- Lab 8A at a glance -->
+  <div class="w3-container" style="margin-top:30px;margin-bottom:30px;">
+    <h2>Lab 8A at a glance</h2>
+    <p>The table separates participant activity from instructor pre-work. The long-running scans and the initial IDMC Metadata synchronization should be completed before a live workshop session.</p>
+
+    <table class="workshop-table">
+      <tr><th>Part</th><th>Participant activity</th><th>Instructor prerequisite</th><th>Where</th></tr>
+      <tr><td>A</td><td>Confirm access, roles, and the connections the scanners reuse</td><td>&mdash;</td><td>MCC / Admin</td></tr>
+      <tr><td>B</td><td>Inspect or configure the Salesforce catalog source (metadata-only scan)</td><td>Pre-scan or validate a narrow filter</td><td>MCC</td></tr>
+      <tr><td>C</td><td>Inspect or configure the Databricks source using the validated scanner connection</td><td>Pre-scan on CN_DBX_CV1_MCC</td><td>MCC</td></tr>
+      <tr><td>D</td><td>Confirm the completed IDMC Metadata sync; locate one CDI Mapping asset in CDGC</td><td>Enable IDMC Metadata; let initial sync finish</td><td>MCC &rarr; CDGC</td></tr>
+      <tr><td>E</td><td>Bind one real business term (Preferred Email) to two technical fields</td><td>Ensure Lab 1 terms exist; both scans complete</td><td>CDGC</td></tr>
+      <tr><td>F</td><td>Inspect the lineage actually available; document full / partial / seed-only</td><td>Optionally pre-validate a persistent Mapping Task run</td><td>CDGC</td></tr>
+    </table>
+
+    <p>Participant hands-on time is ~45&ndash;60 min &mdash; only if the platform jobs are done first. The 45&ndash;60-minute estimate holds only when the instructor has already completed both catalog-source scans and the initial IDMC Metadata synchronization. Do not make participants wait for these platform jobs during a live session.</p>
+
+    <p><strong>Observed durations in the live tenant:</strong></p>
+    <table class="workshop-table">
+      <tr><th>Observed activity</th><th>Observed duration / behavior</th><th>Workshop implication</th></tr>
+      <tr><td>Salesforce metadata extraction</td><td>~1 hour 49 minutes for an unfiltered whole-org metadata scan</td><td>Pre-scan, or validate a narrow filter, before the workshop</td></tr>
+      <tr><td>Databricks metadata extraction</td><td>~9 minutes 10 seconds after the scanner-specific connection fix</td><td>Live only if compute + Secure Agent are free; pre-scan is safer</td></tr>
+      <tr><td>IDMC Metadata initial enablement</td><td>~3 hours end-to-end until synchronized assets were available (the Bulk Sync execution itself showed ~00:03:55)</td><td>Enable and validate well before the participant session</td></tr>
+    </table>
+
+    <p>Do not claim the Bulk Sync job itself ran for three hours. MCC recorded the final IDMC Metadata Bulk Sync execution as roughly 00:03:55. The three-hour figure is the observed end-to-end wait until setup completed and synchronized assets were actually available &mdash; not the job's runtime. Keep those two numbers distinct.</p>
+
+    <p>Run the two scans SEQUENTIALLY, not at once. Both catalog-source scans run through the same Secure Agent on cv1secureruntime01. Building and saving both sources in parallel is safe, but running both at once makes them compete for the one agent and each runs slower. Run the Salesforce scan to completion, then run the Databricks scan. Because the unfiltered Salesforce scan took ~1h49m, have at least one source pre-scanned before a live session so the later steps always have data to work with.</p>
+  </div>
+
+  <!-- Part A -->
+  <div class="w3-container" style="margin-top:30px;margin-bottom:30px;">
+    <h2>Part A &mdash; Access, roles, and the connections you'll reuse</h2>
+    <div class="flow-banner">Access + roles + existing source connections &rarr; ready to run metadata discovery</div>
+
+    <h3>Purpose of this part</h3>
+    <p>Before MCC can discover metadata, it needs access to the source systems. In this workshop, the catalog scanners reuse connections already defined in IDMC Administrator. You also need access to both MCC, where discovery is configured and run, and CDGC, where the discovered assets are later browsed and governed.</p>
+
+    <h3>What you will do</h3>
+    <p>Before registering anything, settle three things: the service tiles exist, your role can create and run catalog sources, and the source connections the scanners will reuse are already in place.</p>
+
+    <p>1. Confirm the service tiles. In IDMC, open My Services (top-left service selector). You should see Metadata Command Center and Cloud Data Governance and Catalog.</p>
+    <p>These are two cooperating services and you will switch between them in this lab: MCC is where you register, run, and monitor catalog sources; CDGC is where you browse the resulting assets, bind terms, and view lineage. If either tile is missing it's an entitlement issue &mdash; ask your admin.</p>
+
+    <p>2. Confirm your role. For a workshop the simplest single role is Governance Administrator, which administers assets across both CDGC and MCC &mdash; it covers creating/running catalog sources and curating glossary associations. Check Administrator &rarr; Users that your user carries it.</p>
+
+    <div class="callout-important"><strong>Security note &mdash;</strong> roles are broad by design here. Governance Administrator is deliberately over-scoped for workshop convenience. In production you would split the hats: a platform administrator manages services and connections; a catalog administrator creates and runs catalog sources; a Governance Owner curates terms and asset relationships; a data steward reviews classifications and quality; a Governance User only searches and views. A role name alone may not be enough &mdash; IDMC access policies and asset-group permissions decide which assets a person can actually manage. (You'll see asset groups again in Part B's Associations page.)</div>
+
+    <p>3. Confirm the source connections exist in Administrator. The MCC scanners do not ask you to invent a second set of credentials &mdash; they reuse a connection already defined in Administrator &rarr; Connections. You need a Salesforce connection (CN_SF_CV1) and a Databricks connection (CN_DBX_CV1), both on runtime environment cv1secureruntime01. These are the same connections the earlier labs used.</p>
+
+    <div class="callout-important"><strong>Security note &mdash;</strong> scanner least privilege, and one Databricks caveat you'll meet in Part C. A metadata scanner needs enough access to discover assets and no more. For Databricks, keep the connection's privileges read-only and prefer a scoped identity. Note now (detail and fix in Part C): a metadata-scanner connection and an integration/ETL connection can share the same platform identity and endpoint yet need to be managed independently &mdash; in this environment the Databricks scan required a scanner-specific clone of the CDI connection with one extra JDBC (Java Database Connectivity) property. Cloning rather than editing the working CDI connection is itself the safer, least-disruption choice.</div>
+
+    <h3>What you accomplished</h3>
+    <p>You confirmed that the governance services, permissions, runtime, and source connections required by the rest of Lab 8 are available. No metadata has been scanned yet.</p>
+  </div>
+
+  <!-- Part B -->
+  <div class="w3-container" style="margin-top:30px;margin-bottom:30px;">
+    <h2>Part B &mdash; Register the Salesforce catalog source</h2>
+    <div class="flow-banner">Salesforce &rarr; MCC metadata-only scan &rarr; Salesforce objects and fields in CDGC</div>
+
+    <h3>Why this part exists</h3>
+    <p>The catalog cannot govern a Salesforce object until it first knows that the object and its fields exist. The Salesforce catalog source reads structural metadata &mdash; for example object names, field names, types, triggers, and list views &mdash; and creates corresponding technical assets in the catalog.</p>
+    <p>This lab deliberately performs a metadata-only scan. It discovers the structure of Salesforce without profiling customer record values. That is why only Metadata Extraction is enabled.</p>
+
+    <div class="callout-important"><strong>Lineage Discovery is a different capability.</strong> Leaving the scanner's optional Lineage Discovery capability OFF does not prevent the CDI lineage exercise later in this lab. The CDI mapping/task information used in Part F enters through IDMC Metadata in Part D, not through this Salesforce scanner option.</div>
+
+    <h3>Hands-on &mdash; verified procedure</h3>
+    <p>The creation path is the same for every scanner-based source: New &rarr; Catalog Source &rarr; pick the type &rarr; Create, then a four-page wizard: Registration &rarr; Configuration &rarr; Associations &rarr; Schedule. The wizard buttons Back / Next / Save / Run and an X (close) sit top-right; Run stays greyed until you Save. Completed steps turn green with a check; the current step shows a blue number.</p>
+
+    <h4>Step 1 &mdash; Registration</h4>
+    <p>1. In MCC, click New in the left navigation, then Catalog Source. Select source type Salesforce, then Create.</p>
+    <p>2. Under General Information, enter a Name (e.g. <code>CS_SALESFORCE_CV1</code>) and an optional Description.</p>
+    <p>3. Under Connection Information: Catalog Source Type is Salesforce (read-only, fixed at creation). For Connection, select the existing CN_SF_CV1. Expand Connection Properties to confirm Runtime Environment cv1secureruntime01, Type Salesforce, and the Service URL. Click Test Connection, then Next.</p>
+
+    <h4>Step 2 &mdash; Configuration (this is the important one)</h4>
+    <p>The Configuration page has seven capability tabs:</p>
+    <table class="workshop-table">
+      <tr><th>Capability tab</th><th>Lab setting</th><th>Why</th></tr>
+      <tr><td>Metadata Extraction</td><td>ON &mdash; locked</td><td>Required base capability. Creates Salesforce technical assets such as Org, Object, Field, Trigger, and List View. Reads schema, not customer values.</td></tr>
+      <tr><td>Lineage Discovery</td><td>OFF</td><td>Optional source-level lineage discovery. It is not how the CDI mapping enters the catalog in this lab; CDI mapping/task metadata comes through IDMC Metadata in Part D.</td></tr>
+      <tr><td>Data Profiling and Quality</td><td>OFF</td><td>Reads records and computes statistics / runs DQ rules &mdash; a value-level read. Lab 8B keeps the DQ governance overlay conceptual.</td></tr>
+      <tr><td>Data Observability</td><td>OFF</td><td>Needs repeated runs to detect deviations; not required for this one-time workshop scan.</td></tr>
+      <tr><td>Data Classification</td><td>OFF</td><td>Would introduce value/classification results that are outside the core exercise. Optional post-lab only.</td></tr>
+      <tr><td>Relationship Discovery</td><td>OFF</td><td>Not needed for this lab.</td></tr>
+      <tr><td>Glossary Association</td><td>OFF</td><td>Must remain off so participants can perform the manual Preferred Email association in Part E.</td></tr>
+    </table>
+
+    <p>Metadata Extraction is ON and LOCKED &mdash; do not try to "enable" it. The Enable Metadata Extraction toggle is locked on (clicking it shows a not-allowed cursor). It is the mandatory base capability every catalog source runs. A greyed appearance here is the locked-control styling, not an OFF state. Do NOT write or read this step as "turn Metadata Extraction on."</p>
+
+    <p>On the Metadata Extraction tab, leave the defaults: Runtime Environment = cv1secureruntime01; Metadata Change Option = Retain (the default &mdash; objects removed from the source stay in the catalog); Specify metadata filters = No for the first validated run. Ignore the Show Advanced &rarr; Expert Parameters area &mdash; leave it empty. Then open each of the other six tabs and confirm its Enable toggle is OFF.</p>
+
+    <p>Set the capabilities correctly before you save &mdash; this needs careful attention. Configure the capability toggles the way you want them before saving the source. In this environment, if Data Profiling was enabled during source creation, turning it back off within the same wizard session needed careful handling. The reliable approach is to get the capabilities right on the first pass; if you do enable one by mistake before saving, the clean path is to exit and discard the catalog-source changes (click the X top-right &rarr; Discard Changes) and recreate the source. (Behavior can vary by environment and release.)</p>
+
+    <p>A &#10003; on a capability tab means that capability is ENABLED. In this tenant several capabilities came pre-enabled (Data Quality, Data Observability, Data Classification, Lineage Discovery, Glossary Association all showed a &#10003;). The security step in this lab is therefore active, not passive: you must open each tab and turn the value-reading capabilities OFF to get a true metadata-only scan. If Data Profiling is ever left on, its Modes of Run = "Keep Signatures Only" avoids storing actual values &mdash; that is the precise privacy knob.</p>
+
+    <h4>Steps 3 and 4 &mdash; Associations and Schedule</h4>
+    <p>4. Associations page has two tabs, Stakeholders and Asset Groups; both checkboxes (Assign Stakeholders, Assign Asset Groups) are unchecked by default. Leave both unchecked. They are optional and not needed to prove extraction, term binding, or lineage.</p>
+    <p>5. Schedule page has a single Run on schedule toggle. Leave it OFF (we run once, on demand).</p>
+    <p>6. Click Save, then Run.</p>
+
+    <p>Observe, don't configure, the governance operating model. Do not instruct participants to "assign the asset group / stakeholders." Instead, have them observe that MCC can assign stakeholders and place extracted assets into controlled asset groups, and that asset groups + access policies are the CDGC access-control mechanism &mdash; but this workshop does not configure that operating model.</p>
+
+    <h4>The Run dialog and monitoring</h4>
+    <p>7. In the Run Catalog Source Job dialog, the Scope of Run lists only Metadata Extraction (with Metadata Change Option = Retain). Because that is the sole enabled capability, the dialog visibly proves no value-reading capability will run. Click Run.</p>
+    <p>8. MCC opens the job monitoring page for the run (named CS_SALESFORCE_CV1_Salesforce_sync), with Overview and Logs tabs, a STATUS (STARTING &rarr; RUNNING &rarr; COMPLETED), Completed Tasks, and timing. Expand Job Details for extracted asset counts once done. (COMPLETED is the confirmed final-status label in this pod; label wording can vary by release.)</p>
+
+    <p>What the metadata-extraction task actually does (the security through-line). The Secure Agent on cv1secureruntime01 connects to the Salesforce org through CN_SF_CV1 and reads the org's structural definitions &mdash; not the row data. It calls Salesforce's metadata/describe APIs and harvests the Org, the objects (standard + custom, e.g. CV1_Customer__c), each object's fields (name, type, label), and related definitions like triggers and list views &mdash; each written to CDGC as a technical asset. It reads schema, not values: no customer records, just "this org has these objects with these fields of these types." That is exactly what the Scope-of-Run dialog confirmed. Contrast with Data Profiling / Data Classification, which would open records and sample actual values &mdash; which is why we left them off.</p>
+
+    <p>Note &mdash; you will see "lineage" in the logs even with Lineage Discovery OFF. The extractor does internal graph analysis as part of base Metadata Extraction (log lines like "Analysing lineage for Graph...", "Lineage analysis finished"). This is the scanner building its internal relationship graph (object&rarr;field containment, references) into the output model &mdash; a different mechanism from the optional Lineage Discovery capability you turned off. Same word, two meanings; this is expected and not a sign that Lineage Discovery is secretly on.</p>
+
+    <p>Why the unfiltered Salesforce scan was slow &mdash; metadata estate, not data rows. This first run used Specify metadata filters = No, which cataloged a large accessible metadata estate: standard and custom objects, managed-package objects, fields, list views, triggers, and related definitions. Data Profiling was off, so this was not a scan of millions of Salesforce data rows &mdash; it was breadth of schema, not depth of data. In the live tenant the unfiltered whole-org scan took ~1 hour 49 minutes.</p>
+
+    <p>Instructor pre-scan is the default; a narrow filter is desirable but its exact SF syntax is unverified. For live delivery, the recommended default is an instructor pre-scan so participants never wait ~1h49m. A narrow metadata filter scoped to the workshop object is desirable, but the exact Salesforce filter expression was not live-tested during this walkthrough. Do not present <code>CV1_Customer__c*</code> (or any specific expression) as confirmed working syntax unless it is separately validated in your pod.</p>
+
+    <blockquote><strong>End-state check:</strong> the SF job completes with STATUS = COMPLETED. You will browse the resulting assets in CDGC (Part E), not in MCC.</blockquote>
+
+    <h3>What you accomplished</h3>
+    <p>MCC has discovered the Salesforce technical structure and CDGC can now represent Salesforce objects and fields as catalog assets. The scan did not read customer record values.</p>
+  </div>
+
+  <!-- Part C -->
+  <div class="w3-container" style="margin-top:30px;margin-bottom:30px;">
+    <h2>Part C &mdash; Register the Databricks catalog source</h2>
+    <div class="flow-banner">Databricks &rarr; MCC metadata-only scan &rarr; catalogs, schemas, tables, views, and columns in CDGC</div>
+
+    <h3>Why this part exists</h3>
+    <p>The catalog also needs to know what exists on the Databricks side. In this workshop, that includes the Databricks objects that hold the customer-event data and the staging tables created by the CDI pipelines. Once these assets are cataloged, CDGC can search and govern them and can use them as endpoints when lineage is connected.</p>
+    <p>The Databricks scan is scoped to the workshop catalog so the exercise does not spend time discovering unrelated catalogs. In this tenant, the scanner also requires a scanner-specific clone of the working CDI connection. The detailed diagnosis is retained in Appendix A.</p>
+
+    <h3>Hands-on &mdash; verified procedure</h3>
+    <p>Same four-page wizard, applied to Databricks. Run this scan only after the Salesforce scan has finished (shared Secure Agent).</p>
+
+    <h4>Registration and Configuration</h4>
+    <p>1. New &rarr; Catalog Source &rarr; Databricks &rarr; Create. Name it (e.g. <code>CS_DATABRICKS_CV1</code>). Under Connection Information, select the scanner-specific connection CN_DBX_CV1_MCC (not the CDI connection CN_DBX_CV1); Catalog Source Type = Databricks is read-only. Test Connection, then Next. Confirm Catalog Name = cv1_workshop_catalog &mdash; the Unity Catalog holding Lab 4B's staging tables.</p>
+
+    <p>Use the scanner-specific connection CN_DBX_CV1_MCC &mdash; this is the primary path in this tenant. In this workshop tenant the Databricks scanner runs on CN_DBX_CV1_MCC, a clone of CN_DBX_CV1 that retains the same runtime, PAT (Personal Access Token &mdash; the Databricks credential this connection uses), SQL warehouse, HTTP path, and Catalog Name. The only functional addition is one JDBC property, <code>ConnCatalog=cv1_workshop_catalog;</code>, which gives the scanner its catalog session context. Do not modify the working CDI connection CN_DBX_CV1. Full JDBC URL:</p>
+<pre>jdbc:databricks://dbc-c6cc5660-e25f.cloud.databricks.com:443/default;transportMode=http;ssl=1;AuthMech=3;httpPath=/sql/1.0/warehouses/8e487c7c5526e7cb;ConnCatalog=cv1_workshop_catalog;</pre>
+
+    <p>2. Configuration has the same seven capability tabs as Salesforce. Apply the same policy: Metadata Extraction ON (locked); all six others OFF. Runtime Environment = cv1secureruntime01; Metadata Change Option = Retain.</p>
+
+    <p>3. Databricks adds an extra Configuration Parameters section (with a Show Advanced link). Leave all of these at their defaults and ignore Show Advanced. The defaults are: Lineage from Unity = Disabled (this is Unity-Catalog lineage, separate from the Lineage Discovery capability and from the CDI-mapping lineage that Part F actually uses); Notebooks Workspace Path = /Users; Extract Tags = No; and a set of Volumes / partition parameters that only matter for file-based Volumes.</p>
+
+    <h4>Scope the scan to the workshop catalog &mdash; filter to Table</h4>
+    <p>The Databricks workspace contains many catalogs beyond the workshop one, so an unfiltered scan is slow and also tries to scan file Volumes you don't need. Filter the source down to just the workshop tables:</p>
+    <p>4. On the Metadata Extraction tab, set Specify metadata filters = Yes. A filter row appears: [Include/Exclude] &rarr; [Object type] &rarr; [Pattern] &rarr; [value] &rarr; Select, with + to add rows and a trash icon to remove them.</p>
+    <p>5. Set the row to Include Metadata &rarr; Object type = Table. Click into the value field (the Select values dialog) and enter the value below, then click OK:</p>
+<pre>cv1_workshop_catalog.*.*</pre>
+    <p>6. Save, then Run, confirming in the Run Catalog Source Job dialog.</p>
+
+    <p>The greyed "Pattern" dropdown on the filter row does not need your attention here. On the filter row, the Pattern dropdown appears greyed for the Table object type; you do not set it in this workflow. The field that matters is the value field. A row of Include Metadata / Table / value is complete and valid without changing Pattern.</p>
+
+    <p>Filter value syntax &mdash; use the dotted path, not the bare catalog name. For the Table object type the value is a dotted three-part path catalog.schema.table (the wildcards panel's own example is <code>catalog_dept.db_schema.customers</code>). <code>*</code> matches multiple characters or empty; <code>?</code> matches a single character. A bare <code>cv1_workshop_catalog</code> with no dots matches nothing &mdash; an empty scan. Use <code>cv1_workshop_catalog.*.*</code> to mean "any table in any schema of cv1_workshop_catalog." Because you include only Table* (not Volume), the Volumes/file-storage errors do not occur and the Volume parameters are irrelevant.</p>
+
+    <p>Known Databricks Unity Catalog issue in this tenant (short form &mdash; full diagnosis in the appendix). If the extraction fails with "Unable to detect [connection].[hive_metastore] catalog type", the cause is that the scanner did not establish <code>cv1_workshop_catalog</code> as its JDBC session context and fell back to the legacy hive_metastore, which does not exist in this Unity-Catalog-only workspace. The fix is exactly the scanner-specific cloned connection above, containing <code>ConnCatalog=cv1_workshop_catalog;</code>. Using CN_DBX_CV1_MCC from the start avoids the failure entirely; participants do not need to reproduce it. The complete diagnosis and ruled-out alternatives are in the appendix (Detailed analysis and resolution).</p>
+
+    <div class="callout-important"><strong>Do NOT try these "fixes" &mdash; they were ruled out.</strong> Do not switch PAT to OAuth (keep AuthMech=3, not the M2M AuthMech=11/Auth_Flow=1 which needs a service principal). Do not set the connection's catalog to hive_metastore (it doesn't exist). Do not add the Informatica connection name into the table filter pattern. Do not change the SQL warehouse or the Secure Agent runtime. The only material change is the <code>ConnCatalog</code> property on the cloned connection.</div>
+
+    <div class="callout-important"><strong>Security / architecture takeaway.</strong> Cloning the connection instead of editing the working CDI one is the safer choice and a useful production principle: integration-runtime connections and catalog-scanner connections may share the same platform identity and endpoint but be managed independently when the scanner needs specific JDBC properties or privileges. In production, scope the scanner identity to only the metadata and catalogs it must discover; profiling, classification, and DQ execution require value-level access and should be granted separately from metadata-only extraction.</div>
+
+    <h4>Verified result &mdash; what a successful Databricks scan produced</h4>
+    <p>A Table filter does not yield table assets only. Although the include filter used Object Type = Table, the scanner also returned views and view columns (and other supporting or related assets) as part of the result. Do not tell participants the result will contain tables only.</p>
+    <p>The successful run (CS_DATABRICKS_CV1-v2, filtered to <code>cv1_workshop_catalog.*.*</code> on the CN_DBX_CV1_MCC connection) completed 4/4 tasks in 9 minutes 10 seconds, through the phases Test Connection &rarr; Catalog Source Extraction &rarr; Bulk Ingestion &rarr; Indexing. The Metadata Extraction Details &rarr; Results page reported:</p>
+    <table class="workshop-table">
+      <tr><th>Asset type</th><th>Count</th><th>Asset type</th><th>Count</th></tr>
+      <tr><td>Database / catalog</td><td>1</td><td>View</td><td>31</td></tr>
+      <tr><td>Schema</td><td>2</td><td>View Column</td><td>316</td></tr>
+      <tr><td>Table</td><td>6</td><td>Nested Field</td><td>4</td></tr>
+      <tr><td>Column</td><td>112</td><td>Data Set</td><td>21</td></tr>
+      <tr><td>Data Element</td><td>164</td><td>Data Source</td><td>1</td></tr>
+      <tr><td>Reference Catalog Source</td><td>1</td><td></td><td></td></tr>
+    </table>
+    <p>The Results page also offers an XLSX export and a Debug Logs download. The run generated many INFORMATION/WARNING log entries; these were nonfatal because all four tasks and both Bulk Ingestion and Indexing completed.</p>
+
+    <blockquote><strong>End-state check:</strong> CDGC shows the cv1_workshop_catalog tables (Lab 4B staging tables) as table/column assets, with Unity Catalog structure preserved.</blockquote>
+
+    <h3>What you accomplished</h3>
+    <p>CDGC now has cataloged Databricks technical assets for the workshop catalog. Together, Parts B and C give the catalog the physical source and target assets that Part F will attempt to connect through CDI lineage.</p>
+  </div>
+
+  <!-- Part D -->
+  <div class="w3-container" style="margin-top:30px;margin-bottom:30px;">
+    <h2>Part D &mdash; Add CDI to the catalog through IDMC Metadata</h2>
+    <div class="flow-banner">Salesforce asset &rarr; CDI mapping / Mapping Task &rarr; Databricks asset</div>
+
+    <h3>Why Part D is required</h3>
+    <p>Parts B and C answer a structural question: "What Salesforce and Databricks assets exist?" They do not answer the integration question: "What process read the Salesforce data, transformed it, and wrote the Databricks staging table?"</p>
+    <p>For the lineage exercise, that middle step is the CDI mapping CV1_M_01_STANDARDIZE_SF. It reads the Salesforce customer source, applies the standardization and validation pipeline, and writes the resulting records to Databricks staging and exception tables. The source and target scans alone cannot describe that CDI step.</p>
+    <p>CDGC therefore also needs metadata about CDI. The purpose is twofold: first, to make the CDI mapping itself visible as a governed technical asset; second, to provide the mapping/task information needed to represent the integration step in technical lineage. Without the CDI metadata, the catalog can know the Salesforce object and the Databricks table exist but cannot show the CDI process between them.</p>
+    <p>Because CDI and CDGC are already in the same Informatica Data Management Cloud (IDMC) organization, you do not register a third external scanner. The built-in IDMC Metadata feature synchronizes CDI information into the catalog.</p>
+
+    <h3>Two kinds of CDI information matter</h3>
+    <table class="workshop-table">
+      <tr><th>Information</th><th>What it answers</th><th>Why it matters here</th></tr>
+      <tr><td>Design-time Mapping metadata</td><td>What is this mapping configured to do?</td><td>Makes CV1_M_01_STANDARDIZE_SF searchable in CDGC and describes the authored integration definition.</td></tr>
+      <tr><td>Runtime Mapping Task metadata</td><td>What task actually executed?</td><td>Provides execution metadata used for runtime lineage. Part F uses a persistent Mapping Task for this reason.</td></tr>
+    </table>
+
+    <div class="callout-important"><strong>Important distinction.</strong> Seeing the Mapping asset in CDGC proves that the design-time definition was cataloged. It does not by itself prove that CDGC has drawn end-to-end runtime lineage. That requires task execution metadata and, where necessary, connection assignment in Part F.</div>
+
+    <h3>Hands-on &mdash; verified procedure</h3>
+
+    <h4>D1. Instructor prerequisite &mdash; enable IDMC Metadata</h4>
+    <p>Confirmed path: Metadata Command Center &rarr; Configure &rarr; IDMC Metadata</p>
+    <p>1. Enable IDMC Metadata.</p>
+    <p>2. Select Runtime Environment: cv1secureruntime01.</p>
+    <p>3. Leave the other values at their defaults for this workshop.</p>
+    <p>4. Save.</p>
+
+    <div class="callout-important"><strong>Do not create another external catalog source to scan CDI.</strong> CDI and CDGC are in the same IDMC organization, so IDMC Metadata synchronizes CDI directly. Creating a separate external catalog source to "scan" CDI in the same org duplicates assets and is not the mechanism.</div>
+
+    <h4>D2. Monitor the initial synchronization</h4>
+    <p>Confirmed path: Metadata Command Center &rarr; Monitor &rarr; Jobs</p>
+    <p>The job appears in the main Jobs list as:</p>
+<pre>IDMC Metadata Bulk Sync</pre>
+    <p>5. Refresh the Jobs list.</p>
+    <p>6. Wait until IDMC Metadata Bulk Sync shows COMPLETED.</p>
+
+    <div class="callout-important"><strong>Look under Monitor &rarr; Jobs, not the IDMC Metadata tab.</strong> In live testing the IDMC Metadata tab showed IDMC Metadata (0) while the actual Bulk Sync job appeared under Monitor &rarr; Jobs. Do not tell participants to expect the job under the IDMC Metadata tab.</div>
+
+    <h4>D3. Timing note (instructor pre-work only)</h4>
+    <p><strong>Enable and validate well before the participant session.</strong> Initial end-to-end availability of synchronized CDI assets took ~3 hours in the live tenant, although MCC displayed the final Bulk Sync execution itself as ~00:03:55. The three hours is the end-to-end wait, not the job runtime. This is why IDMC Metadata enablement is instructor pre-work.</p>
+
+    <h4>D4. Confirm the design-time Mapping asset in CDGC</h4>
+    <p>7. Switch to Data Governance and Catalog.</p>
+    <p>8. Search for CV1_M_01_STANDARDIZE_SF.</p>
+    <p>9. Open the result with Asset Type = Mapping.</p>
+    <p>10. Open Hierarchy. Confirmed hierarchy:</p>
+<pre>Informatica Data Management Cloud
+-> CV1_DATA_AI_WORKSHOP
+-> CV1_M_01_STANDARDIZE_SF</pre>
+    <p>11. Open Relationships. Confirm the graph currently shows the Mapping related to its containing Project.</p>
+
+    <h4>D5. What this confirms &mdash; the mapping is cataloged; runtime lineage is a separate step</h4>
+    <p>This is the core governance point of Part D. The completed synchronization confirms that the CDI mapping definition is now in the catalog. The Hierarchy view answers where the mapping sits (its organization). The Relationships view shows its Project membership. In this walkthrough the mapping asset did not yet expose a Lineage tab. This is expected: the initial synchronization brings the design-time definition, while runtime lineage is built from actual Mapping Task executions and is confirmed separately in Part F. Cataloging the mapping is not the same as tracing a run of it from source to target.</p>
+
+    <h4>D6. A note on how Lab 4B ran, and why it matters here</h4>
+    <p>Lab 4B created and directly ran two mapping assets, CV1_M_01_STANDARDIZE_SF and CV1_M_02_STANDARDIZE_DBX. It did not create persistent Mapping Task assets. Running the mapping directly is enough to move and transform the data, but runtime lineage in the catalog is derived from the executions of a persistent Mapping Task. That is why Part F introduces one: the Mapping Task gives IDMC Metadata a task execution to capture and, in turn, the raw material for an end-to-end lineage graph.</p>
+
+    <h4>D7. Part D completion criteria</h4>
+    <p>&bull; IDMC Metadata is enabled for cv1secureruntime01.</p>
+    <p>&bull; IDMC Metadata Bulk Sync is COMPLETED.</p>
+    <p>&bull; CV1_M_01_STANDARDIZE_SF is searchable as a Mapping asset in CDGC.</p>
+    <p>&bull; The participant can explain the difference between design-time Mapping metadata and runtime lineage.</p>
+
+    <h3>What you accomplished</h3>
+    <p>The catalog now contains the CDI mapping definition in addition to the Salesforce and Databricks endpoint assets. You have supplied the "middle" technical component required for a source &rarr; integration &rarr; target lineage view. Runtime lineage is inspected separately in Part F.</p>
+  </div>
+
+  <!-- Part E -->
+  <div class="w3-container" style="margin-top:30px;margin-bottom:30px;">
+    <h2>Part E &mdash; Bind Preferred Email across Salesforce and Databricks</h2>
+<pre>Salesforce Email__c   --+
+                        +--> Preferred Email
+Databricks web_email  --+</pre>
+
+    <h3>Why this part exists</h3>
+    <p>Cataloging technical fields tells us that they exist; it does not automatically tell a business user that two differently named fields represent the same business concept. Here, Salesforce uses Email__c and Databricks uses web_email. We associate both with the existing business term Preferred Email.</p>
+    <p>This adds governed meaning to the catalog. It does not rename the physical source fields, change their values, or change source-system security.</p>
+
+    <h3>Hands-on &mdash; verified procedure</h3>
+    <p>This happens in CDGC, not MCC. MCC is the command center where you configure, run, and monitor catalog sources. The extracted technical assets are browsed and curated in Cloud Data Governance and Catalog (CDGC) &mdash; a separate service. Switch to it via the service selector (top-left) or My Services.</p>
+    <p>The exercise scope is deliberately narrow: bind one real business term to two technically different source fields. The correct workshop email term from the final Lab 1 is Preferred Email &mdash; not 'Customer Email', 'Preferred Phone', or 'Customer Location'. The two fields you will bind it to are:</p>
+<pre>Salesforce: CV1_Customer__c.Email__c
+Databricks: customer_events.web_email
+Business term: Preferred Email</pre>
+
+    <div class="callout-important"><strong>Do not type a manual business name first.</strong> Clicking the pencil beside Add Business Name and typing text changes only the technical asset's display/business name &mdash; it does not create a glossary association. A manually entered business name can exist while the Glossaries section still shows Accepted (0). The real governance link is created from the Glossaries section, using Add Glossary Assets. Place this warning before the first click.</div>
+
+    <h4>E1. Salesforce field Email__c</h4>
+    <p>1. In CDGC, search for CV1_Customer__c.</p>
+    <p>2. Open the Salesforce Object result.</p>
+    <p>3. Open Contains.</p>
+    <p>4. Select Email__c.</p>
+    <p>5. On the field page, scroll to Glossaries.</p>
+    <p>6. Click the blue + or Click here to add Glossary assets.</p>
+    <p>7. The Add Glossary Assets dialog opens on Associate Glossary Assets.</p>
+    <p>8. Select Preferred Email.</p>
+    <p>9. Enable: Assign a business name and description from a Glossary asset to the technical asset.</p>
+    <p>10. Proceed to the Assign Business Name tab.</p>
+    <p>11. Confirm Preferred Email is selected.</p>
+    <p>12. Click Finish.</p>
+
+    <p><strong>Confirmed result:</strong> the page heading becomes Preferred Email; the physical field name remains Email__c; the glossary definition is copied to the asset Description; Glossaries shows Accepted (1): Preferred Email.</p>
+
+    <h4>E2. Databricks column web_email</h4>
+    <p>13. Search for customer_events.</p>
+    <p>14. Open the table under CS_DATABRICKS_CV1-v2 &rarr; cv1_workshop_catalog &rarr; cv1_workshop.</p>
+    <p>15. Open Contains.</p>
+    <p>16. Select web_email.</p>
+    <p>17. Scroll to Glossaries and click the blue +.</p>
+    <p>18. Select Preferred Email.</p>
+    <p>19. Enable the same business-name-and-description switch.</p>
+    <p>20. Confirm Preferred Email on the Assign Business Name tab.</p>
+    <p>21. Click Finish.</p>
+
+    <p><strong>Confirmed final relationship &mdash;</strong> one governed term now spans two systems:</p>
+<pre>CV1_Customer__c.Email__c   ---+
+                              +--> Preferred Email
+customer_events.web_email  ---+</pre>
+
+    <h4>E3. Security and governance wording</h4>
+    <p>Glossary association adds meaning; it does not enforce security. Glossary association adds governed business meaning to technical fields and makes cross-system discovery and impact analysis easier. It can complement classification and privacy processes, but it does not by itself enforce source security, masking, consent, or data access. Binding a field to a term is not a control &mdash; it is context that lets security and privacy teams answer 'which columns hold this kind of data?' across systems, from one place.</p>
+
+    <blockquote><strong>End-state check:</strong> Preferred Email shows Accepted on both CV1_Customer__c.Email__c and customer_events.web_email, and each field page shows the business term it now represents.</blockquote>
+
+    <h3>What you accomplished</h3>
+    <p>Two technical fields in two different systems now point to one governed business concept. A customer can search or browse from the business term Preferred Email without first knowing that Salesforce calls the field Email__c and Databricks calls it web_email.</p>
+  </div>
+
+  <!-- Part F -->
+  <div class="w3-container" style="margin-top:30px;margin-bottom:30px;">
+    <h2>Part F &mdash; Inspect the lineage currently available</h2>
+
+    <h3>Expected lineage for this exercise</h3>
+    <div class="flow-banner">Salesforce CV1_Customer__c &rarr; CDI Mapping Task &rarr; Databricks staging_sf_customer</div>
+
+    <h3>What lineage is showing</h3>
+    <p>Lineage is the catalog view of technical data movement: where data came from, what integration or transformation handled it, and where it landed. For this exercise, the ideal connected graph would show the Salesforce source object, the CDI mapping/task that standardized it, and the Databricks staging table.</p>
+    <p>Those three pieces entered the catalog by different routes: the Salesforce scan supplied the Salesforce asset; IDMC Metadata supplied the CDI mapping/task information; and the Databricks scan supplied the target table. Part F checks whether CDGC has connected those pieces into one lineage graph.</p>
+
+    <div class="callout-important"><strong>Lineage Discovery remains separate.</strong> The optional Lineage Discovery capability left OFF in Parts B and C is not the mechanism used to make the CDI mapping appear. The CDI integration metadata used here comes through IDMC Metadata.</div>
+
+    <h3>What SEED means</h3>
+    <p>When you open Lineage from an asset, CDGC marks the asset you started from as the SEED. If the graph shows only staging_sf_customer with no arrows, that means the table is cataloged but its upstream lineage has not yet been connected in the catalog. It does not mean the data never moved.</p>
+
+    <div class="callout-important"><strong>Observed state in this environment.</strong> The CDI Mapping definition is cataloged and the staging table has a Lineage tab, but the end-to-end graph was still seed-only at the time of this revision. The Mapping Task execution has been confirmed; final CDGC runtime-lineage visibility remains to be validated.</div>
+
+    <h3>F1&ndash;F3 &mdash; Core participant inspection</h3>
+
+    <h4>F1. Inspect the CDI Mapping asset</h4>
+    <p>1. Open CV1_M_01_STANDARDIZE_SF in CDGC.</p>
+    <p>2. Review the available tabs. Confirmed tabs: Overview, Hierarchy, Relationships, Stakeholders, Attributes, Tickets, History.</p>
+    <p>3. Note that the Mapping asset did not expose a Lineage tab during the walkthrough.</p>
+    <p>4. Open Relationships and observe the single Project relationship.</p>
+    <p><strong>Interpretation.</strong> This confirms design-time cataloging and project membership. It is not runtime data lineage.</p>
+
+    <h4>F2. Inspect the target Databricks table</h4>
+    <p>5. Search for staging_sf_customer.</p>
+    <p>6. Open the Databricks Table asset.</p>
+    <p>7. Open Lineage.</p>
+    <p><strong>Observation:</strong> In our environment we have not completed the final few steps. As such, the Lineage tab exists; the graph shows only the seed &mdash; staging_sf_customer &mdash; with no arrows; no upstream Salesforce object and no CDI mapping is connected to it yet. In other words, the catalog knows the table but has not yet linked what produced it.</p>
+
+    <h4>F3. Interpret the current result</h4>
+    <p>A missing graph segment is a visibility gap, not proof that no data flowed. The Salesforce and Databricks scanners cataloged the endpoint assets, and IDMC Metadata synchronized the CDI mapping definition. The runtime lineage &mdash; the drawn connections between them &mdash; was not yet visible. A seed-only graph does not mean no data moved: Lab 4B demonstrably moved the data; the catalog simply has not yet represented that movement as connected lines. Read it as a documented governance visibility gap to close, and compare it against the ideal result described at the start of Part F: Salesforce object &rarr; CDI mapping / Mapping Task &rarr; Databricks staging table, all connected.</p>
+
+    <h3>F4&ndash;F6 &mdash; Instructor extension: complete the runtime-lineage path</h3>
+    <p>The following section is not required to understand the core lineage concept. It documents the additional runtime steps used to give IDMC Metadata an actual Mapping Task execution to capture, and then to reconcile that execution with the physical Salesforce and Databricks assets.</p>
+
+    <div class="flow-banner">CDI Mapping Task runs &rarr; IDMC Metadata captures runtime metadata &rarr; Connection Assignment links references &rarr; CDGC lineage can connect the graph</div>
+
+    <h4>F4. Instructor follow-up &mdash; persistent Mapping Task path (Mapping Task run confirmed; CDGC lineage visibility pending)</h4>
+    <p>Mapping Task execution is now confirmed; the remaining open item is whether the lineage nodes appear in CDGC. With Databricks compute restored, the persistent Mapping Task CV1_MT_01_STANDARDIZE_SF was built and run successfully and it recreated the Salesforce output tables (staging_sf_customer = 2 rows, dq_exception_sf = 2 rows). What has not yet been confirmed is whether the source &rarr; Mapping Task &rarr; target lineage nodes become visible in CDGC after IDMC Metadata synchronization. Present that final lineage-visibility step as pending validation, not the Mapping Task run itself.</p>
+    <p>8. Ensure Databricks compute is available.</p>
+    <p>9. Back up the Salesforce output tables before resetting them, so the exact rows that fed Lab 5 (MDM) can still be shown in a demo. <code>CREATE TABLE AS SELECT</code> makes an independent Delta copy that survives the drop:</p>
+<pre>CREATE TABLE
+cv1_workshop_catalog.cv1_workshop.staging_sf_customer_bkp_20260807
+AS SELECT * FROM
+cv1_workshop_catalog.cv1_workshop.staging_sf_customer;
+CREATE TABLE
+cv1_workshop_catalog.cv1_workshop.dq_exception_sf_bkp_20260807
+AS SELECT * FROM
+cv1_workshop_catalog.cv1_workshop.dq_exception_sf;</pre>
+    <p>10. Verify the backups landed before dropping anything (expect 2 and 2):</p>
+<pre>SELECT 'staging_backup' AS tbl, COUNT(*) FROM
+cv1_workshop_catalog.cv1_workshop.staging_sf_customer_bkp_20260807
+UNION ALL
+SELECT 'exception_backup' AS tbl, COUNT(*) FROM
+cv1_workshop_catalog.cv1_workshop.dq_exception_sf_bkp_20260807;</pre>
+    <p>11. Only after the backup counts look right, reset the Salesforce output tables (the targets use Insert, so the originals must be dropped or the run appends duplicate rows):</p>
+<pre>DROP TABLE IF EXISTS
+cv1_workshop_catalog.cv1_workshop.staging_sf_customer;
+DROP TABLE IF EXISTS
+cv1_workshop_catalog.cv1_workshop.dq_exception_sf;</pre>
+    <p>12. In Data Integration, choose New &rarr; Data Integration &rarr; Mapping Task &rarr; Create.</p>
+    <p>13. Configure the Mapping Task:</p>
+<pre>Name: CV1_MT_01_STANDARDIZE_SF
+Location: CV1_DATA_AI_WORKSHOP
+Mapping: CV1_M_01_STANDARDIZE_SF
+Runtime Environment: cv1secureruntime01</pre>
+    <p>14. Save and run the Mapping Task. Both targets are Create New at Runtime, so the run recreates staging_sf_customer and dq_exception_sf fresh.</p>
+    <p>15. Confirm success in Data Integration &rarr; My Jobs, and confirm the recreated tables (expect staging = 2, exception = 2).</p>
+    <p>16. Allow IDMC Metadata to capture the execution. Confirm a runtime entry for the task under MCC &rarr; Monitor &rarr; IDMC Metadata before expecting any lineage change &mdash; this is the checkpoint that tells you the run was seen.</p>
+    <p>17. If the graph then stops at generic reference-connection nodes, apply Connection Assignment (Part F6) to reconcile them.</p>
+    <p>18. Recheck the Mapping Task / task-instance asset and staging_sf_customer &rarr; Lineage in CDGC to see whether the runtime lineage nodes now appear.</p>
+
+    <h4>F5. Runtime-lineage status &mdash; compute restored, Mapping Task confirmed, CDGC lineage still to verify</h4>
+    <p>Databricks compute is available and the Mapping Task ran; only CDGC lineage visibility remains to confirm. An earlier environment constraint &mdash; a Databricks Free Edition compute limit that temporarily blocked even the <code>DROP TABLE</code> SQL &mdash; has been cleared. The persistent Mapping Task CV1_MT_01_STANDARDIZE_SF ran successfully and recreated the Salesforce tables (2 staging / 2 exception). The only item still to validate is whether the source &rarr; Mapping Task &rarr; target lineage graph becomes visible in CDGC after IDMC Metadata captures the execution and, if needed, Connection Assignment reconciles the reference connections. Until that is observed in your environment, do not describe full runtime lineage as confirmed.</p>
+
+    <h4>F6. How runtime lineage actually gets drawn (and where to look first)</h4>
+    <p>It helps to know the sequence the catalog follows, so you can tell where a seed-only result is stuck:</p>
+    <p>&bull; A Mapping Task executes in CDI (Part F4).</p>
+    <p>&bull; IDMC Metadata captures that execution incrementally as runtime metadata. This is the first thing to check &mdash; until a runtime entry for the task appears under Monitor &rarr; IDMC Metadata in MCC, the lineage graph will stay seed-only no matter what else is configured.</p>
+    <p>&bull; The endpoint scans (Parts B and C) must already contain the physical assets the task read from and wrote to.</p>
+    <p>&bull; Connection Assignment reconciles the generic source/target reference connections the CDI task reports against the real Salesforce and Databricks catalog assets &mdash; this is the step that stitches the two ends together into one graph.</p>
+
+    <div class="callout-important"><strong>Connection Assignment is a distinct step &mdash;</strong> confirm its exact path in your environment. If runtime lineage appears but stops at generic source or target reference-connection nodes, the reconciliation step is Connection Assignment (reached under MCC &rarr; Configure &rarr; Lineage; it requires the Manage Lineage Settings privilege). Connection Assignment is not the same as the optional Lineage Discovery capability that was left OFF on the scanner sources. The exact label and navigation can vary by release &mdash; verify the path in your environment (or check with your Informatica contact) rather than following an assumed click path.</div>
+
+    <div class="callout-important"><strong>Synchronization frequency is environment-dependent &mdash;</strong> inspect, do not change. How often IDMC Metadata captures new task executions is governed by Metadata Platform Service settings on the Secure Agent (batch size and wait interval). These are tenant-specific, and changing them restarts the service. If runtime lineage is slow to appear, the correct action is to confirm the task ran and then wait for the next synchronization window &mdash; not to retune platform settings during a workshop. Treat the exact property names and values as verify-in-environment.</div>
+
+    <h3>F7 &mdash; Completion levels</h3>
+
+    <h4>F7. Part F completion levels</h4>
+    <p>Confirmed minimum end state:</p>
+    <p>&bull; Mapping definition visible in CDGC.</p>
+    <p>&bull; Salesforce and Databricks technical assets visible.</p>
+    <p>&bull; Target table exposes a Lineage tab.</p>
+    <p>&bull; Actual graph state documented honestly as full, partial, or seed-only.</p>
+    <p>&bull; Participant understands that an incomplete graph is a governance visibility gap, not proof of no data flow.</p>
+    <p>Extended instructor-prevalidated end state:</p>
+    <p>&bull; Persistent Mapping Task executes after IDMC Metadata enablement.</p>
+    <p>&bull; Runtime lineage synchronizes.</p>
+    <p>&bull; Source, Mapping Task, and target nodes become visible.</p>
+    <p>&bull; Reference connections are reconciled if required.</p>
+
+    <div class="callout-important"><strong>Security note &mdash;</strong> lineage is a control, and its gaps are documented risks. Lineage exposes trust boundaries: where data crosses systems, which credentials move it, where sensitive fields are transformed. It powers incident response &mdash; if a field or table is compromised, lineage shows plausible upstream origins and downstream impact. Critically, an incomplete lineage graph is not proof that no data flow exists: missing segments become documented governance blind spots needing compensating evidence (integration inventories, API-gateway logs, event monitoring, audit logs). And catalog access does not grant access to the underlying data &mdash; seeing that Email__c exists and is PII (Personally Identifiable Information) is not the same as being able to read the values.</div>
+
+    <h3>What you accomplished</h3>
+    <p>You inspected the lineage actually available instead of assuming the graph was complete. The governance result is useful in either case: a connected graph shows the technical path; a partial or seed-only graph identifies a catalog visibility gap that still needs to be resolved.</p>
+  </div>
+
+  <!-- Lab 8A end-of-lab checklist -->
+  <div class="w3-container" style="margin-top:30px;margin-bottom:30px;">
+    <h2>Lab 8A &mdash; end-of-lab checklist</h2>
+    <p>&bull; MCC and CDGC are accessible; the Salesforce (CN_SF_CV1) and Databricks scanner (CN_DBX_CV1_MCC) connections are in place and tested.</p>
+    <p>&bull; Both scans completed as metadata-only (only Metadata Extraction enabled): the Run dialog's Scope of Run listed just that one capability.</p>
+    <p>&bull; Salesforce and Databricks catalog sources have completed extraction (status COMPLETED); IDMC Metadata Bulk Sync is COMPLETED and CV1_M_01_STANDARDIZE_SF is searchable as a Mapping asset.</p>
+    <p>&bull; Technical assets are visible in CDGC: CV1_Customer__c + columns (Salesforce); cv1_workshop_catalog tables + columns (Databricks); the CDI Mapping definition.</p>
+    <p>&bull; Preferred Email is accepted on CV1_Customer__c.Email__c.</p>
+    <p>&bull; Preferred Email is accepted on customer_events.web_email.</p>
+    <p>&bull; The lineage view for at least one staging table has been inspected and its actual state documented: full source &rarr; CDI &rarr; target lineage if prevalidated, or a partial/seed-only graph identified as an unresolved catalog visibility gap.</p>
+    <p>&bull; The participant can explain business name versus accepted glossary association versus classification.</p>
+    <p>&bull; The participant can explain Mapping design-time metadata versus Mapping Task runtime execution versus endpoint scanner assets versus Connection Assignment versus optional Lineage Discovery.</p>
+
+    <h3>Lab 8A &mdash; what you should now understand</h3>
+    <div class="flow-banner">Discover assets &rarr; add CDI integration metadata &rarr; add business meaning &rarr; inspect lineage</div>
+    <p>You cataloged Salesforce and Databricks without profiling customer values, added the CDI mapping definition to the same catalog, associated Preferred Email with fields in both systems, and inspected the lineage currently available. The result is a governance view that can answer three different questions: what technical assets exist, what selected fields mean to the business, and how much of the technical data flow can be traced.</p>
+  </div>
+
+  <!-- Lab 8B -->
+  <div class="w3-container" style="margin-top:30px;margin-bottom:30px;">
+    <h2>Lab 8B &mdash; Data Quality Governance Overlay (conceptual only)</h2>
+
+    <h3>Why this section exists</h3>
+    <p>Data quality and data governance look at related evidence from different perspectives. A data-quality engineer may want to know which rules or records failed. A governance user may want to open a cataloged asset or business term and understand whether the associated data is healthy. CDGC can surface data-quality evidence in that governance context, but the connection must be configured; the evidence does not appear merely because a quality rule and a catalog asset both exist.</p>
+    <p>This section stays conceptual because the exact setup depends on scanner and rule-template configuration. The architectural distinction is more important for this workshop than another long click-through.</p>
+
+    <h3>There are two separate routes</h3>
+    <div class="flow-banner">Route 1: Profile + CDQ Rule Specification &rarr; Scorecard / Rule Occurrence &rarr; quality evidence visible in CDGC</div>
+    <div class="flow-banner">Route 2: Catalog asset + CDGC Rule Template / MCC Rule Automation &rarr; Rule Occurrence in CDGC</div>
+    <p>Do not combine these into one automatic chain. The source lab records two distinct mechanisms, and the relevant integration or automation must be configured and validated before claiming that the same score automatically appears against a governed asset.</p>
+
+    <h3>Route 1 &mdash; Scorecard Rule Occurrence</h3>
+    <p>A rule occurrence is created from a Cloud Data Quality (CDQ) Rule Specification associated with a profile. The profile runs; a scorecard aggregates the rule-occurrence scores; the scorecards can be viewed in CDGC.</p>
+
+    <h3>Route 2 &mdash; CDGC Rule Template + MCC Data Quality Rule Automation</h3>
+    <p>MCC's Data Quality capability can use Rule Automation to create or update rule occurrences for catalog data elements. This is a separate configuration path from the scorecard route.</p>
+
+    <div class="callout-important"><strong>Do not claim automatic propagation.</strong> A Lab 4A quality rule and a cataloged Lab 8 asset do not automatically become one continuous flow unless the relevant scorecard integration or rule-automation route has been configured and validated.</div>
+
+    <h3>Operational view versus governance view</h3>
+    <table class="workshop-table">
+      <tr><th></th><th>Lab 4A scorecard (CDP/CDQ)</th><th>Lab 8B rule occurrences (CDGC)</th></tr>
+      <tr><td>Where it lives</td><td>Cloud Data Profiling &mdash; profile Results</td><td>CDGC &mdash; asset pages and term pages</td></tr>
+      <tr><td>Audience</td><td>DQ engineers building/tuning rules</td><td>Governance stakeholders, business owners, compliance</td></tr>
+      <tr><td>Emphasis</td><td>Which rows failed; which rules are noisy</td><td>Which terms/assets are healthy vs. risky, at a glance</td></tr>
+      <tr><td>Freshness</td><td>Per profile run</td><td>Aggregated snapshot from the last aggregation job</td></tr>
+      <tr><td>How evidence gets there</td><td>Rule outputs directly</td><td>Surfaced when a scorecard-integration or rule-automation route is configured and validated</td></tr>
+    </table>
+    <p>Quality evidence can be surfaced in CDGC when the relevant scorecard integration or rule-automation route is configured and validated. Lab 4A and Lab 8B address related quality evidence through different operational surfaces and audiences; do not describe the same numbers as automatically moving from one to the other.</p>
+
+    <h3>Security perspective</h3>
+    <p>Quality results provide evidence about data integrity. Invalid consent states, missing identifiers, impossible dates, or unexpected duplicates can signal data or integration problems. DQ evidence supports integrity analysis; it does not replace security monitoring.</p>
+  </div>
+
+  <!-- Illustrations -->
+  <div class="w3-container" style="margin-top:30px;margin-bottom:30px;">
+    <h2>Illustrations</h2>
+
+    <div class="w3-card w3-container w3-center w3-mobile"><img class="w3-image" src="img/slide46.jpeg" alt="Metadata Command Center job history"></div>
+    <p class="img-caption">Metadata Command Center records the jobs used to collect metadata from Salesforce, Databricks and IDMC. Successful extraction and bulk-sync runs provide the technical assets that CDGC can later search, govern and relate. The job history also preserves prior failed or cancelled attempts rather than hiding them.</p>
+    <p>&nbsp;</p>
+
+    <div class="w3-card w3-container w3-center w3-mobile"><img class="w3-image" src="img/slide47.jpeg" alt="Salesforce Email__c cataloged with Preferred Email under Glossaries Accepted"></div>
+    <p class="img-caption">The Salesforce field Email__c is cataloged with the governed business term <strong>Preferred Email</strong>, shown explicitly under Glossaries &rarr; Accepted. This is where the governance model stops being only a glossary: business meaning is now attached to a real technical asset.</p>
+    <p>&nbsp;</p>
+
+    <div class="w3-card w3-container w3-center w3-mobile"><img class="w3-image" src="img/slide48.jpeg" alt="CDGC technical lineage relationship for Salesforce Email__c associated with Preferred Email"></div>
+    <p class="img-caption">CDGC shows an available technical lineage relationship for the Salesforce Email__c field associated with <strong>Preferred Email</strong>. This demonstrates field-level traceability in the catalog; it <strong>does not claim that the full Salesforce &rarr; CDI &rarr; Databricks runtime lineage was established</strong>, because that path was not completed in this environment.</p>
+    <p>&nbsp;</p>
+  </div>
+
+  <!-- Lab 8 conclusion -->
+  <div class="w3-container" style="margin-top:30px;margin-bottom:30px;">
+    <h2>Lab 8 &mdash; conclusion</h2>
+    <div class="flow-banner">Technical assets + business meaning + lineage visibility &rarr; governed understanding of the data landscape</div>
+    <p>Lab 8 did not change the source data. It made the technical landscape visible and governable: Salesforce and Databricks assets were cataloged, CDI integration metadata was added, Preferred Email was associated across systems, and lineage was inspected honestly based on what the environment currently exposes.</p>
+    <p>The only unfinished validation in this workshop environment is the final connected runtime-lineage graph. The persistent Mapping Task ran successfully; the remaining question is whether IDMC Metadata capture and, if needed, Connection Assignment produce the complete Salesforce &rarr; Mapping Task &rarr; Databricks graph in CDGC. Until that graph is observed, describe lineage as inspected rather than fully validated.</p>
+    <p>If this is the final workshop lab, the broader workshop end state is data that has been profiled, cleaned, mastered, published/activated, and then viewed through a governance layer that adds catalog, glossary, lineage, and security context.</p>
+  </div>
+
+  <!-- Appendix A -->
+  <div class="w3-container" style="margin-top:30px;margin-bottom:30px;">
+    <h2>Appendix A &mdash; Detailed Databricks catalog-source failure analysis and resolution</h2>
+    <p>This appendix is retained as technical reference from the live troubleshooting record. It is intentionally more detailed than the main customer flow.</p>
+
+    <div class="callout-important"><strong>Filter notation note.</strong> The verified hands-on instruction in Part C, Step 5 uses cv1_workshop_catalog.*.*. Some text in the original troubleshooting record below displays cv1_workshop_catalog.*.* instead. The main hands-on Step 5 is the workshop instruction to follow; the troubleshooting record is otherwise retained for reference.</div>
+
+    <p>This appendix records, in full, the diagnosis and resolution of the Databricks catalog-source failure encountered during live testing. It is included verbatim as reference material for anyone who hits the same "scanner framework failed exitCode 1" error against a Unity-Catalog Databricks workspace.</p>
+
+    <h3>1. Workshop context</h3>
+    <p>The catalog source was created in Metadata Command Center &rarr; New &rarr; Catalog Source &rarr; Databricks. The source used the existing Databricks connection CN_DBX_CV1. The target Unity Catalog catalog was cv1_workshop_catalog.</p>
+    <p>The metadata extraction was deliberately kept narrow: Metadata Extraction enabled; optional capabilities disabled (no profiling, no data quality automation, no observability, no classification, no glossary association); no scheduled run.</p>
+    <p>The metadata filter was: Include Metadata; Object Type: Table; Pattern (value): <code>cv1_workshop_catalog.*.*</code>. This pattern means catalog.schema.table &mdash; therefore <code>cv1_workshop_catalog.*.*</code> means all tables in all schemas under cv1_workshop_catalog. The Informatica connection name is not part of the Databricks object path and must not be added to this pattern.</p>
+
+    <h3>2. Initial failure</h3>
+    <p>The first Databricks catalog-source run failed after approximately three and a half minutes. The MCC job showed Status: FAILED; Completed Tasks: 1/3. The top-level error was generic:</p>
+<pre>scanner framework failed and returned with exitCode: 1</pre>
+    <p>The more useful scanner error was:</p>
+<pre>Could not execute scanner task, error:
+java.lang.RuntimeException:
+com.compactsolutionsllc.dimc.repository.util.DatabaseFatalError:
+Unable to detect [CN_DBX_CV1].[hive_metastore] catalog type.</pre>
+    <p>Related log messages included "Fatal exception occurred during metadata extraction: Unable to detect [CN_DBX_CV1].[hive_metastore] catalog type." and "Catalog Source Extraction Failed. Reason: ...Unable to detect [CN_DBX_CV1].[hive_metastore] catalog type." There was also a reports-directory warning, but that appeared as a secondary consequence of the scanner failure and was not the root cause.</p>
+
+    <h3>3. Existing Informatica connection configuration</h3>
+    <p>The existing Administrator connection already had the correct catalog: Connection Name CN_DBX_CV1; Runtime Environment cv1secureruntime01; Authentication Type Personal Access Token; Catalog Name cv1_workshop_catalog. Its JDBC URL was:</p>
+<pre>jdbc:databricks://dbc-c6cc5660-e25f.cloud.databricks.com:443/default;transportMode=http;ssl=1;AuthMech=3;httpPath=/sql/1.0/warehouses/8e487c7c5526e7cb;</pre>
+    <p>The Databricks warehouse supplied the same JDBC format. The authentication configuration was internally consistent (Authentication Type = Personal Access Token, AuthMech=3), so the failure was not addressed by switching to OAuth or changing AuthMech. The existing connection was already working for prior CDI workshop exercises, so it was important not to disrupt it merely to troubleshoot MCC.</p>
+
+    <h3>4. Databricks validation</h3>
+    <p>The Databricks SQL Editor was used to validate the actual catalog environment.</p>
+
+    <h4>4.1 Available catalogs</h4>
+<pre>SHOW CATALOGS;</pre>
+    <p>The result included cv1_workshop_catalog, food_catalog, salesforce_pilot, samples, system, workspace, and others. It did not include hive_metastore.</p>
+
+    <h4>4.2 Current SQL editor catalog</h4>
+<pre>SELECT current_catalog();</pre>
+    <p>The result was <code>workspace</code>, reflecting the SQL editor session context (workspace.default). This did not invalidate the target catalog or indicate a problem with cv1_workshop_catalog.</p>
+
+    <h4>4.3 Target catalog validation</h4>
+<pre>DESCRIBE CATALOG EXTENDED cv1_workshop_catalog;</pre>
+    <p>This succeeded and returned Catalog Name cv1_workshop_catalog; Owner ffaizi@salesforce.com; Catalog Type Regular. This proved the catalog existed, the user could see it, the user could describe it, and it was a valid Unity Catalog catalog.</p>
+
+    <h4>4.4 Legacy metastore validation</h4>
+<pre>DESCRIBE CATALOG EXTENDED hive_metastore;</pre>
+    <p>This failed with [NO_SUCH_CATALOG_EXCEPTION] Catalog 'hive_metastore' was not found. SQLSTATE: 42704. This established that MCC was attempting to inspect a catalog that did not exist in this Databricks Free Edition workspace.</p>
+
+    <h3>5. Root-cause assessment</h3>
+    <p>The most defensible assessment based on the observed evidence: the MCC Databricks scanner was not establishing cv1_workshop_catalog as its JDBC catalog context, despite the separate Informatica connection field containing that catalog name. The scanner fell back to &mdash; or attempted to inspect &mdash; hive_metastore. Because this Unity-Catalog-only workspace had no hive_metastore, catalog-type detection failed and the extraction stopped.</p>
+    <p>This conclusion is based on: the target catalog existed; the PAT identity could list and describe it; the connection already specified the correct Catalog Name; hive_metastore did not exist; the scanner explicitly failed while detecting hive_metastore; and adding ConnCatalog=cv1_workshop_catalog was the only material change before the successful run. This should be described as an observed environment-specific scanner behaviour, not necessarily a universal MCC requirement.</p>
+
+    <h3>6. Controlled fix</h3>
+    <p>To protect the existing CDI connection, it was cloned. New scanner-specific connection: CN_DBX_CV1_MCC. All existing values were retained (Runtime Environment cv1secureruntime01; Authentication Type Personal Access Token; Catalog Name cv1_workshop_catalog; Databricks Token unchanged; SQL Warehouse unchanged; HTTP Path unchanged; AuthMech=3). The only functional change was appending ConnCatalog=cv1_workshop_catalog; to the JDBC URL. Final JDBC URL:</p>
+<pre>jdbc:databricks://dbc-c6cc5660-e25f.cloud.databricks.com:443/default;transportMode=http;ssl=1;AuthMech=3;httpPath=/sql/1.0/warehouses/8e487c7c5526e7cb;ConnCatalog=cv1_workshop_catalog;</pre>
+    <p>The MCC catalog source was then updated to use CN_DBX_CV1_MCC. The metadata filter remained cv1_workshop_catalog.*.*.</p>
+
+    <h3>7. Successful result</h3>
+    <p>After the cloned connection with ConnCatalog was used, the job passed the point where it had previously failed. Final result: Status COMPLETED; Completed Tasks 4/4; Run Duration 00:09:10. The completed phases included Test Connection, Catalog Source Extraction, Bulk Ingestion, and Indexing. The log showed successful messages such as "Processing succeeded for batch", "Processing completed for batch", "Indexing completed for batch", "Relationship Indexing complete", "Bulk Ingestion Job completed successfully", and "Metadata extracted". The MCC Results page reported:</p>
+    <table class="workshop-table">
+      <tr><th>Asset type</th><th>Count</th></tr>
+      <tr><td>Database/catalog</td><td>1</td></tr>
+      <tr><td>Schema</td><td>2</td></tr>
+      <tr><td>Table</td><td>6</td></tr>
+      <tr><td>Column</td><td>112</td></tr>
+      <tr><td>View</td><td>31</td></tr>
+      <tr><td>View Column</td><td>316</td></tr>
+      <tr><td>Nested Field</td><td>4</td></tr>
+      <tr><td>Data Element</td><td>164</td></tr>
+      <tr><td>Data Set</td><td>21</td></tr>
+      <tr><td>Data Source</td><td>1</td></tr>
+      <tr><td>Reference Catalog Source</td><td>1</td></tr>
+    </table>
+    <p>The job generated a large number of informational and warning log entries, but these were nonfatal because all four tasks completed, bulk ingestion succeeded, indexing succeeded, and the final status was COMPLETED. The warnings did not justify changing the metadata filter or adding the Informatica connection name to the qualified table pattern.</p>
+
+    <h3>Changes that were not needed</h3>
+    <p>The following changes were considered during troubleshooting but were not required and should not be included as workshop instructions.</p>
+    <p>Do not change PAT authentication to OAuth: the working configuration retained Authentication Type Personal Access Token and AuthMech=3. There was no need to change to AuthMech=11 / Auth_Flow=1, which would represent an OAuth machine-to-machine setup and would require a service principal, client ID and client secret.</p>
+    <p>Do not set the catalog to hive_metastore: the workspace proved hive_metastore did not exist. Changing the connection's catalog to that name would have pointed the connection at a nonexistent catalog.</p>
+    <p>Do not change the metadata filter: the correct filter remained cv1_workshop_catalog.*.*, representing catalog.schema.table. The Informatica connection name must not be added to it.</p>
+    <p>Do not change the SQL warehouse: the existing SQL warehouse and HTTP path worked after the catalog context was added.</p>
+    <p>Do not change the Secure Agent runtime: the existing runtime environment cv1secureruntime01 worked.</p>
+
+    <h3>Recommended Lab 8 Part C wording</h3>
+    <h4>Databricks catalog-source configuration</h4>
+    <p>Create the Databricks catalog source using the existing Administrator connection. For the workshop: keep Metadata Extraction enabled; leave optional capabilities disabled; filter the scan to cv1_workshop_catalog.*.*; leave stakeholder assignment off; leave asset-group assignment off; leave scheduled execution off; save and run the source manually.</p>
+
+    <h4>Databricks Unity Catalog troubleshooting note</h4>
+    <p>In this workshop environment, MCC initially failed with "Unable to detect [connection].[hive_metastore] catalog type." The Databricks workspace used Unity Catalog and did not contain the legacy hive_metastore. Although the Administrator connection already specified Catalog Name = cv1_workshop_catalog, MCC did not establish that catalog as its JDBC session context. A scanner-specific clone of the connection was created, and the property ConnCatalog=cv1_workshop_catalog; was appended to the JDBC URL. The metadata extraction then completed successfully. Do not switch authentication types or point the connection to hive_metastore. Treat the ConnCatalog addition as an environment-specific workaround unless it is validated as necessary in another tenant.</p>
+
+    <h4>Architectural and security takeaway</h4>
+    <p>The scanner-specific clone was also the safer architectural choice. Instead of modifying the connection used by working CDI mappings (CN_DBX_CV1), a separate metadata-scanner connection was created (CN_DBX_CV1_MCC). This reduced the risk of breaking previous labs and reflects a useful production principle: integration-runtime connections and catalog-scanner connections may use the same platform identity and endpoint, but they can be managed independently when scanner-specific JDBC properties or privileges are required.</p>
+    <p>For a production implementation, the scanner identity should be limited to the metadata and catalogs it must discover. Profiling, classification and data-quality execution would require additional value-level access and should be granted separately from metadata-only extraction.</p>
+  </div>
+
+  <!-- Appendix B -->
+  <div class="w3-container" style="margin-top:30px;margin-bottom:30px;">
+    <h2>Appendix B &mdash; Lineage Discovery versus CDI lineage</h2>
+    <p>These are different mechanisms and should not be confused.</p>
+    <p>Lineage Discovery is an optional MCC capability run against a catalog source to discover lineage that the source itself can expose. It is not the mechanism used in this workshop to make the CDI mapping appear in CDGC.</p>
+    <div class="flow-banner">Source scanner Lineage Discovery &ne; CDI mapping/task metadata</div>
+    <p>The CDI mapping and task information enters the catalog through IDMC Metadata. For the specific Salesforce lineage exercise, IDMC Metadata can tell the catalog about the CDI mapping/task that read from Salesforce and wrote to Databricks. Connection Assignment, reached under MCC &rarr; Configure &rarr; Lineage in the tested environment, is then used when needed to link the source and target connection references reported by CDI to the actual Salesforce and Databricks assets already cataloged by MCC.</p>
+    <div class="flow-banner">Salesforce scan + IDMC Metadata + Databricks scan &rarr; connection assignment when needed &rarr; CDGC lineage view</div>
+    <p>Until those pieces are connected, the Lineage view may show only the selected Databricks table marked SEED, with no upstream flow. That means the table is cataloged but the catalog has not yet linked the integration path to it.</p>
+
+    <h3>End</h3>
+  </div>
+
+  <!-- Footer -->
+  <div class="w3-container">
+    <div class="w3-bar w3-black">
+      <a href="lab-7.html" class="w3-bar-item w3-button"><i class="fa fa-bolt fa-fw w3-margin-right"></i>Lab 7</a>
+      <a href="lab-8.html" class="w3-bar-item w3-button"><i class="fa fa-sitemap fa-fw w3-margin-right"></i>Lab 8</a>
+      <a href="lab-9.html" class="w3-bar-item w3-button"><i class="fa fa-shield fa-fw w3-margin-right"></i>Lab 9</a>
+    </div>
+    <p>Trusted Data Foundation Workshop</p>
+  </div>
+
+  <p>&nbsp;</p>
+</div>
+
+<!-- Scripts -->
+<script src="nav.js"></script>
+<script>
+function w3_open() {
+  document.getElementById("mySidebar").style.display = "block";
+  document.getElementById("myOverlay").style.display = "block";
+}
+function w3_close() {
+  document.getElementById("mySidebar").style.display = "none";
+  document.getElementById("myOverlay").style.display = "none";
+}
+</script>
+</body>
+</html>

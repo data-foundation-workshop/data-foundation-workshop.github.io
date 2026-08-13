@@ -1,0 +1,620 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Lab 4B - Clean, Validate &amp; Route the Data</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<style>
+body,h1,h2,h3,h4,h5,h6 {font-family: "Raleway", sans-serif}
+body {font-size: 17px;}
+.accordion {
+  background: #336699;
+  border: 1px solid #F1F0FF;
+  border-radius: 5px;
+  font-weight: 700;
+  margin: 10px;
+  margin-bottom: 15px;
+  padding: 10px 20px;
+  cursor: pointer;
+  font-size: 130%;
+  color: white;
+}
+.accordionDrop {
+  padding: 0px 30px;
+}
+::-webkit-details-marker {
+  display: none;
+}
+table.workshop-table {
+  border-collapse: collapse;
+  width: 100%;
+  margin: 15px 0;
+}
+table.workshop-table th, table.workshop-table td {
+  border: 1px solid #ddd;
+  padding: 10px 14px;
+  text-align: left;
+}
+table.workshop-table th {
+  background: #336699;
+  color: white;
+}
+table.workshop-table tr:nth-child(even) {
+  background: #f9f9f9;
+}
+blockquote {
+  border-left: 4px solid #336699;
+  margin: 15px 0;
+  padding: 10px 20px;
+  background: #f5f8fc;
+}
+code, pre {
+  background: #f4f4f4;
+  padding: 2px 6px;
+  border-radius: 3px;
+  font-size: 95%;
+}
+pre {
+  padding: 15px;
+  overflow-x: auto;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+}
+.img-caption {
+  text-align: center;
+  color: #555;
+  font-style: italic;
+  margin: 12px 40px 20px;
+  line-height: 1.5;
+}
+.callout-important {
+  background: #fff3cd;
+  border-left: 4px solid #ffc107;
+  padding: 12px 20px;
+  margin: 15px 0;
+}
+.callout-tip {
+  background: #d1ecf1;
+  border-left: 4px solid #17a2b8;
+  padding: 12px 20px;
+  margin: 15px 0;
+}
+.hero {
+  background: linear-gradient(135deg, #2b567f 0%, #336699 60%, #3d76ac 100%);
+  color: #fff;
+  padding: 40px 40px 34px;
+}
+.hero .hero-eyebrow {
+  margin: 0 0 4px;
+  font-size: 0.85em;
+  font-weight: 700;
+  letter-spacing: 2px;
+  color: #bcd6ef;
+  text-transform: uppercase;
+}
+.hero h1 {
+  margin: 0 0 22px;
+  font-size: 2.2em;
+  font-weight: 800;
+}
+.journey {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px;
+}
+.journey .step {
+  background: rgba(255,255,255,0.12);
+  border: 1px solid rgba(255,255,255,0.35);
+  border-radius: 20px;
+  padding: 7px 16px;
+  font-size: 0.92em;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.journey .arrow {
+  color: #bcd6ef;
+  font-size: 1.1em;
+  padding: 0 2px;
+}
+</style>
+</head>
+<body class="w3-content" style="max-width:1600px;">
+
+<!-- Sidebar/menu -->
+<nav class="w3-sidebar w3-collapse w3-white w3-animate-left" style="z-index:3;width:300px;overflow-y:auto;padding-bottom:50px;" id="mySidebar"><br></nav>
+
+<!-- Overlay effect when opening sidebar on small screens -->
+<div class="w3-overlay w3-hide-large w3-animate-opacity" onclick="w3_close()" style="cursor:pointer" title="close side menu" id="myOverlay"></div>
+
+<!-- PAGE CONTENT -->
+<div class="w3-main" style="margin-left:300px;border-left:1px solid #000000;">
+
+  <!-- Header -->
+  <header>
+    <span class="w3-button w3-hide-large w3-xxlarge w3-hover-text-grey" onclick="w3_open()"><i class="fa fa-bars"></i></span>
+    <div class="hero">
+      <p class="hero-eyebrow">Lab 4B</p>
+      <h1>Clean, Validate &amp; Route the Data</h1>
+      <div class="journey">
+        <span class="step">Create Cleanse assets</span>
+        <span class="arrow"><i class="fa fa-long-arrow-right"></i></span>
+        <span class="step">Standardize</span>
+        <span class="arrow"><i class="fa fa-long-arrow-right"></i></span>
+        <span class="step">Validate</span>
+        <span class="arrow"><i class="fa fa-long-arrow-right"></i></span>
+        <span class="step">Route valid / exception</span>
+        <span class="arrow"><i class="fa fa-long-arrow-right"></i></span>
+        <span class="step">Verify Databricks outputs</span>
+      </div>
+    </div>
+  </header>
+
+  <!-- Lab subtitle -->
+  <div class="w3-container" style="margin-top:30px;margin-bottom:30px;">
+    <p><strong>Lab 4B &mdash; Operationalize and Standardize</strong></p>
+    <p><em>v6 &mdash; Aug 8, 2026. Build two verified CDI mappings that standardize customer data, validate each record, and write valid and exception outputs to Databricks.</em></p>
+  </div>
+
+  <!-- Where we are -->
+  <div class="w3-container" style="margin-top:30px;margin-bottom:30px;">
+    <h2>Where we are</h2>
+    <table class="workshop-table">
+      <tr><th>Earlier step</th><th>What it established</th></tr>
+      <tr><td>Lab 0</td><td>Sample Salesforce and Databricks data plus working connections.</td></tr>
+      <tr><td>Lab 1</td><td>Governance vocabulary and reference context.</td></tr>
+      <tr><td>Lab 2</td><td>Observed the raw source data without custom rules.</td></tr>
+      <tr><td>Lab 3</td><td>Agreed what should count as valid and which values should be standardized.</td></tr>
+      <tr><td>Lab 4A</td><td>Built validation rules and measured the raw data with pass/fail scorecards.</td></tr>
+    </table>
+  </div>
+
+  <!-- Goal of Lab 4B -->
+  <div class="w3-container" style="margin-top:30px;margin-bottom:30px;">
+    <h2>Goal of Lab 4B</h2>
+    <p>Apply those standards to the data itself. We build Cloud Data Integration (CDI) mappings that read the Salesforce and Databricks customer data, standardize selected values, re-check required validation rules, and write the result to Databricks.</p>
+
+<pre>Source record
+|
+v
+STANDARDIZE
+phone / city / state / country
+|
+v
+VALIDATE
+email / date as required by the mapping
+|
+v
+ROUTE
++--&gt; valid -&gt; staging table
++--&gt; any failure -&gt; exception table</pre>
+
+    <blockquote><strong>The original sources are never changed:</strong> the mappings create standardized copies in Databricks. The clean staging tables become the input to MDM in Lab 5.</blockquote>
+
+    <blockquote><strong>Summary:</strong> decide the standards &rarr; measure against them &rarr; apply them to create clean data.</blockquote>
+  </div>
+
+  <!-- What CDI is doing here -->
+  <div class="w3-container" style="margin-top:30px;margin-bottom:30px;">
+    <h2>What CDI is doing here</h2>
+    <p>Cloud Data Integration (CDI) is the Informatica service that reads records from a source, applies transformations, and writes results to a target. In this lab, CDI is the execution pipeline for the Cleanse and Rule Specification assets.</p>
+    <table class="workshop-table">
+      <tr><th>Stage</th><th>Informatica transformation</th><th>Purpose</th></tr>
+      <tr><td>Read</td><td>Source</td><td>Read Salesforce or Databricks records.</td></tr>
+      <tr><td>Standardize</td><td>Cleanse</td><td>Change selected values into the approved representation.</td></tr>
+      <tr><td>Validate</td><td>Rule Specification</td><td>Add Valid / Invalid verdict columns without changing the field being checked.</td></tr>
+      <tr><td>Route</td><td>Router</td><td>Send rows to valid or exception output according to the verdicts.</td></tr>
+      <tr><td>Write</td><td>Target</td><td>Create the Databricks staging and exception tables.</td></tr>
+    </table>
+  </div>
+
+  <!-- Why there are two mappings and four output tables -->
+  <div class="w3-container" style="margin-top:30px;margin-bottom:30px;">
+    <h2>Why there are two mappings and four output tables</h2>
+    <p>Salesforce and Databricks contain different source fields. We keep one mapping and one valid/exception table pair per source rather than forcing both sources into a single artificial schema.</p>
+    <table class="workshop-table">
+      <tr><th>Mapping</th><th>Valid rows</th><th>Failed rows</th></tr>
+      <tr><td>CV1_M_01_STANDARDIZE_SF</td><td>staging_sf_customer</td><td>dq_exception_sf</td></tr>
+      <tr><td>CV1_M_02_STANDARDIZE_DBX</td><td>staging_dbx_customer</td><td>dq_exception_dbx</td></tr>
+    </table>
+    <p>MDM performs the cross-source identity reconciliation later. Lab 4B's job is to create reliable per-source inputs.</p>
+  </div>
+
+  <!-- Scope note - transactions -->
+  <div class="w3-container" style="margin-top:30px;margin-bottom:30px;">
+    <h2>Scope note &mdash; transactions</h2>
+    <p>The Databricks mapping in this lab uses customer_events because it contains identity attributes such as email and phone hint that matter for customer matching. The transactions table is not standardized into an MDM identity feed here. Its amount/date rules can still be measured in Lab 4A and the transaction data remains available for downstream analytics and Data 360 use.</p>
+  </div>
+
+  <!-- Prerequisites -->
+  <div class="w3-container" style="margin-top:30px;margin-bottom:30px;">
+    <h2>Prerequisites</h2>
+    <p>&bull; CV1_DICT_CITY, CV1_DICT_STATE, and CV1_DICT_COUNTRY exist.</p>
+    <p>&bull; The required Rule Specifications exist and validate.</p>
+    <p>&bull; CV1_RS_EMAIL_VALID outputs EmailStatus.</p>
+    <p>&bull; CV1_RS_DATE_NOT_FUTURE outputs DateStatus.</p>
+    <p>&bull; The Secure Agent and Databricks connection CN_DBX_CV1 are working.</p>
+  </div>
+
+  <!-- Part A -->
+  <div class="w3-container" style="margin-top:30px;margin-bottom:30px;">
+    <h2>Part A &mdash; Create the four Cleanse assets</h2>
+
+    <details>
+      <summary class="accordion">What a Cleanse asset does</summary>
+      <div class="accordionDrop">
+        <p>A Cleanse asset contains reusable standardization logic for one input. In this workshop, each asset has exactly one instance and one valid step.</p>
+        <div class="callout-important"><strong>Configuration needs careful attention:</strong> each Cleanse asset should show exactly 1 instance and '1 valid step'. An accidental second instance changes how the mapping input is presented and causes unnecessary confusion.</div>
+      </div>
+    </details>
+
+    <details>
+      <summary class="accordion">A1. CV1_CL_PHONE_NORMALIZE</summary>
+      <div class="accordionDrop">
+        <p>Purpose: remove the formatting characters present in the sample phone values, for example (555) 0198 &rarr; 5550198.</p>
+        <p>1. Data Quality &rarr; New &rarr; Cleanse.</p>
+        <p>2. Name = CV1_CL_PHONE_NORMALIZE. Location = CV1_DATA_AI_WORKSHOP. Dimension = Consistency. Save.</p>
+        <p>3. Configuration &rarr; single instance &rarr; input name = Phone_In.</p>
+        <p>4. Add Step &rarr; Remove Values.</p>
+        <p>5. Mode = Remove Custom Strings; Delimiter = None; Scope = Anywhere.</p>
+        <p>6. Add one custom string per formatting character: (, ), -, and a space.</p>
+        <p>7. Save. Optional Test: (555) 0198 &rarr; 5550198.</p>
+      </div>
+    </details>
+
+    <details>
+      <summary class="accordion">A2. CV1_CL_CITY_STANDARDIZE</summary>
+      <div class="accordionDrop">
+        <p>8. New &rarr; Cleanse. Name = CV1_CL_CITY_STANDARDIZE. Location = CV1_DATA_AI_WORKSHOP. Dimension = Consistency. Save.</p>
+        <p>9. Configuration &rarr; single instance &rarr; input name = City_In.</p>
+        <p>10. Add Step &rarr; Replace Values.</p>
+        <p>11. Mode = Replace Input Values with Dictionary Values.</p>
+        <p>12. Dictionary = CV1_DICT_CITY. Valid Column = Column 1 (standard_value). Case Sensitive = unchecked. Delimiter = None. Scope = Anywhere.</p>
+        <p>13. Save. Optional Test: ATX &rarr; Austin.</p>
+      </div>
+    </details>
+
+    <details>
+      <summary class="accordion">A3. CV1_CL_STATE_STANDARDIZE</summary>
+      <div class="accordionDrop">
+        <p>Repeat A2 with Name = CV1_CL_STATE_STANDARDIZE, input = State_In, Dictionary = CV1_DICT_STATE. Example result: Texas &rarr; TX.</p>
+      </div>
+    </details>
+
+    <details>
+      <summary class="accordion">A4. CV1_CL_COUNTRY_STANDARDIZE</summary>
+      <div class="accordionDrop">
+        <p>Repeat A2 with Name = CV1_CL_COUNTRY_STANDARDIZE, input = Country_In, Dictionary = CV1_DICT_COUNTRY. Example result: USA &rarr; US.</p>
+        <blockquote><strong>Part A result:</strong> four reusable Cleanse assets exist; phone is reused in both mappings, while city/state/country apply to the Salesforce mapping.</blockquote>
+      </div>
+    </details>
+  </div>
+
+  <!-- Part B -->
+  <div class="w3-container" style="margin-top:30px;margin-bottom:30px;">
+    <h2>Part B &mdash; Build CV1_M_01_STANDARDIZE_SF</h2>
+
+<pre>Salesforce CV1_Customer__c
+-&gt; Cleanse Phone
+-&gt; Cleanse City
+-&gt; Cleanse State
+-&gt; Cleanse Country
+-&gt; Email Rule
+-&gt; Date Rule
+-&gt; Router
++-&gt; staging_sf_customer
++-&gt; dq_exception_sf</pre>
+
+    <details>
+      <summary class="accordion">B1. Create mapping and source</summary>
+      <div class="accordionDrop">
+        <p>14. Data Integration &rarr; New &rarr; Mapping &rarr; Create.</p>
+        <p>15. Name = CV1_M_01_STANDARDIZE_SF. Location = CV1_DATA_AI_WORKSHOP.</p>
+        <p>16. Source &rarr; Connection = CN_SF_CV1; Object Type = Single Object; Object = CV1_Customer__c.</p>
+        <p>17. General &rarr; rename the source to src_SF_Customer. Save.</p>
+        <div class="callout-important"><strong>Source filter must be empty:</strong> Source &rarr; Query Options &rarr; Filter should read Configure... with no condition. A stray filter caused a verified 0-row SOQL failure during testing.</div>
+      </div>
+    </details>
+
+    <details>
+      <summary class="accordion">B2. Add the four Cleanse transformations</summary>
+      <div class="accordionDrop">
+        <table class="workshop-table">
+          <tr><th>Transform</th><th>Cleanse asset</th><th>Input field</th></tr>
+          <tr><td>Cleanse_Phone</td><td>CV1_CL_PHONE_NORMALIZE</td><td>Phone__c</td></tr>
+          <tr><td>Cleanse_City</td><td>CV1_CL_CITY_STANDARDIZE</td><td>City__c</td></tr>
+          <tr><td>Cleanse_State</td><td>CV1_CL_STATE_STANDARDIZE</td><td>State__c</td></tr>
+          <tr><td>Cleanse_Country</td><td>CV1_CL_COUNTRY_STANDARDIZE</td><td>Country__c</td></tr>
+        </table>
+        <p>For each Cleanse, drag the transformation, connect the previous object, name it, and select the asset.</p>
+        <p>&bull; Phone / Remove Values asset: use the Cleanse-tab Add button and select Phone__c.</p>
+        <p>&bull; Dictionary assets: if no Add button appears, use Field Mapping to connect the incoming field to City_In / State_In / Country_In.</p>
+        <p>&bull; Output Fields should populate automatically after the input is attached.</p>
+        <div class="callout-important"><strong>Do not restrict Incoming Fields:</strong> leave Include All Fields. Restricting incoming fields drops columns that downstream transformations and targets still need.</div>
+      </div>
+    </details>
+
+    <details>
+      <summary class="accordion">B3. Add the two Rule Specification transformations</summary>
+      <div class="accordionDrop">
+        <table class="workshop-table">
+          <tr><th>Transform</th><th>Rule Specification</th><th>Map incoming field</th><th>Output</th></tr>
+          <tr><td>RuleSpec_Email</td><td>CV1_RS_EMAIL_VALID</td><td>Email__c &rarr; Email</td><td>EmailStatus</td></tr>
+          <tr><td>RuleSpec_Date</td><td>CV1_RS_DATE_NOT_FUTURE</td><td>Last_Purchase_Date__c &rarr; DateValue</td><td>DateStatus</td></tr>
+        </table>
+        <p>For each transformation: select the Rule Specification, open Field Mapping, choose Manual, and drag the incoming source field to the rule input.</p>
+        <div class="callout-important"><strong>Verify '1 of 1 mapped':</strong> seeing the rule input in the grid is not enough. If the mapping says 0 of 1 mapped, the rule is not receiving the field.</div>
+        <div class="callout-important"><strong>Unique verdict columns are required:</strong> EmailStatus and DateStatus prevent a field-name collision when both rules reach the Router.</div>
+      </div>
+    </details>
+
+    <details>
+      <summary class="accordion">B4. Add the Router and Databricks targets</summary>
+      <div class="accordionDrop">
+        <p>18. Drag a Router and connect RuleSpec_Date &rarr; Router.</p>
+        <p>19. Name = Router_ValidInvalid.</p>
+        <p>20. Output Groups &rarr; add group Valid with condition:</p>
+<pre>EmailStatus = 'Valid' AND DateStatus = 'Valid'</pre>
+        <p>21. Keep the automatically created catch-all group DEFAULT1. It receives every row that does not satisfy Valid.</p>
+        <p>22. Use the orange + to expand the Router's output groups.</p>
+        <p>23. Connect Valid &rarr; target named tgt_Valid.</p>
+        <p>24. Connect DEFAULT1 &rarr; target named tgt_Exception.</p>
+        <p>Configure both targets:</p>
+        <p>&bull; Connection = CN_DBX_CV1.</p>
+        <p>&bull; Object Type = Single Object &rarr; Create New at Runtime.</p>
+        <p>&bull; Table Format = Delta.</p>
+        <p>&bull; Database Name = cv1_workshop.</p>
+        <p>&bull; Operation = Insert.</p>
+        <p>&bull; tgt_Valid table = staging_sf_customer.</p>
+        <p>&bull; tgt_Exception table = dq_exception_sf.</p>
+        <p>&bull; Leave Create-New-at-Runtime field mapping automatic.</p>
+        <p>25. Save. Mapping header should show Valid.</p>
+      </div>
+    </details>
+
+    <details>
+      <summary class="accordion">B5. Run</summary>
+      <div class="accordionDrop">
+        <p>26. Click Run.</p>
+        <p>27. Select the Secure Agent Runtime Environment explicitly in the Run dialog.</p>
+        <p>28. Monitor My Jobs.</p>
+        <div class="callout-important"><strong>Expected:</strong> Status = Success, Rows Processed = 4. Databricks creates staging_sf_customer and dq_exception_sf on the first run.</div>
+      </div>
+    </details>
+  </div>
+
+  <!-- Part C -->
+  <div class="w3-container" style="margin-top:30px;margin-bottom:30px;">
+    <h2>Part C &mdash; Build CV1_M_02_STANDARDIZE_DBX</h2>
+    <p>The Databricks customer_events mapping is shorter. It standardizes phone_hint and validates web_email.</p>
+
+<pre>Databricks customer_events
+-&gt; Cleanse Phone
+-&gt; Email Rule
+-&gt; Router
++-&gt; staging_dbx_customer
++-&gt; dq_exception_dbx</pre>
+
+    <details>
+      <summary class="accordion">C1. Create mapping and source</summary>
+      <div class="accordionDrop">
+        <p>29. New &rarr; Mapping &rarr; Create.</p>
+        <p>30. Name = CV1_M_02_STANDARDIZE_DBX. Location = CV1_DATA_AI_WORKSHOP.</p>
+        <p>31. Source &rarr; Connection = CN_DBX_CV1; Object = customer_events in cv1_workshop.</p>
+        <p>32. General &rarr; rename to src_DBX_Events. Save.</p>
+      </div>
+    </details>
+
+    <details>
+      <summary class="accordion">C2. Cleanse phone_hint</summary>
+      <div class="accordionDrop">
+        <p>33. Add Cleanse_Phone.</p>
+        <p>34. Select CV1_CL_PHONE_NORMALIZE.</p>
+        <p>35. Click Add &rarr; phone_hint.</p>
+        <p>36. Confirm the output field is populated and leave Incoming Fields unrestricted.</p>
+      </div>
+    </details>
+
+    <details>
+      <summary class="accordion">C3. Validate web_email</summary>
+      <div class="accordionDrop">
+        <p>37. Add RuleSpec_Email.</p>
+        <p>38. Select CV1_RS_EMAIL_VALID.</p>
+        <p>39. Field Mapping &rarr; Manual &rarr; web_email &rarr; Email.</p>
+        <p>40. Confirm 1 of 1 mapped and output = EmailStatus.</p>
+      </div>
+    </details>
+
+    <details>
+      <summary class="accordion">C4. Router and targets</summary>
+      <div class="accordionDrop">
+        <p>41. Add Router_ValidInvalid.</p>
+        <p>42. Add group Valid with condition:</p>
+<pre>EmailStatus = 'Valid'</pre>
+        <p>43. Expand the Router outputs.</p>
+        <p>44. Valid &rarr; tgt_Valid &rarr; staging_dbx_customer.</p>
+        <p>45. DEFAULT1 &rarr; tgt_Exception &rarr; dq_exception_dbx.</p>
+        <p>Both targets use CN_DBX_CV1, Create New at Runtime, Delta, Database Name = cv1_workshop, Operation = Insert.</p>
+        <p>46. Save.</p>
+      </div>
+    </details>
+
+    <details>
+      <summary class="accordion">C5. Run</summary>
+      <div class="accordionDrop">
+        <p>47. Run using the Secure Agent.</p>
+        <div class="callout-important"><strong>Expected:</strong> Status = Success, Rows Processed = 4. Databricks creates staging_dbx_customer and dq_exception_dbx.</div>
+        <p>The two mappings are independent because they write to different tables; their run order does not matter.</p>
+      </div>
+    </details>
+  </div>
+
+  <!-- Part D -->
+  <div class="w3-container" style="margin-top:30px;margin-bottom:30px;">
+    <h2>Part D &mdash; Verify the Databricks outputs</h2>
+
+    <details>
+      <summary class="accordion">D1. Reconcile row counts</summary>
+      <div class="accordionDrop">
+<pre>-- Salesforce
+SELECT 'valid' t, COUNT(*) n
+FROM cv1_workshop_catalog.cv1_workshop.staging_sf_customer
+UNION ALL
+SELECT 'exception', COUNT(*)
+FROM cv1_workshop_catalog.cv1_workshop.dq_exception_sf;
+
+-- Databricks
+SELECT 'valid' t, COUNT(*) n
+FROM cv1_workshop_catalog.cv1_workshop.staging_dbx_customer
+UNION ALL
+SELECT 'exception', COUNT(*)
+FROM cv1_workshop_catalog.cv1_workshop.dq_exception_dbx;</pre>
+        <div class="callout-important"><strong>Expected split:</strong> Salesforce = 2 valid / 2 exception. Databricks = 3 valid / 1 exception.</div>
+        <p>&bull; Salesforce valid: sf-003 and sf-004.</p>
+        <p>&bull; Salesforce exception: sf-001 future date; sf-002 invalid email.</p>
+        <p>&bull; Databricks valid: ev-001, ev-002, ev-004.</p>
+        <p>&bull; Databricks exception: ev-003 empty email.</p>
+        <p>&bull; Each mapping processed 4 rows, and valid + exception must reconcile to 4.</p>
+      </div>
+    </details>
+
+    <details>
+      <summary class="accordion">D2. Confirm standardized values</summary>
+      <div class="accordionDrop">
+        <p>Check that valid outputs show standardized values such as digits-only phone, Austin, TX, and US where applicable.</p>
+      </div>
+    </details>
+
+    <details>
+      <summary class="accordion">D3. Preview the cross-source overlap that MDM will use</summary>
+      <div class="accordionDrop">
+<pre>SELECT 'SF' src, Email__c email, Phone__c_Cleanse_Phone phone
+FROM cv1_workshop_catalog.cv1_workshop.staging_sf_customer
+UNION ALL
+SELECT 'DBX', web_email, phone_hint_Cleanse_Phone
+FROM cv1_workshop_catalog.cv1_workshop.staging_dbx_customer
+ORDER BY email;</pre>
+        <p>You should see sarah.jenkins@gmail.com and diego.m@example.com in both source outputs. These exact-email overlaps are the pairs MDM can compare in Lab 5.</p>
+      </div>
+    </details>
+  </div>
+
+  <!-- Repeatable demo reset -->
+  <div class="w3-container" style="margin-top:30px;margin-bottom:30px;">
+    <h2>Repeatable demo reset</h2>
+    <p>Both targets use Create New at Runtime and Insert. For a clean rerun, drop the four Databricks output tables; the mappings recreate them on the next run.</p>
+  </div>
+
+  <!-- Troubleshooting -->
+  <div class="w3-container" style="margin-top:30px;margin-bottom:30px;">
+    <h2>Troubleshooting</h2>
+    <table class="workshop-table">
+      <tr><th>Symptom</th><th>Likely cause / correction</th></tr>
+      <tr><td>Cleanse Output Fields empty</td><td>Input field was not attached. Use Add or Field Mapping depending on the asset type.</td></tr>
+      <tr><td>Downstream transform has 0 incoming fields</td><td>An upstream transform is incomplete or Incoming Fields were restricted. Restore Include All Fields.</td></tr>
+      <tr><td>Cleanse has unexpected second input</td><td>The Cleanse asset has duplicate instances. Delete the extra instance and keep one meaningful input.</td></tr>
+      <tr><td>Cleanse shows 0 valid steps</td><td>The step was not added. Build the Remove Values or Replace Values step.</td></tr>
+      <tr><td>Rule Spec shows 0 of 1 mapped</td><td>Drag the incoming field to the rule input on Field Mapping.</td></tr>
+      <tr><td>Router field-name conflict</td><td>Rule outputs are both named Status. Use EmailStatus and DateStatus in the Lab 4A assets.</td></tr>
+      <tr><td>No group-picker appears on Router</td><td>Expand Router with the orange + and connect from the group's own port. DEFAULT1 is the catch-all.</td></tr>
+      <tr><td>Target has Salesforce objects / no Create New at Runtime</td><td>Target connection is still Salesforce. Change to CN_DBX_CV1.</td></tr>
+      <tr><td>Rows Processed = 0 with Salesforce query error</td><td>Clear the stray Source filter.</td></tr>
+      <tr><td>Databricks warehouse is overloaded</td><td>Close unused mapping/Preview panels and manage the SQL Warehouse when idle.</td></tr>
+    </table>
+  </div>
+
+  <!-- End-of-lab validation -->
+  <div class="w3-container" style="margin-top:30px;margin-bottom:30px;">
+    <h2>End-of-lab validation</h2>
+    <p>&bull; 4 Cleanse assets exist with one instance and one valid step.</p>
+    <p>&bull; Both mappings show Valid and ran successfully.</p>
+    <p>&bull; My Jobs shows Rows Processed = 4 for each mapping.</p>
+    <p>&bull; Four Databricks output tables exist.</p>
+    <p>&bull; Splits are 2/2 for Salesforce and 3/1 for Databricks.</p>
+    <p>&bull; Standardized values are present in the valid tables.</p>
+    <p>&bull; Raw Salesforce and Databricks source data is unchanged.</p>
+  </div>
+
+  <!-- Illustrations -->
+  <div class="w3-container" style="margin-top:30px;margin-bottom:30px;">
+    <h2>Illustrations</h2>
+
+    <div class="w3-card w3-container w3-center w3-mobile"><img class="w3-image" src="img/slide29.jpeg" alt="Salesforce CDI standardize mapping"></div>
+    <p class="img-caption">The Salesforce CDI mapping turns the quality design into an executable flow. It reads the source record, standardizes phone, city, state and country, applies the email and date rules, and then routes acceptable records to staging and failed records to the exception target. The original Salesforce data is not overwritten.</p>
+    <p>&nbsp;</p>
+
+    <div class="w3-card w3-container w3-center w3-mobile"><img class="w3-image" src="img/slide30.jpeg" alt="Databricks CDI standardize mapping"></div>
+    <p class="img-caption">The Databricks mapping follows the same architecture with the controls appropriate to that source: read the event record, normalize the phone value, validate email, and route the result either to clean staging or to the exception table. The pattern is reusable even though the source-specific rules differ.</p>
+    <p>&nbsp;</p>
+
+    <div class="w3-card w3-container w3-center w3-mobile"><img class="w3-image" src="img/slide31.jpeg" alt="Databricks mapping run success with valid and exception split"></div>
+    <p class="img-caption">The Databricks mapping completed successfully for all four input rows. Three records were written to staging_dbx_customer and one was routed to dq_exception_dbx, showing that failed quality checks are separated rather than silently allowed into the downstream MDM feed.</p>
+    <p>&nbsp;</p>
+  </div>
+
+  <!-- What did we get out of this lab? -->
+  <div class="w3-container" style="margin-top:30px;margin-bottom:30px;">
+    <h2>What did we get out of this lab?</h2>
+    <p>We operationalized the data-quality decisions. The mappings now produce source-specific clean staging tables for MDM and keep failed rows separate for review.</p>
+
+<pre>Salesforce raw data --&gt; standardize + validate --&gt; staging_sf_customer / dq_exception_sf
+Databricks raw data --&gt; standardize + validate --&gt; staging_dbx_customer / dq_exception_dbx
+
+Both staging tables
+|
+v
+Lab 5 MDM matching and mastering</pre>
+
+    <blockquote><strong>In short:</strong> Cleanse standardizes the data, Rule Specifications validate it, and the Router separates usable records from exceptions.</blockquote>
+  </div>
+
+  <!-- What's next -->
+  <div class="w3-container" style="margin-top:30px;margin-bottom:30px;">
+    <h2>What's next</h2>
+    <p>Lab 5 takes the Salesforce and Databricks staging outputs as separate source inputs. Customer 360 uses the matching email values to identify cross-source pairs. In the verified workshop flow, the Salesforce Sarah record sf-003 matches Databricks ev-001 on sarah.jenkins@gmail.com and is merged into one golden record; ev-002 remains separate because its email is different.</p>
+
+    <blockquote><strong>Demo note:</strong> a later Lab 8 exercise recreated the Salesforce output tables. Preserved copies staging_sf_customer_bkp_20260807 and dq_exception_sf_bkp_20260807 can be used when demonstrating the original rows without rerunning the mapping.</blockquote>
+  </div>
+
+  <!-- Appendix - CDI quick reference -->
+  <div class="w3-container" style="margin-top:30px;margin-bottom:30px;">
+    <h2>Appendix &mdash; CDI quick reference</h2>
+    <p>&bull; New mapping: Data Integration &rarr; New &rarr; Mapping &rarr; Create.</p>
+    <p>&bull; Each Cleanse transformation uses one Cleanse asset.</p>
+    <p>&bull; Each Rule Specification transformation maps one incoming field to the rule input and adds its output verdict.</p>
+    <p>&bull; Leave Cleanse Incoming Fields as Include All Fields.</p>
+    <p>&bull; Router: add Valid and use DEFAULT1 as the catch-all exception path.</p>
+    <p>&bull; Databricks Create New at Runtime creates the Delta target on first run; Database Name = cv1_workshop.</p>
+    <p>&bull; Source data remains unchanged; standardized outputs live in the staging/exception tables.</p>
+  </div>
+
+  <!-- Footer -->
+  <div class="w3-container">
+    <div class="w3-bar w3-black">
+      <a href="index.html" class="w3-bar-item w3-button"><i class="fa fa-home fa-fw w3-margin-right"></i>Introduction</a>
+      <a href="lab-4a.html" class="w3-bar-item w3-button"><i class="fa fa-book fa-fw w3-margin-right"></i>Lab 4A</a>
+      <a href="lab-5.html" class="w3-bar-item w3-button"><i class="fa fa-book fa-fw w3-margin-right"></i>Lab 5</a>
+    </div>
+    <p>Trusted Data Foundation Workshop</p>
+  </div>
+
+  <p>&nbsp;</p>
+</div>
+
+<!-- Scripts -->
+<script src="nav.js"></script>
+<script>
+function w3_open() {
+  document.getElementById("mySidebar").style.display = "block";
+  document.getElementById("myOverlay").style.display = "block";
+}
+function w3_close() {
+  document.getElementById("mySidebar").style.display = "none";
+  document.getElementById("myOverlay").style.display = "none";
+}
+</script>
+</body>
+</html>

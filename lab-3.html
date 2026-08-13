@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Lab 3 - Agree on What Good Data Means</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<style>
+body,h1,h2,h3,h4,h5,h6 {font-family: "Raleway", sans-serif}
+body {font-size: 17px;}
+.accordion {
+  background: #336699;
+  border: 1px solid #F1F0FF;
+  border-radius: 5px;
+  font-weight: 700;
+  margin: 10px;
+  margin-bottom: 15px;
+  padding: 10px 20px;
+  cursor: pointer;
+  font-size: 130%;
+  color: white;
+}
+.accordionDrop {
+  padding: 0px 30px;
+}
+::-webkit-details-marker {
+  display: none;
+}
+table.workshop-table {
+  border-collapse: collapse;
+  width: 100%;
+  margin: 15px 0;
+}
+table.workshop-table th, table.workshop-table td {
+  border: 1px solid #ddd;
+  padding: 10px 14px;
+  text-align: left;
+}
+table.workshop-table th {
+  background: #336699;
+  color: white;
+}
+table.workshop-table tr:nth-child(even) {
+  background: #f9f9f9;
+}
+blockquote {
+  border-left: 4px solid #336699;
+  margin: 15px 0;
+  padding: 10px 20px;
+  background: #f5f8fc;
+}
+code, pre {
+  background: #f4f4f4;
+  padding: 2px 6px;
+  border-radius: 3px;
+  font-size: 95%;
+}
+pre {
+  padding: 15px;
+  overflow-x: auto;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+}
+.img-caption {
+  text-align: center;
+  color: #555;
+  font-style: italic;
+  margin: 12px 40px 20px;
+  line-height: 1.5;
+}
+.callout-important {
+  background: #fff3cd;
+  border-left: 4px solid #ffc107;
+  padding: 12px 20px;
+  margin: 15px 0;
+}
+.callout-tip {
+  background: #d1ecf1;
+  border-left: 4px solid #17a2b8;
+  padding: 12px 20px;
+  margin: 15px 0;
+}
+.hero {
+  background: linear-gradient(135deg, #2b567f 0%, #336699 60%, #3d76ac 100%);
+  color: #fff;
+  padding: 40px 40px 34px;
+}
+.hero .hero-eyebrow {
+  margin: 0 0 4px;
+  font-size: 0.85em;
+  font-weight: 700;
+  letter-spacing: 2px;
+  color: #bcd6ef;
+  text-transform: uppercase;
+}
+.hero h1 {
+  margin: 0 0 22px;
+  font-size: 2.2em;
+  font-weight: 800;
+}
+.journey {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px;
+}
+.journey .step {
+  background: rgba(255,255,255,0.12);
+  border: 1px solid rgba(255,255,255,0.35);
+  border-radius: 20px;
+  padding: 7px 16px;
+  font-size: 0.92em;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.journey .arrow {
+  color: #bcd6ef;
+  font-size: 1.1em;
+  padding: 0 2px;
+}
+</style>
+</head>
+<body class="w3-content" style="max-width:1600px;">
+
+<!-- Sidebar/menu -->
+<nav class="w3-sidebar w3-collapse w3-white w3-animate-left" style="z-index:3;width:300px;overflow-y:auto;padding-bottom:50px;" id="mySidebar"><br></nav>
+
+<!-- Overlay effect when opening sidebar on small screens -->
+<div class="w3-overlay w3-hide-large w3-animate-opacity" onclick="w3_close()" style="cursor:pointer" title="close side menu" id="myOverlay"></div>
+
+<!-- PAGE CONTENT -->
+<div class="w3-main" style="margin-left:300px;border-left:1px solid #000000;">
+
+  <!-- Header -->
+  <header>
+    <span class="w3-button w3-hide-large w3-xxlarge w3-hover-text-grey" onclick="w3_open()"><i class="fa fa-bars"></i></span>
+    <div class="hero">
+      <p class="hero-eyebrow">Lab 3</p>
+      <h1>Agree on What Good Data Means</h1>
+      <div class="journey">
+        <span class="step">Review profile observations</span>
+        <span class="arrow"><i class="fa fa-long-arrow-right"></i></span>
+        <span class="step">Agree what is valid</span>
+        <span class="arrow"><i class="fa fa-long-arrow-right"></i></span>
+        <span class="step">Agree what to standardize</span>
+        <span class="arrow"><i class="fa fa-long-arrow-right"></i></span>
+        <span class="step">Define reference dictionaries</span>
+        <span class="arrow"><i class="fa fa-long-arrow-right"></i></span>
+        <span class="step">Specify rules for Lab 4A / 4B</span>
+      </div>
+    </div>
+  </header>
+
+  <!-- Lab title / subtitle -->
+  <div class="w3-container" style="margin-top:30px;margin-bottom:10px;">
+    <p><strong>Lab 3 &mdash; Agree on the Rules Before Building Them</strong></p>
+    <p><em>v2 &mdash; Aug 8, 2026. Translate profile observations into agreed validation and standardization requirements before building Informatica assets.</em></p>
+  </div>
+
+  <!-- Goal -->
+  <div class="w3-container" style="margin-top:30px;margin-bottom:30px;">
+    <h2>Goal</h2>
+    <p>Decide, with the business, what should count as valid data and which inconsistent values should be standardized. This lab is planning only: no source data changes and no Informatica rule executes yet.</p>
+
+    <blockquote>
+      <p>Profile observations<br>
+      |<br>
+      v<br>
+      Business decisions<br>
+      what is valid? what should be standardized?<br>
+      |<br>
+      v<br>
+      Lab 4A: validation rules<br>
+      Lab 4B: standardization + routing</p>
+    </blockquote>
+  </div>
+
+  <!-- Why this step exists -->
+  <div class="w3-container" style="margin-top:30px;margin-bottom:30px;">
+    <h2>Why This Step Exists</h2>
+    <p>Profiling tells us what is present in the data. It does not tell us what the business accepts. Before building technical rules, the business and data team need to agree on questions such as whether blank email is allowed, how phone numbers should be stored, which aliases are recognized, and how future dates or negative amounts should be treated.</p>
+
+    <blockquote><strong>The output of Lab 3:</strong> an agreed specification of the validation rules, standardization logic, and reference dictionaries that will be built next.</blockquote>
+  </div>
+
+  <!-- Four Informatica building blocks -->
+  <div class="w3-container" style="margin-top:30px;margin-bottom:30px;">
+    <h2>Four Informatica Building Blocks Used After This Lab</h2>
+    <table class="workshop-table">
+      <tr><th>Building block</th><th>What it does</th><th>Where it runs</th></tr>
+      <tr><td>Rule Specification</td><td>Evaluates a value and returns a result such as Valid or Invalid. It does not change the source value.</td><td>Attached to a profile in Lab 4A; also reused inside CDI mappings in Lab 4B.</td></tr>
+      <tr><td>Cleanse asset</td><td>Transforms a value into the required standard form.</td><td>Inside CDI mappings in Lab 4B.</td></tr>
+      <tr><td>Dictionary</td><td>Stores approved/standard values and recognized variants used by rules and cleanse logic.</td><td>Referenced by Rule Specifications and Cleanse assets.</td></tr>
+      <tr><td>CDI mapping</td><td>Reads records, applies transformations, and writes results to targets.</td><td>Lab 4B operationalizes the standardization and validation logic.</td></tr>
+    </table>
+  </div>
+
+  <!-- Why validation and standardization are separate -->
+  <div class="w3-container" style="margin-top:30px;margin-bottom:30px;">
+    <h2>Why Validation and Standardization Are Separate</h2>
+    <p>A value can be recognized but still not be in the preferred standard form. For example, the city dictionary can recognize both ATX and Austin. The validation rule can therefore say the value is known, while the Cleanse asset still standardizes ATX to Austin.</p>
+
+    <blockquote>
+      <p>ATX<br>
+      |<br>
+      +--&gt; Validation: recognized value -&gt; Valid<br>
+      |<br>
+      +--&gt; Standardization: ATX -&gt; Austin</p>
+    </blockquote>
+
+    <p>This is why Lab 4A and Lab 4B use different assets. Lab 4A measures whether data meets the agreed checks. Lab 4B changes selected values into the approved representation and separates records that still fail required validation.</p>
+  </div>
+
+  <!-- Agreed validation rules -->
+  <div class="w3-container" style="margin-top:30px;margin-bottom:30px;">
+    <h2>Agreed Validation Rules &mdash; Built in Lab 4A</h2>
+    <table class="workshop-table">
+      <tr><th>Problem observed</th><th>Agreed check</th><th>Asset</th><th>Dimension</th><th>Expected workshop behavior</th></tr>
+      <tr><td>Malformed email such as 12345@abc</td><td>Email must contain the required structural characters used by the workshop rule.</td><td>CV1_RS_EMAIL_VALID</td><td>Validity</td><td>sf-002 fails; Salesforce score expected 3/4 = 75%.</td></tr>
+      <tr><td>Missing phone</td><td>Phone must not be null.</td><td>CV1_RS_PHONE_REQUIRED</td><td>Completeness</td><td>sf-003 fails; expected 3/4 = 75%.</td></tr>
+      <tr><td>Phone formatting varies</td><td>Reject the formatting characters present in the raw workshop phone values; standard format is produced later by Cleanse.</td><td>CV1_RS_PHONE_FORMAT_VALID</td><td>Consistency</td><td>Raw formatted phones fail according to the tested Lab 4A rule behavior.</td></tr>
+      <tr><td>ATX / AUS aliases</td><td>City must be recognized by the city dictionary.</td><td>CV1_RS_CITY_VALID</td><td>Consistency</td><td>Recognized variants can pass; Lab 4B still standardizes them to Austin.</td></tr>
+      <tr><td>Texas / Tex variants</td><td>State must be recognized by the state dictionary.</td><td>CV1_RS_STATE_VALID</td><td>Consistency</td><td>Recognized variants can pass; Lab 4B standardizes them to TX.</td></tr>
+      <tr><td>USA / U.S. / United States variants</td><td>Country must be recognized by the country dictionary.</td><td>CV1_RS_COUNTRY_VALID</td><td>Consistency</td><td>Recognized variants can pass; Lab 4B standardizes them to US.</td></tr>
+      <tr><td>Future Salesforce purchase date</td><td>Date must not be later than the current date/time.</td><td>CV1_RS_DATE_NOT_FUTURE</td><td>Timeliness</td><td>sf-001 fails; expected 3/4 = 75%.</td></tr>
+      <tr><td>Negative transaction amount</td><td>Amount must be &gt;= 0.</td><td>CV1_RS_AMOUNT_NON_NEGATIVE</td><td>Validity</td><td>TXN-10002 fails; expected 4/5 = 80%.</td></tr>
+      <tr><td>Future transaction date</td><td>Transaction date must not be later than current date/time.</td><td>CV1_RS_DATE_NOT_FUTURE</td><td>Timeliness</td><td>TXN-10004 fails; expected 4/5 = 80%.</td></tr>
+    </table>
+
+    <blockquote><strong>About dictionary rules:</strong> the tested Lab 4A 'in dictionary:' operator checks both the standard and variant columns. Therefore ATX, Texas, or USA can be recognized as valid while still requiring standardization in Lab 4B.</blockquote>
+  </div>
+
+  <!-- Agreed standardization -->
+  <div class="w3-container" style="margin-top:30px;margin-bottom:30px;">
+    <h2>Agreed Standardization &mdash; Built in Lab 4B</h2>
+    <table class="workshop-table">
+      <tr><th>Problem</th><th>Required change</th><th>Cleanse asset</th></tr>
+      <tr><td>Phone punctuation and spaces</td><td>Remove the non-digit formatting characters used by the workshop data. Example: (555) 0198 &rarr; 5550198.</td><td>CV1_CL_PHONE_NORMALIZE</td></tr>
+      <tr><td>City aliases</td><td>Use the city dictionary to replace aliases with the approved city. Example: ATX / AUS &rarr; Austin.</td><td>CV1_CL_CITY_STANDARDIZE</td></tr>
+      <tr><td>State variants</td><td>Use the state dictionary to replace variants with the approved code. Example: Texas &rarr; TX.</td><td>CV1_CL_STATE_STANDARDIZE</td></tr>
+      <tr><td>Country variants</td><td>Use the country dictionary to replace variants with the approved code. Example: USA &rarr; US.</td><td>CV1_CL_COUNTRY_STANDARDIZE</td></tr>
+    </table>
+  </div>
+
+  <!-- Reference dictionaries -->
+  <div class="w3-container" style="margin-top:30px;margin-bottom:30px;">
+    <h2>Reference Dictionaries &mdash; Created in Lab 4A</h2>
+    <p>Each dictionary has a standard_value column and a raw_value/variant column. Rule Specifications use the dictionary to recognize values; Cleanse assets use it to replace a variant with the standard value.</p>
+    <table class="workshop-table">
+      <tr><th>Dictionary</th><th>Standard examples</th><th>Variant examples</th></tr>
+      <tr><td>CV1_DICT_STATE</td><td>TX, ON, CA, NY</td><td>Texas, Tex, Ontario, Ont</td></tr>
+      <tr><td>CV1_DICT_COUNTRY</td><td>US, CA, UK</td><td>USA, United States, U.S., Canada</td></tr>
+      <tr><td>CV1_DICT_CITY</td><td>Austin, Houston</td><td>ATX, AUS, HOU</td></tr>
+    </table>
+  </div>
+
+  <!-- How the agreed rules become running logic -->
+  <div class="w3-container" style="margin-top:30px;margin-bottom:30px;">
+    <h2>How the Agreed Rules Become Running Logic</h2>
+
+    <blockquote>
+      <p>Saved definition<br>
+      Rule Specification / Cleanse / Dictionary<br>
+      |<br>
+      v<br>
+      Execution context<br>
+      Profile task or CDI mapping<br>
+      |<br>
+      v<br>
+      Actual result<br>
+      Scorecard or standardized output</p>
+    </blockquote>
+
+    <p>Creating an asset saves its definition. The asset affects data only when an executing task uses it. A Rule Specification attached to a profile produces pass/fail results when the profile runs. A Cleanse asset inside a CDI mapping changes values when the mapping runs. A Dictionary is referenced by those assets.</p>
+  </div>
+
+  <!-- How this connects to Lab 4A -->
+  <div class="w3-container" style="margin-top:30px;margin-bottom:30px;">
+    <h2>How This Connects to Lab 4A</h2>
+    <p>Lab 4A creates the three dictionaries and eight Rule Specifications. Seven Salesforce-relevant rules are attached to the Salesforce profile and the profile is re-run to produce measured pass/fail counts. The transaction rules can also be applied to the Databricks transaction profile.</p>
+  </div>
+
+  <!-- How this connects to Lab 4B -->
+  <div class="w3-container" style="margin-top:30px;margin-bottom:30px;">
+    <h2>How This Connects to Lab 4B</h2>
+    <p>Lab 4B creates the four Cleanse assets and two CDI mappings. The mappings standardize selected values, re-apply required Rule Specifications, route valid records to staging tables, and route failing records to exception tables. The original sources remain unchanged.</p>
+
+    <blockquote>
+      <p>Decide the standards<br>
+      |<br>
+      v<br>
+      Measure against them (Lab 4A)<br>
+      |<br>
+      v<br>
+      Apply them to create standardized outputs (Lab 4B)</p>
+    </blockquote>
+  </div>
+
+  <!-- Example Template for Ideation -->
+  <div class="w3-container" style="margin-top:30px;margin-bottom:30px;">
+    <h2>Example Template for Ideation</h2>
+
+    <div class="w3-card w3-container w3-center w3-mobile"><img class="w3-image" src="img/slide21.jpeg" alt="Data Quality Rule Design Worksheet"></div>
+    <p class="img-caption">Profiling gives us evidence; this worksheet turns that evidence into decisions. For each issue, business and technical owners agree what counts as valid, what can be corrected automatically, what should happen when a record fails, who owns the decision, and which Informatica capability will eventually implement it. No data is changed in this lab.</p>
+    <p>&nbsp;</p>
+  </div>
+
+  <!-- End-of-lab check -->
+  <div class="w3-container" style="margin-top:30px;margin-bottom:30px;">
+    <h2>End-of-Lab Check</h2>
+    <p>&bull; The validation checks above make sense for the workshop data.</p>
+    <p>&bull; You understand which issues are measured, which are standardized, and which require both.</p>
+    <p>&bull; You understand that recognized dictionary variants can pass validation even before they are standardized.</p>
+    <p>&bull; No data was modified.</p>
+  </div>
+
+  <!-- What's next -->
+  <div class="w3-container" style="margin-top:30px;margin-bottom:30px;">
+    <h2>What's Next</h2>
+    <p>Lab 4A turns these decisions into actual Informatica dictionaries and Rule Specifications and attaches the rules to the profile to produce the first scorecard.</p>
+  </div>
+
+  <!-- Appendix -->
+  <div class="w3-container" style="margin-top:30px;margin-bottom:30px;">
+    <h2>Appendix &mdash; What Is a CDI Mapping?</h2>
+    <p>Cloud Data Integration (CDI) is Informatica's service for moving and transforming data. A mapping reads from a source, passes each record through configured transformations, and writes the result to a target.</p>
+    <p>In Lab 4B, CDI is the execution pipeline that carries the data-quality work: Cleanse transformations standardize values, Rule Specification transformations produce validation verdicts, and a Router sends valid and failing rows to separate Databricks tables.</p>
+  </div>
+
+  <!-- Footer -->
+  <div class="w3-container">
+    <div class="w3-bar w3-black">
+      <a href="lab-2.html" class="w3-bar-item w3-button"><i class="fa fa-search fa-fw w3-margin-right"></i>Lab 2</a>
+      <a href="lab-3.html" class="w3-bar-item w3-button"><i class="fa fa-check-square-o fa-fw w3-margin-right"></i>Lab 3</a>
+      <a href="lab-4a.html" class="w3-bar-item w3-button"><i class="fa fa-tachometer fa-fw w3-margin-right"></i>Lab 4A</a>
+    </div>
+    <p>Trusted Data Foundation Workshop</p>
+  </div>
+
+  <p>&nbsp;</p>
+</div>
+
+<!-- Scripts -->
+<script src="nav.js"></script>
+<script>
+function w3_open() {
+  document.getElementById("mySidebar").style.display = "block";
+  document.getElementById("myOverlay").style.display = "block";
+}
+function w3_close() {
+  document.getElementById("mySidebar").style.display = "none";
+  document.getElementById("myOverlay").style.display = "none";
+}
+</script>
+</body>
+</html>

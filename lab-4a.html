@@ -1,0 +1,562 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Lab 4A - Build Rules &amp; Measure the Data</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<style>
+body,h1,h2,h3,h4,h5,h6 {font-family: "Raleway", sans-serif}
+body {font-size: 17px;}
+.accordion {
+  background: #336699;
+  border: 1px solid #F1F0FF;
+  border-radius: 5px;
+  font-weight: 700;
+  margin: 10px;
+  margin-bottom: 15px;
+  padding: 10px 20px;
+  cursor: pointer;
+  font-size: 130%;
+  color: white;
+}
+.accordionDrop {
+  padding: 0px 30px;
+}
+::-webkit-details-marker {
+  display: none;
+}
+table.workshop-table {
+  border-collapse: collapse;
+  width: 100%;
+  margin: 15px 0;
+}
+table.workshop-table th, table.workshop-table td {
+  border: 1px solid #ddd;
+  padding: 10px 14px;
+  text-align: left;
+}
+table.workshop-table th {
+  background: #336699;
+  color: white;
+}
+table.workshop-table tr:nth-child(even) {
+  background: #f9f9f9;
+}
+blockquote {
+  border-left: 4px solid #336699;
+  margin: 15px 0;
+  padding: 10px 20px;
+  background: #f5f8fc;
+}
+code, pre {
+  background: #f4f4f4;
+  padding: 2px 6px;
+  border-radius: 3px;
+  font-size: 95%;
+}
+pre {
+  padding: 15px;
+  overflow-x: auto;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+}
+.img-caption {
+  text-align: center;
+  color: #555;
+  font-style: italic;
+  margin: 12px 40px 20px;
+  line-height: 1.5;
+}
+.callout-important {
+  background: #fff3cd;
+  border-left: 4px solid #ffc107;
+  padding: 12px 20px;
+  margin: 15px 0;
+}
+.callout-tip {
+  background: #d1ecf1;
+  border-left: 4px solid #17a2b8;
+  padding: 12px 20px;
+  margin: 15px 0;
+}
+.hero {
+  background: linear-gradient(135deg, #2b567f 0%, #336699 60%, #3d76ac 100%);
+  color: #fff;
+  padding: 40px 40px 34px;
+}
+.hero .hero-eyebrow {
+  margin: 0 0 4px;
+  font-size: 0.85em;
+  font-weight: 700;
+  letter-spacing: 2px;
+  color: #bcd6ef;
+  text-transform: uppercase;
+}
+.hero h1 {
+  margin: 0 0 22px;
+  font-size: 2.2em;
+  font-weight: 800;
+}
+.journey {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px;
+}
+.journey .step {
+  background: rgba(255,255,255,0.12);
+  border: 1px solid rgba(255,255,255,0.35);
+  border-radius: 20px;
+  padding: 7px 16px;
+  font-size: 0.92em;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.journey .arrow {
+  color: #bcd6ef;
+  font-size: 1.1em;
+  padding: 0 2px;
+}
+</style>
+</head>
+<body class="w3-content" style="max-width:1600px;">
+
+<!-- Sidebar/menu -->
+<nav class="w3-sidebar w3-collapse w3-white w3-animate-left" style="z-index:3;width:300px;overflow-y:auto;padding-bottom:50px;" id="mySidebar"><br></nav>
+
+<!-- Overlay effect when opening sidebar on small screens -->
+<div class="w3-overlay w3-hide-large w3-animate-opacity" onclick="w3_close()" style="cursor:pointer" title="close side menu" id="myOverlay"></div>
+
+<!-- PAGE CONTENT -->
+<div class="w3-main" style="margin-left:300px;border-left:1px solid #000000;">
+
+  <!-- Header -->
+  <header>
+    <span class="w3-button w3-hide-large w3-xxlarge w3-hover-text-grey" onclick="w3_open()"><i class="fa fa-bars"></i></span>
+    <div class="hero">
+      <p class="hero-eyebrow">Lab 4A</p>
+      <h1>Build Rules &amp; Measure the Data</h1>
+      <div class="journey">
+        <span class="step">Create dictionaries</span>
+        <span class="arrow"><i class="fa fa-long-arrow-right"></i></span>
+        <span class="step">Build Rule Specifications</span>
+        <span class="arrow"><i class="fa fa-long-arrow-right"></i></span>
+        <span class="step">Attach rules to profile</span>
+        <span class="arrow"><i class="fa fa-long-arrow-right"></i></span>
+        <span class="step">Run the scorecard</span>
+        <span class="arrow"><i class="fa fa-long-arrow-right"></i></span>
+        <span class="step">Read the baseline</span>
+      </div>
+    </div>
+  </header>
+
+  <!-- Goal -->
+  <div class="w3-container" style="margin-top:30px;margin-bottom:30px;">
+    <h2>Goal</h2>
+    <p>Turn the agreed data-quality standards into reusable Informatica rules and measure the source data against them. The output is a scorecard: pass/fail counts and percentages for each attached rule.</p>
+
+    <pre>Reference dictionaries
++
+Rule Specifications
+|
+v
+Profile task
+|
+v
+Scorecard
+how many rows pass / fail each rule</pre>
+
+    <blockquote><strong>This lab does not fix source data:</strong> it creates a measured baseline. Standardization happens in Lab 4B.</blockquote>
+  </div>
+
+  <!-- What you will build -->
+  <div class="w3-container" style="margin-top:30px;margin-bottom:30px;">
+    <h2>What you will build</h2>
+    <p>&bull; 3 Dictionaries: state, country, city.</p>
+    <p>&bull; 8 Rule Specifications: reusable validation checks.</p>
+    <p>&bull; A Salesforce profile run with 7 relevant rules attached.</p>
+    <p>&bull; Optional Databricks transaction profile run with amount/date rules.</p>
+  </div>
+
+  <!-- Prerequisites -->
+  <div class="w3-container" style="margin-top:30px;margin-bottom:30px;">
+    <h2>Prerequisites</h2>
+    <p>&bull; The agreed rule inventory from Lab 3 is understood.</p>
+    <p>&bull; The Salesforce profile task PROF_CV1_SF_CUSTOMERS_RAW exists.</p>
+    <p>&bull; The Secure Agent runtime and source connections work.</p>
+  </div>
+
+  <!-- Part A -->
+  <div class="w3-container" style="margin-top:30px;margin-bottom:30px;">
+    <h2>Part A &mdash; Create the reference dictionaries</h2>
+
+    <details>
+      <summary class="accordion">Why dictionaries come first</summary>
+      <div class="accordionDrop">
+        <p>The city, state, and country rules need a shared reference list of recognized values. The same dictionaries are later reused by the Cleanse assets to replace variants with standard values.</p>
+        <div class="callout-important"><strong>Important behavior:</strong> the tested 'in dictionary:' operator checks all columns in the dictionary. Both the standard value and its listed variants are recognized. Standardization is a separate Lab 4B step.</div>
+      </div>
+    </details>
+
+    <details>
+      <summary class="accordion">A1. Open Data Quality</summary>
+      <div class="accordionDrop">
+        <p>1. Service selector &rarr; Data Quality.</p>
+        <p>2. Explore &rarr; open CV1_DATA_AI_WORKSHOP.</p>
+      </div>
+    </details>
+
+    <details>
+      <summary class="accordion">A2. Create CV1_DICT_STATE</summary>
+      <div class="accordionDrop">
+        <p>3. New &rarr; Dictionary.</p>
+        <p>4. Name = CV1_DICT_STATE. Location = CV1_DATA_AI_WORKSHOP. Save.</p>
+        <p>5. Open the empty dictionary grid &rarr; Import.</p>
+        <p>6. Select cv1_dict_state.csv.</p>
+        <p>7. Delimiter = Comma. Select Import from first line.</p>
+        <p>8. Import.</p>
+        <p>9. Verify standard_value / raw_value rows such as TX / Texas, TX / TX, TX / Tex, ON / Ontario.</p>
+        <p>10. Save.</p>
+      </div>
+    </details>
+
+    <details>
+      <summary class="accordion">A3. Create CV1_DICT_COUNTRY</summary>
+      <div class="accordionDrop">
+        <p>11. New &rarr; Dictionary &rarr; Name = CV1_DICT_COUNTRY.</p>
+        <p>12. Import cv1_dict_country.csv with the same settings.</p>
+        <p>13. Verify examples such as US / United States, US / USA, US / U.S., US / US, CA / Canada.</p>
+        <p>14. Save.</p>
+      </div>
+    </details>
+
+    <details>
+      <summary class="accordion">A4. Create CV1_DICT_CITY</summary>
+      <div class="accordionDrop">
+        <p>15. New &rarr; Dictionary &rarr; Name = CV1_DICT_CITY.</p>
+        <p>16. Import cv1_dict_city.csv.</p>
+        <p>17. Verify examples such as Austin / ATX, Austin / AUS, Austin / Austin, Houston / HOU, Houston / Houston.</p>
+        <p>18. Save.</p>
+        <blockquote><strong>End-state for Part A:</strong> CV1_DICT_STATE, CV1_DICT_COUNTRY, and CV1_DICT_CITY exist in CV1_DATA_AI_WORKSHOP.</blockquote>
+      </div>
+    </details>
+  </div>
+
+  <!-- Part B -->
+  <div class="w3-container" style="margin-top:30px;margin-bottom:30px;">
+    <h2>Part B &mdash; Create the Rule Specifications</h2>
+
+    <details>
+      <summary class="accordion">What a Rule Specification does</summary>
+      <div class="accordionDrop">
+        <p>A Rule Specification reads an input value and writes an output verdict. It does not alter the input. We use Advanced mode because the confirmed workshop expressions require functions/operators that are not available in the required form in Basic mode.</p>
+      </div>
+    </details>
+
+    <details>
+      <summary class="accordion">The creation sequence &mdash; use this every time</summary>
+      <div class="accordionDrop">
+        <p>19. Definition &rarr; enter the rule name and Dimension &rarr; Save.</p>
+        <p>20. Configuration &rarr; immediately click Convert to Advanced.</p>
+        <p>21. Manage Inputs and Outputs &rarr; add the required Input and Output.</p>
+        <p>22. Enter the IF / THEN / ELSE logic.</p>
+        <p>23. Click Validate.</p>
+        <p>24. Save.</p>
+        <div class="callout-important"><strong>Configuration needs careful attention:</strong> convert to Advanced before building the inputs. In the tested tenant, converting after Basic-mode configuration does not carry that configuration into the Advanced editor.</div>
+        <div class="callout-important"><strong>Output names must match the code:</strong> most rules use Status. CV1_RS_EMAIL_VALID uses EmailStatus and CV1_RS_DATE_NOT_FUTURE uses DateStatus so both can be chained in the same Lab 4B mapping without a field-name collision.</div>
+        <div class="callout-important"><strong>Confirmed string function:</strong> use INSTR(), not Contains(). Contains() saved successfully in testing but did not produce the intended runtime result.</div>
+      </div>
+    </details>
+
+    <details>
+      <summary class="accordion">Dimensions used in the scorecard</summary>
+      <div class="accordionDrop">
+        <table class="workshop-table">
+          <tr><th>Dimension</th><th>Meaning in this workshop</th></tr>
+          <tr><td>Validity</td><td>Does the value meet the required structural/business condition?</td></tr>
+          <tr><td>Completeness</td><td>Is the required value present?</td></tr>
+          <tr><td>Consistency</td><td>Is the representation recognized/consistent with the agreed standard?</td></tr>
+          <tr><td>Timeliness</td><td>Is the date/time acceptable relative to the current time?</td></tr>
+        </table>
+      </div>
+    </details>
+  </div>
+
+  <!-- The 8 Rule Specifications -->
+  <div class="w3-container" style="margin-top:30px;margin-bottom:30px;">
+    <h2>The 8 Rule Specifications</h2>
+
+    <details>
+      <summary class="accordion">1. CV1_RS_EMAIL_VALID</summary>
+      <div class="accordionDrop">
+        <p>Input: Email (String, 80) | Output: EmailStatus (String, 10) | Dimension: Validity</p>
+<pre>IF INSTR(Email, '@') &gt; 0 AND INSTR(Email, '.') &gt; 0
+THEN EmailStatus := 'Valid'
+ELSE EmailStatus := 'Invalid'
+ENDIF</pre>
+        <p>Workshop check: the value must contain both @ and a dot. It is intentionally a simple structural rule rather than full RFC email validation.</p>
+      </div>
+    </details>
+
+    <details>
+      <summary class="accordion">2. CV1_RS_PHONE_REQUIRED</summary>
+      <div class="accordionDrop">
+        <p>Input: Phone (String, 40) | Output: Status (String, 10) | Dimension: Completeness</p>
+<pre>IF IsNull(Phone)
+THEN Status := 'Invalid'
+ELSE Status := 'Valid'
+ENDIF</pre>
+      </div>
+    </details>
+
+    <details>
+      <summary class="accordion">3. CV1_RS_PHONE_FORMAT_VALID</summary>
+      <div class="accordionDrop">
+        <p>Input: Phone (String, 40) | Output: Status (String, 10) | Dimension: Consistency</p>
+<pre>IF INSTR(Phone, '-') = 0 AND INSTR(Phone, '(') = 0
+AND INSTR(Phone, ')') = 0 AND INSTR(Phone, '+') = 0
+AND INSTR(Phone, ' ') = 0
+THEN Status := 'Valid'
+ELSE Status := 'Invalid'
+ENDIF</pre>
+        <p>This rule rejects the formatting characters present in the workshop phone data. Lab 4B produces the standardized digits-only representation.</p>
+      </div>
+    </details>
+
+    <details>
+      <summary class="accordion">4. CV1_RS_CITY_VALID</summary>
+      <div class="accordionDrop">
+        <p>Input: City (String, 60) | Output: Status (String, 10) | Dimension: Consistency</p>
+<pre>IF City in dictionary:CV1_DATA_AI_WORKSHOP.CV1_DICT_CITY
+THEN Status := 'Valid'
+ELSE Status := 'Invalid'
+ENDIF</pre>
+        <p>This answers whether the value is recognized anywhere in the city reference dictionary. A recognized alias such as ATX can pass even though Lab 4B will still standardize it to Austin.</p>
+      </div>
+    </details>
+
+    <details>
+      <summary class="accordion">5. CV1_RS_STATE_VALID</summary>
+      <div class="accordionDrop">
+        <p>Input: State (String, 60) | Output: Status (String, 10) | Dimension: Consistency</p>
+<pre>IF State in dictionary:CV1_DATA_AI_WORKSHOP.CV1_DICT_STATE
+THEN Status := 'Valid'
+ELSE Status := 'Invalid'
+ENDIF</pre>
+      </div>
+    </details>
+
+    <details>
+      <summary class="accordion">6. CV1_RS_COUNTRY_VALID</summary>
+      <div class="accordionDrop">
+        <p>Input: Country (String, 60) | Output: Status (String, 10) | Dimension: Consistency</p>
+<pre>IF Country in dictionary:CV1_DATA_AI_WORKSHOP.CV1_DICT_COUNTRY
+THEN Status := 'Valid'
+ELSE Status := 'Invalid'
+ENDIF</pre>
+      </div>
+    </details>
+
+    <details>
+      <summary class="accordion">7. CV1_RS_DATE_NOT_FUTURE</summary>
+      <div class="accordionDrop">
+        <p>Input: DateValue (Date/Time, precision 29, scale 9) | Output: DateStatus (String, 10) | Dimension: Timeliness</p>
+<pre>IF DateValue &lt;= Systimestamp()
+THEN DateStatus := 'Valid'
+ELSE DateStatus := 'Invalid'
+ENDIF</pre>
+        <div class="callout-important"><strong>Date function:</strong> Systimestamp() is the confirmed working current-date/time function in the tested environment. CurrentDate() and Today() were not used because they did not work there.</div>
+      </div>
+    </details>
+
+    <details>
+      <summary class="accordion">8. CV1_RS_AMOUNT_NON_NEGATIVE</summary>
+      <div class="accordionDrop">
+        <p>Input: Amount (Float) | Output: Status (String, 10) | Dimension: Validity</p>
+<pre>IF Amount &gt;= 0
+THEN Status := 'Valid'
+ELSE Status := 'Invalid'
+ENDIF</pre>
+      </div>
+    </details>
+  </div>
+
+  <!-- Part C -->
+  <div class="w3-container" style="margin-top:30px;margin-bottom:30px;">
+    <h2>Part C &mdash; Attach rules to the Salesforce profile and run the scorecard</h2>
+
+    <details>
+      <summary class="accordion">Why attach rules to the profile</summary>
+      <div class="accordionDrop">
+        <p>The Rule Specifications are saved definitions until something executes them. Attaching them to the profile means every Salesforce row is evaluated when the profile runs, and the results become measurable pass/fail counts.</p>
+      </div>
+    </details>
+
+    <details>
+      <summary class="accordion">C1. Open the profile</summary>
+      <div class="accordionDrop">
+        <p>25. Service selector &rarr; Data Profiling.</p>
+        <p>26. Open PROF_CV1_SF_CUSTOMERS_RAW.</p>
+        <p>27. Open the Rules tab.</p>
+      </div>
+    </details>
+
+    <details>
+      <summary class="accordion">C2. Attach the seven Salesforce-relevant rules</summary>
+      <div class="accordionDrop">
+        <table class="workshop-table">
+          <tr><th>Rule Specification</th><th>Source column</th></tr>
+          <tr><td>CV1_RS_EMAIL_VALID</td><td>Email__c</td></tr>
+          <tr><td>CV1_RS_PHONE_REQUIRED</td><td>Phone__c</td></tr>
+          <tr><td>CV1_RS_PHONE_FORMAT_VALID</td><td>Phone__c</td></tr>
+          <tr><td>CV1_RS_CITY_VALID</td><td>City__c</td></tr>
+          <tr><td>CV1_RS_STATE_VALID</td><td>State__c</td></tr>
+          <tr><td>CV1_RS_COUNTRY_VALID</td><td>Country__c</td></tr>
+          <tr><td>CV1_RS_DATE_NOT_FUTURE</td><td>Last_Purchase_Date__c</td></tr>
+        </table>
+        <p>28. Click + / Add Rule.</p>
+        <p>29. Select the Rule Specification.</p>
+        <p>30. Select the source column shown in the table.</p>
+        <p>31. Repeat until all seven rules are attached.</p>
+        <p>32. Save the profile task.</p>
+      </div>
+    </details>
+
+    <details>
+      <summary class="accordion">C3. Run with rules</summary>
+      <div class="accordionDrop">
+        <p>33. Confirm the Schedule tab still uses the working Secure Agent runtime.</p>
+        <p>34. Run the profile.</p>
+        <p>35. Open Results after completion.</p>
+      </div>
+    </details>
+
+    <details>
+      <summary class="accordion">C4. Read the scorecard</summary>
+      <div class="accordionDrop">
+        <table class="workshop-table">
+          <tr><th>Rule</th><th>Dimension</th><th>Expected tested result</th><th>Reason</th></tr>
+          <tr><td>CV1_RS_EMAIL_VALID</td><td>Validity</td><td>75% (3/4)</td><td>sf-002 fails.</td></tr>
+          <tr><td>CV1_RS_PHONE_REQUIRED</td><td>Completeness</td><td>75% (3/4)</td><td>sf-003 is null.</td></tr>
+          <tr><td>CV1_RS_PHONE_FORMAT_VALID</td><td>Consistency</td><td>~50% in the tested run</td><td>Workshop raw formatting causes failures.</td></tr>
+          <tr><td>CV1_RS_CITY_VALID</td><td>Consistency</td><td>100%</td><td>Dictionary recognizes standards and variants.</td></tr>
+          <tr><td>CV1_RS_STATE_VALID</td><td>Consistency</td><td>100%</td><td>Dictionary recognizes standards and variants.</td></tr>
+          <tr><td>CV1_RS_COUNTRY_VALID</td><td>Consistency</td><td>100%</td><td>Dictionary recognizes standards and variants.</td></tr>
+          <tr><td>CV1_RS_DATE_NOT_FUTURE</td><td>Timeliness</td><td>75% (3/4)</td><td>sf-001 is future dated.</td></tr>
+        </table>
+        <blockquote><strong>This is the measured baseline:</strong> the profile ran the rules against the actual rows. The percentages are no longer observations made by eye.</blockquote>
+      </div>
+    </details>
+
+    <details>
+      <summary class="accordion">C5. Optional Databricks transaction scorecard</summary>
+      <div class="accordionDrop">
+        <p>Open PROF_CV1_DBX_TRANSACTIONS_RAW and attach:</p>
+        <p>&bull; CV1_RS_AMOUNT_NON_NEGATIVE &rarr; amount.</p>
+        <p>&bull; CV1_RS_DATE_NOT_FUTURE &rarr; transaction_ts.</p>
+        <p>Run. Expected: Amount 80% pass (4/5); Date 80% pass (4/5). This optional run is not required for Lab 4B to execute.</p>
+      </div>
+    </details>
+  </div>
+
+  <!-- Illustration -->
+  <div class="w3-container" style="margin-top:30px;margin-bottom:30px;">
+    <h2>Illustration</h2>
+
+    <div class="w3-card w3-container w3-center w3-mobile"><img class="w3-image" src="img/slide23.jpeg" alt="Data Quality workspace with Rule Specifications, Dictionaries and Cleanse assets"></div>
+    <p class="img-caption">The Data Quality workspace now contains reusable <strong>Rule Specifications, Dictionaries and Cleanse assets</strong>. Instead of embedding quality logic independently in every pipeline, the workshop creates named assets that can be reused and governed across profiling and integration.</p>
+    <p>&nbsp;</p>
+
+    <div class="w3-card w3-container w3-center w3-mobile"><img class="w3-image" src="img/slide24.jpeg" alt="City dictionary mapping raw values to standard values"></div>
+    <p class="img-caption">The city dictionary captures both the value seen in the source and the value the business wants to use consistently. For example, ATX, AUS and Austin all map to the standard value Austin, while HOU maps to Houston.</p>
+    <p>&nbsp;</p>
+
+    <div class="w3-card w3-container w3-center w3-mobile"><img class="w3-image" src="img/slide25.jpeg" alt="CV1_RS_EMAIL_VALID Rule Specification returning Valid or Invalid"></div>
+    <p class="img-caption">The CV1_RS_EMAIL_VALID Rule Specification implements the agreed email test and returns an explicit Valid or Invalid result. This is the point where a business decision from Lab 3 becomes repeatable logic that Informatica can execute.</p>
+    <p>&nbsp;</p>
+
+    <div class="w3-card w3-container w3-center w3-mobile"><img class="w3-image" src="img/slide26.jpeg" alt="Seven Rule Specifications attached to the Salesforce profile"></div>
+    <p class="img-caption">Seven Rule Specifications are now attached to the same Salesforce profile used during discovery. The rules cover city, country, date, phone, state and email, turning the original profile from a purely observational exercise into a repeatable quality assessment.</p>
+    <p>&nbsp;</p>
+
+    <div class="w3-card w3-container w3-center w3-mobile"><img class="w3-image" src="img/slide27.jpeg" alt="Profile rerun with agreed rules attached showing rule-output distributions"></div>
+    <p class="img-caption">The profile is rerun with the agreed rules attached. Each rule evaluates the records and returns a Valid or Invalid status, turning the issues discovered in Lab 2 into explicit, repeatable quality results. <strong>The screen shows rule-output distributions; it should not be described as a labelled 75% pass / 25% fail result unless the UI explicitly shows that breakdown.</strong></p>
+    <p>&nbsp;</p>
+  </div>
+
+  <!-- End-of-lab validation -->
+  <div class="w3-container" style="margin-top:30px;margin-bottom:30px;">
+    <h2>End-of-lab validation</h2>
+    <p>&bull; Three dictionaries exist.</p>
+    <p>&bull; Eight Rule Specifications exist and validate in Advanced mode.</p>
+    <p>&bull; The Salesforce profile has seven rules attached and has been re-run.</p>
+    <p>&bull; Results show rule-level pass/fail counts and percentages.</p>
+    <p>&bull; The earlier no-rule profile run remains available for comparison.</p>
+    <p>&bull; No source data was modified.</p>
+  </div>
+
+  <!-- What did we get out of this lab? -->
+  <div class="w3-container" style="margin-top:30px;margin-bottom:30px;">
+    <h2>What did we get out of this lab?</h2>
+    <p>We converted business expectations into executable validation definitions and produced a numerical baseline for source-data quality.</p>
+
+    <pre>Lab 2: observe
+Lab 3: agree standards
+Lab 4A: measure pass/fail
+|
+v
+Lab 4B: standardize data and route failures</pre>
+  </div>
+
+  <!-- What's next -->
+  <div class="w3-container" style="margin-top:30px;margin-bottom:30px;">
+    <h2>What's next</h2>
+    <p>Lab 4B builds the Cleanse assets and CDI mappings that apply the agreed standards to records. Selected values are standardized, rules are re-applied, valid rows go to staging tables, and failures go to exception tables.</p>
+  </div>
+
+  <!-- Appendix -->
+  <div class="w3-container" style="margin-top:30px;margin-bottom:30px;">
+    <h2>Appendix &mdash; Confirmed Advanced-mode syntax in the tested tenant</h2>
+    <table class="workshop-table">
+      <tr><th>Need</th><th>Working syntax</th><th>Not used / did not work in testing</th></tr>
+      <tr><td>Substring search</td><td>INSTR(field, 'substr') &gt; 0</td><td>Contains(field, 'substr')</td></tr>
+      <tr><td>Substring absent</td><td>INSTR(field, 'substr') = 0</td><td>NOT Contains(...)</td></tr>
+      <tr><td>Null check</td><td>IsNull(field)</td><td></td></tr>
+      <tr><td>Current date/time</td><td>Systimestamp()</td><td>CurrentDate(), Today()</td></tr>
+      <tr><td>Dictionary lookup</td><td>field in dictionary:Project.Name</td><td>IN DICTIONARY, InDictionary()</td></tr>
+      <tr><td>Assignment</td><td>Status := 'Valid'</td><td>Status = 'Valid'</td></tr>
+      <tr><td>Regex/pattern</td><td>Not available in the required tested form; workshop uses INSTR checks</td><td>MatchesRegEx(), Matches()</td></tr>
+    </table>
+    <p>To delete and recreate a bad Rule Specification: Explore &rarr; locate the asset &rarr; three-dot menu &rarr; Delete.</p>
+  </div>
+
+  <!-- Footer -->
+  <div class="w3-container">
+    <div class="w3-bar w3-black">
+      <a href="lab-3.html" class="w3-bar-item w3-button"><i class="fa fa-check-square-o fa-fw w3-margin-right"></i>Lab 3</a>
+      <a href="lab-4a.html" class="w3-bar-item w3-button"><i class="fa fa-tachometer fa-fw w3-margin-right"></i>Lab 4A</a>
+      <a href="lab-4b.html" class="w3-bar-item w3-button"><i class="fa fa-filter fa-fw w3-margin-right"></i>Lab 4B</a>
+    </div>
+    <p>Trusted Data Foundation Workshop</p>
+  </div>
+
+  <p>&nbsp;</p>
+</div>
+
+<!-- Scripts -->
+<script src="nav.js"></script>
+<script>
+function w3_open() {
+  document.getElementById("mySidebar").style.display = "block";
+  document.getElementById("myOverlay").style.display = "block";
+}
+function w3_close() {
+  document.getElementById("mySidebar").style.display = "none";
+  document.getElementById("myOverlay").style.display = "none";
+}
+</script>
+</body>
+</html>

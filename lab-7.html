@@ -1,0 +1,680 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Lab 7 - Activate in Salesforce Data 360</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<style>
+body,h1,h2,h3,h4,h5,h6 {font-family: "Raleway", sans-serif}
+body {font-size: 17px;}
+.accordion {
+  background: #336699;
+  border: 1px solid #F1F0FF;
+  border-radius: 5px;
+  font-weight: 700;
+  margin: 10px;
+  margin-bottom: 15px;
+  padding: 10px 20px;
+  cursor: pointer;
+  font-size: 130%;
+  color: white;
+}
+.accordionDrop {
+  padding: 0px 30px;
+}
+::-webkit-details-marker {
+  display: none;
+}
+table.workshop-table {
+  border-collapse: collapse;
+  width: 100%;
+  margin: 15px 0;
+}
+table.workshop-table th, table.workshop-table td {
+  border: 1px solid #ddd;
+  padding: 10px 14px;
+  text-align: left;
+}
+table.workshop-table th {
+  background: #336699;
+  color: white;
+}
+table.workshop-table tr:nth-child(even) {
+  background: #f9f9f9;
+}
+blockquote {
+  border-left: 4px solid #336699;
+  margin: 15px 0;
+  padding: 10px 20px;
+  background: #f5f8fc;
+}
+code, pre {
+  background: #f4f4f4;
+  padding: 2px 6px;
+  border-radius: 3px;
+  font-size: 95%;
+}
+pre {
+  padding: 15px;
+  overflow-x: auto;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+}
+.img-caption {
+  text-align: center;
+  color: #555;
+  font-style: italic;
+  margin: 12px 40px 20px;
+  line-height: 1.5;
+}
+.callout-important {
+  background: #fff3cd;
+  border-left: 4px solid #ffc107;
+  padding: 12px 20px;
+  margin: 15px 0;
+}
+.callout-tip {
+  background: #d1ecf1;
+  border-left: 4px solid #17a2b8;
+  padding: 12px 20px;
+  margin: 15px 0;
+}
+.hero {
+  background: linear-gradient(135deg, #2b567f 0%, #336699 60%, #3d76ac 100%);
+  color: #fff;
+  padding: 40px 40px 34px;
+}
+.hero .hero-eyebrow {
+  margin: 0 0 4px;
+  font-size: 0.85em;
+  font-weight: 700;
+  letter-spacing: 2px;
+  color: #bcd6ef;
+  text-transform: uppercase;
+}
+.hero h1 {
+  margin: 0 0 22px;
+  font-size: 2.2em;
+  font-weight: 800;
+}
+.journey {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px;
+}
+.journey .step {
+  background: rgba(255,255,255,0.12);
+  border: 1px solid rgba(255,255,255,0.35);
+  border-radius: 20px;
+  padding: 7px 16px;
+  font-size: 0.92em;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.journey .arrow {
+  color: #bcd6ef;
+  font-size: 1.1em;
+  padding: 0 2px;
+}
+</style>
+</head>
+<body class="w3-content" style="max-width:1600px;">
+
+<!-- Sidebar/menu -->
+<nav class="w3-sidebar w3-collapse w3-white w3-animate-left" style="z-index:3;width:300px;overflow-y:auto;padding-bottom:50px;" id="mySidebar"><br></nav>
+
+<!-- Overlay effect when opening sidebar on small screens -->
+<div class="w3-overlay w3-hide-large w3-animate-opacity" onclick="w3_close()" style="cursor:pointer" title="close side menu" id="myOverlay"></div>
+
+<!-- PAGE CONTENT -->
+<div class="w3-main" style="margin-left:300px;border-left:1px solid #000000;">
+
+  <!-- Header -->
+  <header>
+    <span class="w3-button w3-hide-large w3-xxlarge w3-hover-text-grey" onclick="w3_open()"><i class="fa fa-bars"></i></span>
+    <div class="hero">
+      <p class="hero-eyebrow">Lab 7</p>
+      <h1>Activate in Salesforce Data 360</h1>
+      <div class="journey">
+        <span class="step">Publish mastered customer</span>
+        <span class="arrow"><i class="fa fa-long-arrow-right"></i></span>
+        <span class="step">Federate behavior</span>
+        <span class="arrow"><i class="fa fa-long-arrow-right"></i></span>
+        <span class="step">Resolve identity</span>
+        <span class="arrow"><i class="fa fa-long-arrow-right"></i></span>
+        <span class="step">Calculate Lifetime Value</span>
+        <span class="arrow"><i class="fa fa-long-arrow-right"></i></span>
+        <span class="step">Build segment</span>
+        <span class="arrow"><i class="fa fa-long-arrow-right"></i></span>
+        <span class="step">Package Data Graph</span>
+      </div>
+    </div>
+  </header>
+
+  <!-- Where we are -->
+  <div class="w3-container" style="margin-top:30px;margin-bottom:30px;">
+    <h2>Where we are</h2>
+    <p>Informatica Master Data Management (MDM) has already created a trusted customer record by matching and merging records that belong to the same person. The next question is how Salesforce can use that trusted identity together with the customer's behavior.</p>
+    <p>Salesforce Data 360 is the activation layer in this lab. It receives the mastered customer from Informatica, relates that customer to engagement and transaction data that remains in Databricks, and makes the combined information available for insights, segmentation, and downstream use.</p>
+  </div>
+
+  <!-- Goal of Lab 7 -->
+  <div class="w3-container" style="margin-top:30px;margin-bottom:30px;">
+    <h2>Goal of Lab 7</h2>
+    <p>Publish the mastered customer from Informatica into Data 360, connect that customer to engagement and transaction data in Databricks, and show how Data 360 turns the combined information into a usable Salesforce customer profile.</p>
+    <blockquote><strong>In short:</strong> Informatica decides who the customer is; Data 360 combines that trusted identity with customer behavior and puts it to work.</blockquote>
+  </div>
+
+  <!-- The architecture at a glance -->
+  <div class="w3-container" style="margin-top:30px;margin-bottom:30px;">
+    <h2>The architecture at a glance</h2>
+    <p>Two types of data enter Data 360 in two different ways:</p>
+<pre>Informatica MDM
+Trusted / Golden Customer
+|
+| Data 360 Ingestion API
+v
+Salesforce Data 360
+
+Databricks
+customer_events + transactions
+|
+| Zero-copy federation
+v
+Salesforce Data 360</pre>
+    <p>Inside Data 360, the two data streams are brought together and used:</p>
+<pre>Trusted Customer + Engagement / Transactions
+|
+v
+Unified Individual
+|
++---------+---------+
+|         |         |
+v         v         v
+Lifetime Value  Segment  Data Graph
+|
+v
+Activation / use</pre>
+  </div>
+
+  <!-- Why identity and engagement data take different paths -->
+  <div class="w3-container" style="margin-top:30px;margin-bottom:30px;">
+    <h2>Why identity and engagement data take different paths</h2>
+    <p>The mastered customer is relatively small, durable identity data that Data 360 needs as part of its customer profile, so it is published into Data 360. Engagement and transaction data can be much larger and changes continuously. It already lives in Databricks, so Data 360 queries it there instead of creating another full copy.</p>
+<pre>Mastered identity -&gt; copy into Data 360
+Engagement + transactions -&gt; leave in Databricks and query in place</pre>
+    <p>This keeps the roles clear: Informatica MDM remains the source of mastered identity, Databricks remains the source of behavioral and transaction data, and Data 360 combines the two for activation.</p>
+  </div>
+
+  <!-- How this lab is structured -->
+  <div class="w3-container" style="margin-top:30px;margin-bottom:30px;">
+    <h2>How this lab is structured</h2>
+    <table class="workshop-table">
+      <tr><th>Part</th><th>Question it answers</th></tr>
+      <tr><td>A</td><td>How does the mastered customer get into Data 360?</td></tr>
+      <tr><td>B</td><td>How does Databricks behavioral data join that customer without being copied?</td></tr>
+      <tr><td>C</td><td>Why does Data 360 still run Identity Resolution after Informatica has already mastered the customer?</td></tr>
+      <tr><td>D</td><td>How do transactions become a customer insight such as Lifetime Value?</td></tr>
+      <tr><td>E</td><td>How do profile, insight, and engagement data become an activation-ready segment?</td></tr>
+      <tr><td>F</td><td>How is the combined customer context packaged for downstream use?</td></tr>
+    </table>
+    <blockquote><strong>Terminology:</strong> Data 360 is the current name for Salesforce Data Cloud. Some screens and documentation may still use the older Data Cloud name.</blockquote>
+    <blockquote><strong>Scope:</strong> This is a conceptual lab. It explains the architecture and the Data 360 objects that matter rather than giving click-by-click UI instructions. Agentforce is out of scope.</blockquote>
+  </div>
+
+  <!-- Part A -->
+  <div class="w3-container" style="margin-top:30px;margin-bottom:30px;">
+    <h2>Part A &mdash; How does the mastered customer get into Data 360?</h2>
+<pre>Informatica MDM
+Golden Person
+|
+| Data 360 Ingestion API
+v
+Data 360 profile objects</pre>
+    <p>Informatica publishes the golden Person directly to the Salesforce Data 360 Ingestion API. Databricks is not used as an intermediate staging point for the golden record.</p>
+    <p>The important Data 360 concept is that one logical customer is represented by several related Data Model Objects (DMOs). A DMO is a standard Data 360 object used to represent a particular kind of customer information.</p>
+
+    <details>
+      <summary class="accordion">The four DMOs used for the mastered customer</summary>
+      <div class="accordionDrop">
+<pre>Individual
+|
++--&gt; Contact Point Email
++--&gt; Contact Point Phone
++--&gt; Party Identification --&gt; Informatica MDM Business ID</pre>
+        <table class="workshop-table">
+          <tr><th>DMO</th><th>What it holds</th><th>Why it matters</th></tr>
+          <tr><td>Individual</td><td>The customer profile. For Sarah, the row is keyed by the MDM Business ID and carries fields such as first name, last name, and the workshop consent flag.</td><td>This is the core Data 360 customer object.</td></tr>
+          <tr><td>Contact Point Email</td><td>The mastered email address, related back to the Individual through Party ID.</td><td>Data 360 models email as a separate contact point because a person can have multiple emails, each with its own lifecycle and consent.</td></tr>
+          <tr><td>Contact Point Phone</td><td>The mastered phone number, related back to the Individual through Party ID.</td><td>The same contact-point model is used for phone.</td></tr>
+          <tr><td>Party Identification</td><td>The external identity anchor. It records the Informatica MDM Business ID as an external MDM identifier for the Individual.</td><td>This gives Data 360 a governed place to retain the identifier created by Informatica and use it for identity matching.</td></tr>
+        </table>
+        <p>Party Identification is the key integration object in this design. It records that a Data 360 Individual is anchored to a specific Informatica MDM Business ID. That identifier is then available to Identity Resolution and to audit or reporting use cases.</p>
+      </div>
+    </details>
+
+    <details>
+      <summary class="accordion">Field mappings &mdash; what Informatica sends</summary>
+      <div class="accordionDrop">
+        <h3>Individual</h3>
+        <table class="workshop-table">
+          <tr><th>Informatica source</th><th>Data 360 target</th></tr>
+          <tr><td>mdm_business_id (for example, MDM0000000002S)</td><td>Individual ID</td></tr>
+          <tr><td>first_name (mastered)</td><td>First Name</td></tr>
+          <tr><td>last_name (mastered)</td><td>Last Name</td></tr>
+          <tr><td>marketing_consent</td><td>Custom consent flag on Individual for the workshop</td></tr>
+        </table>
+
+        <h3>Contact Point Email</h3>
+        <table class="workshop-table">
+          <tr><th>Informatica source</th><th>Data 360 target</th></tr>
+          <tr><td>mdm_business_id || '|EMAIL'</td><td>Contact Point Email ID</td></tr>
+          <tr><td>mdm_business_id</td><td>Party ID</td></tr>
+          <tr><td>email (mastered)</td><td>Email Address</td></tr>
+        </table>
+
+        <h3>Contact Point Phone</h3>
+        <table class="workshop-table">
+          <tr><th>Informatica source</th><th>Data 360 target</th></tr>
+          <tr><td>mdm_business_id || '|PHONE'</td><td>Contact Point Phone ID</td></tr>
+          <tr><td>mdm_business_id</td><td>Party ID</td></tr>
+          <tr><td>phone_e164 (mastered)</td><td>Formatted E164 Phone Number</td></tr>
+        </table>
+
+        <h3>Party Identification &mdash; the identity anchor</h3>
+        <table class="workshop-table">
+          <tr><th>Informatica source</th><th>Data 360 target</th></tr>
+          <tr><td>mdm_business_id || '|MDM'</td><td>Party Identification ID</td></tr>
+          <tr><td>mdm_business_id</td><td>Party</td></tr>
+          <tr><td>mdm_business_id</td><td>Identification Number</td></tr>
+          <tr><td>Constant 'Informatica C360 MDM ID'</td><td>Identification Name</td></tr>
+          <tr><td>Constant 'External MDM Identifier'</td><td>Party Identification Type</td></tr>
+        </table>
+        <p>The Identification Name and Party Identification Type make the row explicit: this identifier came from Informatica MDM and represents an external MDM identifier.</p>
+      </div>
+    </details>
+
+    <details>
+      <summary class="accordion">What actually performs the API call?</summary>
+      <div class="accordionDrop">
+        <p>The architectural requirement is the same regardless of implementation: Informatica's mastered data must reach the Data 360 Ingestion API. CDI, CAI, Business 360 Egress, MuleSoft, or custom code can perform or orchestrate that call. The choice changes who owns scheduling, monitoring, transformation, retry, and error handling; it does not change the target Data 360 data model.</p>
+        <p>Appendix C compares the available publishing options in more detail.</p>
+      </div>
+    </details>
+
+    <details>
+      <summary class="accordion">Why Databricks is not used as a golden-record staging point</summary>
+      <div class="accordionDrop">
+        <p>In this architecture, Databricks is the source for behavioral and transaction data, not the system of record for Informatica-mastered identity. Writing golden identity to Databricks first would add another hop, another synchronization point, and another place where identity data must be secured and audited. Because Data 360 already provides an Ingestion API for external systems, the golden record can be published directly.</p>
+        <p>Appendix A preserves the full architecture rationale.</p>
+      </div>
+    </details>
+
+    <blockquote><strong>Part A result:</strong> The trusted customer created in Informatica is now represented in Data 360, and the Informatica MDM Business ID is retained as the identity anchor.</blockquote>
+  </div>
+
+  <!-- Part B -->
+  <div class="w3-container" style="margin-top:30px;margin-bottom:30px;">
+    <h2>Part B &mdash; How does Databricks behavioral data join the customer?</h2>
+<pre>Databricks
+customer_events + transactions
+|
+| Zero-copy federation
+v
+Data 360 engagement objects
+|
+| mdm_business_id
+v
+Data 360 customer profile</pre>
+    <p>The customer_events and transactions datasets stay in Databricks. Data 360 uses zero-copy federation to query them in place rather than ingesting full copies into Data 360.</p>
+    <p>Both datasets carry mdm_business_id. That gives Data 360 a common key for relating behavioral and transaction rows back to the mastered customer published in Part A.</p>
+
+    <details>
+      <summary class="accordion">The two federation streams</summary>
+      <div class="accordionDrop">
+        <table class="workshop-table">
+          <tr><th>Databricks source</th><th>Data 360 representation</th><th>Relationship</th></tr>
+          <tr><td>customer_events</td><td>Engagement DMO, for example CV1 Customer Event, backed by federation</td><td>mdm_business_id relates the event to the mastered Individual</td></tr>
+          <tr><td>transactions</td><td>Engagement DMO, for example CV1 Transaction, backed by federation</td><td>mdm_business_id relates the transaction to the mastered Individual</td></tr>
+        </table>
+      </div>
+    </details>
+
+    <details>
+      <summary class="accordion">What zero-copy means here</summary>
+      <div class="accordionDrop">
+        <p>Data 360 queries Databricks when the data is needed for uses such as segmentation, calculated insights, or profile context. The raw customer_events and transactions tables remain in Databricks.</p>
+        <p>The source document also notes that the federation design can use acceleration for faster response, which creates a local cache and therefore a freshness trade-off. For the workshop architecture, acceleration remains off so the conceptual pattern stays purely zero-copy. The document also notes the Databricks File Federation Connector as another implementation option for accessing Databricks data without requiring a full copy.</p>
+      </div>
+    </details>
+
+    <blockquote><strong>Part B result:</strong> Data 360 can use the customer's behavior and transactions while Databricks remains the system that stores the raw engagement data.</blockquote>
+  </div>
+
+  <!-- Part C -->
+  <div class="w3-container" style="margin-top:30px;margin-bottom:30px;">
+    <h2>Part C &mdash; Why run Data 360 Identity Resolution if Informatica already mastered the customer?</h2>
+    <p>This is the most important distinction in the lab. Informatica MDM has already made the identity decision. Data 360 is not being asked to independently remaster Sarah using email, phone, or fuzzy name matching.</p>
+    <p>Data 360 still runs Identity Resolution because that is how Data 360 materializes the Unified Individual used by downstream capabilities such as segmentation, calculated insights, and Data Graphs.</p>
+<pre>Informatica MDM already decided:
+"These records belong to the same customer"
+|
+v
+MDM Business ID
+|
+v
+Data 360 Identity Resolution
+exact match on MDM ID
+|
+v
+Unified Individual</pre>
+    <p>For this workshop, the Identity Resolution rule is deliberately simple: two Individuals are treated as the same person when they share the same Informatica MDM Business ID.</p>
+
+    <details>
+      <summary class="accordion">The single match rule</summary>
+      <div class="accordionDrop">
+        <table class="workshop-table">
+          <tr><th>Property</th><th>Value</th></tr>
+          <tr><td>Object</td><td>Party Identification</td></tr>
+          <tr><td>Field</td><td>Identification Number</td></tr>
+          <tr><td>Match Method</td><td>Exact</td></tr>
+          <tr><td>Filter &mdash; Identification Name</td><td>'Informatica C360 MDM ID'</td></tr>
+          <tr><td>Filter &mdash; Party Identification Type</td><td>'External MDM Identifier'</td></tr>
+        </table>
+        <p>No email comparison, phone comparison, or fuzzy name logic is required for the workshop because Informatica has already established the mastered identity.</p>
+        <p>The lab's source material identifies Party Identifier exact matching as the Data 360 pattern intended for identifiers from external MDM systems and vendor-specific identifier spaces.</p>
+        <p>Expected workshop outcome: each Informatica-mastered Individual produces one Unified Individual. In a broader production implementation, additional Data 360 Identity Resolution rules could also be used for profiles that were not mastered by Informatica.</p>
+      </div>
+    </details>
+
+    <blockquote><strong>Part C result:</strong> Data 360 accepts the Informatica MDM Business ID as the identity anchor and creates the Unified Individual needed by downstream Data 360 features.</blockquote>
+  </div>
+
+  <!-- Part D -->
+  <div class="w3-container" style="margin-top:30px;margin-bottom:30px;">
+    <h2>Part D &mdash; How do transactions become a customer insight?</h2>
+<pre>Federated transactions
++
+Unified Individual
+|
+v
+Calculated Insight
+Lifetime Value (LTV)</pre>
+    <p>We now know who the customer is and can relate transaction rows to that customer. The next step is to calculate something useful from those transactions.</p>
+    <p>A Calculated Insight is a scheduled aggregation defined in Data 360 SQL. In this lab, the insight is Lifetime Value: the sum of valid transaction amounts for each Unified Individual.</p>
+    <p>The important modeling point is that the result is grouped by Unified Individual so the calculated value can be used directly in segmentation and other profile-level uses.</p>
+
+    <details>
+      <summary class="accordion">SQL shape</summary>
+      <div class="accordionDrop">
+        <p><em>Adjust DMO and field API names to the tenant; they are case-sensitive.</em></p>
+<pre>SELECT
+UnifiedIndividual__dlm.ssot__Id__c AS UnifiedCustomerId__c,
+SUM(CV1_Transaction__dlm.Amount__c) AS LifetimeValue__c
+FROM CV1_Transaction__dlm
+JOIN IndividualIdentityLink__dlm
+ON CV1_Transaction__dlm.mdm_business_id =
+IndividualIdentityLink__dlm.SourceRecordId__c
+JOIN UnifiedIndividual__dlm
+ON IndividualIdentityLink__dlm.UnifiedRecordId__c =
+UnifiedIndividual__dlm.ssot__Id__c
+WHERE UPPER(CV1_Transaction__dlm.Transaction_Status__c) = 'VALID'
+GROUP BY UnifiedIndividual__dlm.ssot__Id__c</pre>
+      </div>
+    </details>
+
+    <details>
+      <summary class="accordion">Why this works with zero-copy transactions</summary>
+      <div class="accordionDrop">
+        <p>The raw transactions do not need to be stored in Data 360 for the calculation to use them. The lab's architecture has Data 360 query the federated Databricks data and materialize the aggregated LTV result in Data 360.</p>
+<pre>Databricks stores: raw transaction rows
+Data 360 stores: calculated LTV per Unified Individual</pre>
+        <p>For the insight to appear as a usable profile attribute in segment building, the profile key &mdash; Unified Individual ID in this design &mdash; must be included as a dimension in the Calculated Insight.</p>
+      </div>
+    </details>
+
+    <blockquote><strong>Part D result:</strong> Raw transactions remain in Databricks, while Data 360 holds the customer-level insight needed for activation.</blockquote>
+  </div>
+
+  <!-- Part E -->
+  <div class="w3-container" style="margin-top:30px;margin-bottom:30px;">
+    <h2>Part E &mdash; How do profile, insight, and engagement data become a segment?</h2>
+    <p>A Calculated Insight becomes useful when Salesforce can act on it. This example creates one segment using three different kinds of customer information.</p>
+<pre>Customer profile  Calculated insight  Engagement
+Marketing consent  Lifetime Value  Recent interest
+\         |         /
+\        |        /
++----------------+----------------+
+|
+v
+Segment</pre>
+
+    <details>
+      <summary class="accordion">Segment definition</summary>
+      <div class="accordionDrop">
+        <p>A customer qualifies only when all three conditions are true:</p>
+        <p>&bull; Marketing Consent = true</p>
+        <p>&bull; Lifetime Value &gt; 1000</p>
+        <p>&bull; A Customer Event exists where Product Category = 'Hiking Jackets' and Event Time is within the last 30 days</p>
+      </div>
+    </details>
+
+    <details>
+      <summary class="accordion">Where each condition comes from</summary>
+      <div class="accordionDrop">
+        <table class="workshop-table">
+          <tr><th>Condition</th><th>Source</th></tr>
+          <tr><td>Marketing Consent</td><td>Individual, published from Informatica in Part A</td></tr>
+          <tr><td>Lifetime Value</td><td>Calculated Insight from Part D, bound to Unified Individual</td></tr>
+          <tr><td>Recent Hiking Jackets interest</td><td>customer_events, federated zero-copy from Databricks</td></tr>
+        </table>
+        <p>This is the activation value of the architecture: profile data, a calculated customer insight, and live behavioral data can participate in one audience definition.</p>
+        <p>Publish choice in the source lab: Standard Publish, not Rapid Publish. The example uses a 30-day engagement lookback, while the source document states that Rapid Publish supports only a 7-day engagement lookback.</p>
+        <p>Whether Sarah or Diego qualifies depends on the sample values: marketing consent must be true, valid transactions must total more than $1,000, and a Hiking Jackets event must exist within the last 30 days.</p>
+      </div>
+    </details>
+
+    <blockquote><strong>Part E result:</strong> Data 360 turns trusted identity, customer value, and recent behavior into an activation-ready audience.</blockquote>
+  </div>
+
+  <!-- Part F -->
+  <div class="w3-container" style="margin-top:30px;margin-bottom:30px;">
+    <h2>Part F &mdash; How is the combined customer context packaged for downstream use?</h2>
+<pre>Unified Individual
++
+Mastered email / phone
++
+Lifetime Value
++
+Recent events / transactions
++
+Segment membership
+|
+v
+Data Graph
+one profile-centered payload for downstream use</pre>
+    <p>At this point Data 360 knows who the customer is, can relate behavioral data to that identity, has calculated customer value, and knows which segments the customer belongs to.</p>
+    <p>A Data Graph packages a profile and its related context into a denormalized JSON structure that downstream applications can consume together.</p>
+
+    <details>
+      <summary class="accordion">CV1 Golden Customer Context</summary>
+      <div class="accordionDrop">
+        <p>&bull; Anchor: Unified Individual, or Individual if Identity Resolution was not run.</p>
+        <p>&bull; Profile: MDM Business ID from Party Identification, first name, last name, mastered email, mastered phone, and Marketing Consent.</p>
+        <p>&bull; Insight: Lifetime Value from the Calculated Insight in Part D.</p>
+        <p>&bull; Recent engagement: Customer Events from the last 30 days and Transactions from the last 90 days, federated from Databricks.</p>
+        <p>&bull; Segment membership: the segments the profile currently qualifies for.</p>
+        <p>For Sarah, the result is one customer-centered payload containing mastered identity, customer value, recent behavior, and segment membership. That package can support downstream Salesforce experiences, dashboards, custom applications, and other consumers. Agentforce and Prompt Builder are natural possible consumers, but they are outside this workshop.</p>
+      </div>
+    </details>
+
+    <blockquote><strong>Part F result:</strong> The combined profile and context are packaged in a form that downstream applications can consume without rebuilding the joins themselves.</blockquote>
+  </div>
+
+  <!-- What did we get out of this lab? -->
+  <div class="w3-container" style="margin-top:30px;margin-bottom:30px;">
+    <h2>What did we get out of this lab?</h2>
+    <p>We started with a customer whose identity had already been mastered in Informatica. We published that trusted identity directly into Data 360 while leaving the larger engagement and transaction datasets in Databricks.</p>
+    <p>The Informatica MDM Business ID gives Data 360 a stable identity anchor. Data 360 then uses that identity to create a Unified Individual, relate behavioral data to the customer, calculate Lifetime Value, define an audience segment, and package the resulting context in a Data Graph.</p>
+<pre>Golden Customer
+|
+v
+Unified Individual
+|
+v
+Lifetime Value
+|
+v
+Segment
+|
+v
+Data Graph / Activation</pre>
+    <blockquote><strong>In short:</strong> Informatica establishes trusted identity; Data 360 combines that identity with customer behavior and makes it usable in Salesforce.</blockquote>
+  </div>
+
+  <!-- Architecture and governance takeaways -->
+  <div class="w3-container" style="margin-top:30px;margin-bottom:30px;">
+    <h2>Architecture and governance takeaways</h2>
+    <p>&bull; Party Identification preserves the external Informatica MDM identifier as a first-class identity relationship in Data 360.</p>
+    <p>&bull; Zero-copy federation avoids creating a full additional copy of customer_events and transactions in Data 360.</p>
+    <p>&bull; The Data 360 Ingestion API is the common publish contract; CDI, CAI, Business 360 Egress, MuleSoft, or custom code can sit around that API depending on who owns orchestration.</p>
+    <p>&bull; Consent is simplified to one Marketing Consent flag in the workshop. Production consent normally requires richer per-channel, per-purpose, and jurisdiction-aware modeling.</p>
+    <p>&bull; Segment activation should send only the identifiers and attributes a destination actually needs.</p>
+    <p>&bull; Publishing into Data 360 does not overwrite the Informatica master, and federation does not mutate the Databricks source tables.</p>
+  </div>
+
+  <!-- Illustrations -->
+  <div class="w3-container" style="margin-top:30px;margin-bottom:30px;">
+    <h2>Illustrations</h2>
+
+    <div class="w3-card w3-container w3-center w3-mobile"><img class="w3-image" src="img/slide41.jpeg" alt="Mastered customer mapped into Data 360 objects"></div>
+    <p class="img-caption">The mastered customer data written back to Databricks is mapped into Data 360 objects including <strong>Individual, Contact Point Email and Party Identification</strong>. The Informatica MDM Business ID is carried into Party Identification so Data 360 can use the enterprise identity already established by MDM.</p>
+    <p>&nbsp;</p>
+
+    <div class="w3-card w3-container w3-center w3-mobile"><img class="w3-image" src="img/slide42.jpeg" alt="Identity Resolution exact match on Party Identification Number"></div>
+    <p class="img-caption">Identity Resolution compares the Party Identification Number using an <strong>Exact</strong> match. Data 360 is therefore using the MDM Business ID to connect records that already share the same mastered identity, rather than attempting to master the customer again with fuzzy name, email or phone matching.</p>
+    <p>&nbsp;</p>
+
+    <div class="w3-card w3-container w3-center w3-mobile"><img class="w3-image" src="img/slide43.jpeg" alt="Published ruleset with MDM ID match rule"></div>
+    <p class="img-caption">The Data 360 ruleset contains the MDM ID match rule and is published. This screenshot shows the <strong>configuration</strong>, not a completed end-to-end unification run: the resolution summary still shows zero source and unified profiles in this workshop environment.</p>
+    <p>&nbsp;</p>
+
+    <div class="w3-card w3-container w3-center w3-mobile"><img class="w3-image" src="img/slide44.jpeg" alt="Building an audience from Unified Individual attributes and related data"></div>
+    <p class="img-caption">Once identity is established, Data 360 can relate that trusted customer to the separate behavioral and transaction datasets coming from Databricks for calculated insights, segmentation and activation. This screen shows how Data 360 can build an audience from attributes on a Unified Individual and related data &mdash; here using customer spend and city. <strong>It is an illustrative segmentation example, not the exact segment specification in the current Lab 7</strong>, but it demonstrates the activation step that follows trusted identity and calculated context.</p>
+    <p>&nbsp;</p>
+  </div>
+
+  <!-- What's next -->
+  <div class="w3-container" style="margin-top:30px;margin-bottom:30px;">
+    <h2>What's next</h2>
+    <p>Lab 7 showed how trusted customer data is put to use. Lab 8 changes perspective and asks how the technical landscape can be cataloged, understood, governed, and traced.</p>
+    <p>Lab 8 uses Informatica's catalog and governance capabilities to discover Salesforce and Databricks technical assets, bring CDI integration metadata into the catalog, give related fields common business meaning, and inspect lineage.</p>
+    <blockquote><strong>The transition:</strong> Lab 7 activates the data. Lab 8 makes the landscape understandable and governable.</blockquote>
+  </div>
+
+  <!-- Appendix A -->
+  <div class="w3-container" style="margin-top:30px;margin-bottom:30px;">
+    <h2>Appendix A &mdash; Why Databricks is not a staging point for golden records</h2>
+    <p>The main lab gives the short answer. This appendix preserves the fuller architecture reasoning for design reviews.</p>
+    <p>1. Boundary clarity. Databricks is the workshop's home for large behavioral and analytical data such as events and transactions. Informatica MDM SaaS is the home for golden identity. Making Databricks the courier for identity data blurs those responsibilities.</p>
+    <p>2. Extra latency window. Any staging step introduces a period where staged data can be out of sync with its source. For golden identity, MDM is the source; a Databricks staging table would be a mirror.</p>
+    <p>3. Additional PII surface. Every additional store that holds mastered identity becomes another place to secure, audit, and govern.</p>
+    <p>4. No API benefit that was not already available. The Data 360 Ingestion API accepts pushes from external clients, including Informatica. Databricks is therefore not required as an intermediate hop.</p>
+    <p>5. Consistency with the architecture documented for this workshop. The lab uses the Data 360 Ingestion API pattern for Informatica-to-Data 360 publishing and reserves Databricks for zero-copy behavioral and transaction data.</p>
+  </div>
+
+  <!-- Appendix C -->
+  <div class="w3-container" style="margin-top:30px;margin-bottom:30px;">
+    <h2>Appendix C &mdash; Today-state options for publishing Informatica &rarr; Data 360</h2>
+    <p>The source lab treats these as implementation choices around the same Data 360 Ingestion API. The architectural data flow remains Informatica &rarr; Data 360; the choice is who owns the orchestration, monitoring, and retry logic.</p>
+    <table class="workshop-table">
+      <tr><th>Option</th><th>Who owns orchestration</th><th>When to choose it</th></tr>
+      <tr><td>Informatica-side CDI mapping</td><td>Informatica team</td><td>Scheduled bulk or delta publishes managed through IDMC job scheduling and audit. Best fit when Informatica is the primary integration engine.</td></tr>
+      <tr><td>Informatica-side CAI process</td><td>Informatica team</td><td>When publishing requires orchestration logic such as search, decisioning, transformation, error handling, or retry. CAI processes can also be exposed as REST endpoints.</td></tr>
+      <tr><td>Informatica Business 360 Egress job</td><td>Informatica MDM operations</td><td>Production scheduled publishing using Business 360 egress controls such as master vs. source, active vs. deleted, and full vs. incremental.</td></tr>
+      <tr><td>MuleSoft or another middleware</td><td>API / integration platform team</td><td>When middleware is already the enterprise integration layer. The target Data 360 API contract remains the same.</td></tr>
+      <tr><td>Custom code (Python, Java, etc.)</td><td>Application team</td><td>Greenfield or unusual environments where no managed integration platform is being used.</td></tr>
+    </table>
+    <p>The architectural point: these options use the same target API pattern. The operational choice is who runs the integration, who monitors it, and which platform owns retries and audit.</p>
+    <p>The source document states that the workshop's current recommended pattern for Informatica-to-Data 360 ingestion is API integration through the Data 360 Ingestion API, either directly from Informatica or through another integration layer such as MuleSoft.</p>
+  </div>
+
+  <!-- Appendix D -->
+  <div class="w3-container" style="margin-top:30px;margin-bottom:30px;">
+    <h2>Appendix D &mdash; Real-time single-person lookup (Business 360 REST APIs)</h2>
+    <p>Parts A&ndash;F describe the pattern used to populate and activate data in Data 360. A separate pattern is useful when a consumer needs one golden customer immediately rather than a bulk or scheduled profile feed.</p>
+<pre>Salesforce / custom app / service screen
+|
+| real-time REST request
+v
+Informatica Business 360
+|
+v
+one golden customer</pre>
+    <p>Example use case: a service agent opens Sarah's Salesforce record and requests the current golden customer profile. The consumer can search Informatica using an email or another searchable attribute and then retrieve the golden record using the returned MDM Business ID.</p>
+    <p>This does not compete with the Data 360 flow. The two patterns serve different needs:</p>
+    <table class="workshop-table">
+      <tr><th>Pattern</th><th>Best suited for</th></tr>
+      <tr><td>Publish to Data 360</td><td>Bulk profile population, calculated insights, segmentation, Data Graphs, and scheduled activation.</td></tr>
+      <tr><td>Direct Business 360 REST lookup</td><td>Interactive one-customer-at-a-time lookup, search-before-create, or on-demand enrichment.</td></tr>
+    </table>
+    <p>The direction of the flow is also different. In Parts A&ndash;F, Informatica pushes data to Data 360. In a direct lookup, the consumer initiates the request and pulls the current golden record from Informatica.</p>
+  </div>
+
+  <!-- Appendix E -->
+  <div class="w3-container" style="margin-top:30px;margin-bottom:30px;">
+    <h2>Appendix E &mdash; Security and governance considerations</h2>
+
+    <h3>Party Identification preserves identity lineage</h3>
+    <p>The Party Identification row records the external Informatica MDM identifier alongside the Data 360 Individual. This gives governance and audit teams a defined place to ask which Data 360 profiles are anchored to Informatica MDM identities.</p>
+
+    <h3>Zero-copy reduces additional data copies</h3>
+    <p>customer_events and transactions remain in Databricks while Data 360 queries them through federation. This avoids creating another full behavioral and transaction data store in Data 360, while Databricks remains the enforcement point for its own catalog permissions, row filters, and masking.</p>
+
+    <h3>The API contract is a common governance point</h3>
+    <p>The publish implementation may be CDI, CAI, Business 360 Egress, MuleSoft, or custom code, but the Data 360 Ingestion API remains the common target contract. Authentication, encryption in transit, rate limits, logging, and allow-listing should be reviewed at that boundary.</p>
+
+    <h3>Real-time lookup reverses who initiates the flow</h3>
+    <p>In bulk publishing, Informatica initiates the push to Data 360. In real-time lookup, the consuming application initiates a request to Informatica. The credentials, monitoring, and audit model should reflect that difference.</p>
+
+    <h3>Consent is simplified in the workshop</h3>
+    <p>The workshop uses a single Marketing Consent flag for clarity. Production consent is richer: it can vary by channel, purpose, jurisdiction, expiration, and revocation. Data 360 provides dedicated consent and contact-point-preference models for those broader requirements.</p>
+
+    <h3>Segments are high-leverage outputs</h3>
+    <p>A segment can be activated to downstream destinations such as email, advertising, personalization, or other applications. Data minimization still applies: send only the identifiers and attributes the destination needs.</p>
+
+    <h3>The architecture is reversible at the source boundary</h3>
+    <p>Publishing a subset of mastered fields into Data 360 does not overwrite Informatica's MDM source of truth. Zero-copy queries do not mutate the Databricks source tables. If downstream activation is configured incorrectly, the source master remains intact.</p>
+  </div>
+
+  <!-- Footer -->
+  <div class="w3-container">
+    <div class="w3-bar w3-black">
+      <a href="index.html" class="w3-bar-item w3-button"><i class="fa fa-home fa-fw w3-margin-right"></i>Introduction</a>
+      <a href="lab-6.html" class="w3-bar-item w3-button"><i class="fa fa-arrow-left fa-fw w3-margin-right"></i>Lab 6</a>
+      <a href="lab-8.html" class="w3-bar-item w3-button"><i class="fa fa-arrow-right fa-fw w3-margin-right"></i>Lab 8</a>
+    </div>
+    <p>Trusted Data Foundation Workshop</p>
+  </div>
+
+  <p>&nbsp;</p>
+</div>
+
+<!-- Scripts -->
+<script src="nav.js"></script>
+<script>
+function w3_open() {
+  document.getElementById("mySidebar").style.display = "block";
+  document.getElementById("myOverlay").style.display = "block";
+}
+function w3_close() {
+  document.getElementById("mySidebar").style.display = "none";
+  document.getElementById("myOverlay").style.display = "none";
+}
+</script>
+</body>
+</html>

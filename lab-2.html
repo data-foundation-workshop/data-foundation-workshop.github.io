@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Lab 2 - Discover What Is in the Data</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<style>
+body,h1,h2,h3,h4,h5,h6 {font-family: "Raleway", sans-serif}
+body {font-size: 17px;}
+.accordion {
+  background: #336699;
+  border: 1px solid #F1F0FF;
+  border-radius: 5px;
+  font-weight: 700;
+  margin: 10px;
+  margin-bottom: 15px;
+  padding: 10px 20px;
+  cursor: pointer;
+  font-size: 130%;
+  color: white;
+}
+.accordionDrop {
+  padding: 0px 30px;
+}
+::-webkit-details-marker {
+  display: none;
+}
+table.workshop-table {
+  border-collapse: collapse;
+  width: 100%;
+  margin: 15px 0;
+}
+table.workshop-table th, table.workshop-table td {
+  border: 1px solid #ddd;
+  padding: 10px 14px;
+  text-align: left;
+}
+table.workshop-table th {
+  background: #336699;
+  color: white;
+}
+table.workshop-table tr:nth-child(even) {
+  background: #f9f9f9;
+}
+blockquote {
+  border-left: 4px solid #336699;
+  margin: 15px 0;
+  padding: 10px 20px;
+  background: #f5f8fc;
+}
+code, pre {
+  background: #f4f4f4;
+  padding: 2px 6px;
+  border-radius: 3px;
+  font-size: 95%;
+}
+pre {
+  padding: 15px;
+  overflow-x: auto;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+}
+.img-caption {
+  text-align: center;
+  color: #555;
+  font-style: italic;
+  margin: 12px 40px 20px;
+  line-height: 1.5;
+}
+.callout-important {
+  background: #fff3cd;
+  border-left: 4px solid #ffc107;
+  padding: 12px 20px;
+  margin: 15px 0;
+}
+.callout-tip {
+  background: #d1ecf1;
+  border-left: 4px solid #17a2b8;
+  padding: 12px 20px;
+  margin: 15px 0;
+}
+.hero {
+  background: linear-gradient(135deg, #2b567f 0%, #336699 60%, #3d76ac 100%);
+  color: #fff;
+  padding: 40px 40px 34px;
+}
+.hero .hero-eyebrow {
+  margin: 0 0 4px;
+  font-size: 0.85em;
+  font-weight: 700;
+  letter-spacing: 2px;
+  color: #bcd6ef;
+  text-transform: uppercase;
+}
+.hero h1 {
+  margin: 0 0 22px;
+  font-size: 2.2em;
+  font-weight: 800;
+}
+.journey {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px;
+}
+.journey .step {
+  background: rgba(255,255,255,0.12);
+  border: 1px solid rgba(255,255,255,0.35);
+  border-radius: 20px;
+  padding: 7px 16px;
+  font-size: 0.92em;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.journey .arrow {
+  color: #bcd6ef;
+  font-size: 1.1em;
+  padding: 0 2px;
+}
+</style>
+</head>
+<body class="w3-content" style="max-width:1600px;">
+
+<!-- Sidebar/menu -->
+<nav class="w3-sidebar w3-collapse w3-white w3-animate-left" style="z-index:3;width:300px;overflow-y:auto;padding-bottom:50px;" id="mySidebar"><br></nav>
+
+<!-- Overlay effect when opening sidebar on small screens -->
+<div class="w3-overlay w3-hide-large w3-animate-opacity" onclick="w3_close()" style="cursor:pointer" title="close side menu" id="myOverlay"></div>
+
+<!-- PAGE CONTENT -->
+<div class="w3-main" style="margin-left:300px;border-left:1px solid #000000;">
+
+  <!-- Header -->
+  <header>
+    <span class="w3-button w3-hide-large w3-xxlarge w3-hover-text-grey" onclick="w3_open()"><i class="fa fa-bars"></i></span>
+    <div class="hero">
+      <p class="hero-eyebrow">Lab 2</p>
+      <h1>Discover What Is in the Data</h1>
+      <div class="journey">
+        <span class="step">Establish a baseline</span>
+        <span class="arrow"><i class="fa fa-long-arrow-right"></i></span>
+        <span class="step">Open Data Profiling</span>
+        <span class="arrow"><i class="fa fa-long-arrow-right"></i></span>
+        <span class="step">Profile Salesforce</span>
+        <span class="arrow"><i class="fa fa-long-arrow-right"></i></span>
+        <span class="step">Profile Databricks events</span>
+        <span class="arrow"><i class="fa fa-long-arrow-right"></i></span>
+        <span class="step">Profile transactions</span>
+        <span class="arrow"><i class="fa fa-long-arrow-right"></i></span>
+        <span class="step">Interpret the findings</span>
+      </div>
+    </div>
+  </header>
+
+  <!-- Goal -->
+  <div class="w3-container" style="margin-top:30px;margin-bottom:30px;">
+    <h2>Goal</h2>
+    <p>Inspect the raw source data and establish a before-baseline. Profiling reads the data and calculates statistics; it does not decide whether a value is valid and it does not modify the source.</p>
+
+    <blockquote>Raw source data<br>
+    |<br>
+    v<br>
+    Profiling<br>
+    nulls / distinct values / frequencies / patterns / min / max<br>
+    |<br>
+    v<br>
+    Human interpretation<br>
+    what looks suspicious?<br>
+    <br>
+    No source data is changed</blockquote>
+
+    <div class="callout-tip"><strong>Core distinction:</strong> profiling OBSERVES. Rules later JUDGE. Cleanse logic later CHANGES.</div>
+  </div>
+
+  <!-- What you will profile -->
+  <div class="w3-container" style="margin-top:30px;margin-bottom:30px;">
+    <h2>What You Will Profile</h2>
+    <table class="workshop-table">
+      <tr><th>Source</th><th>Object</th><th>What you learn</th></tr>
+      <tr><td>Salesforce</td><td>CV1_Customer__c</td><td>Customer identity fields: email, phone, city/state/country, dates, names, consent.</td></tr>
+      <tr><td>Databricks</td><td>v_customer_events</td><td>Behavioral identity hints: email, phone hint, location, event data.</td></tr>
+      <tr><td>Databricks</td><td>v_transactions</td><td>Transaction amount and date ranges.</td></tr>
+    </table>
+  </div>
+
+  <!-- Why start without rules -->
+  <div class="w3-container" style="margin-top:30px;margin-bottom:30px;">
+    <h2>Why Start Without Rules</h2>
+    <p>A first profile answers a different question from a quality rule. It tells you what values and statistical patterns actually exist before you encode business expectations.</p>
+    <p>&bull; Confirm the runtime and connections can read the source data.</p>
+    <p>&bull; Capture the before-state so later scorecards have a baseline.</p>
+    <p>&bull; See which issues deserve explicit business rules or standardization.</p>
+    <p>For example, a profile can show 12345@abc as one of the distinct email values and show 2028 as the maximum purchase date. The profiler does not label either one invalid; that judgment becomes a Rule Specification in Lab 4A.</p>
+  </div>
+
+  <!-- Standalone versus catalog-integrated profiling -->
+  <div class="w3-container" style="margin-top:30px;margin-bottom:30px;">
+    <h2>Standalone Profiling Versus Catalog-Integrated Profiling</h2>
+    <p>This lab uses the standalone Data Profiling route because it is the simplest way to learn profiling directly against a connection and source object.</p>
+    <p>Profiling also exists in the Data Governance and Catalog context after technical assets have been discovered through Metadata Command Center. The profiling purpose is the same; the surrounding catalog context is different.</p>
+    <div class="callout-tip"><strong>For this lab:</strong> use standalone Data Profiling. Lab 8 introduces the cataloged-asset view.</div>
+  </div>
+
+  <!-- Pre-flight -->
+  <div class="w3-container" style="margin-top:30px;margin-bottom:30px;">
+    <h2>Pre-flight</h2>
+    <p>&bull; Salesforce sample data is loaded with Email__c and Phone__c as plain Text fields so the intended bad values survived.</p>
+    <p>&bull; Databricks sample data is available.</p>
+    <p>&bull; A Secure Agent runtime is Up and Running with the required Data Quality capability.</p>
+    <p>&bull; Connections CN_SF_CV1 and CN_DBX_CV1 test successfully and use the Secure Agent runtime.</p>
+    <p>&bull; If the workshop governance scaffolding from Lab 1 exists, leave it unchanged; it is not used by the profiling clicks here.</p>
+  </div>
+
+  <!-- Part A -->
+  <div class="w3-container" style="margin-top:30px;margin-bottom:30px;">
+    <h2>Part A &mdash; Open Data Profiling and Orient</h2>
+
+    <details>
+      <summary class="accordion">What a profile run produces automatically</summary>
+      <div class="accordionDrop">
+        <p>&bull; Null count and percentage.</p>
+        <p>&bull; Distinct-value count and value frequencies.</p>
+        <p>&bull; Non-distinct count and percentage.</p>
+        <p>&bull; Minimum and maximum for numeric/date columns.</p>
+        <p>&bull; Pattern analysis and string-length information.</p>
+        <p>&bull; Inferred semantic type when CLAIRE is enabled.</p>
+        <p>&bull; Data Preview of actual rows.</p>
+        <p>You do not write custom rules to obtain these statistics.</p>
+        <table class="workshop-table">
+          <tr><th>Possible entry point</th><th>Use in this lab</th></tr>
+          <tr><td>Service selector &rarr; Data Profiling</td><td>Preferred standalone profile-task UI.</td></tr>
+          <tr><td>Service selector &rarr; Data Quality &rarr; Profile tasks</td><td>Alternate route if your tenant exposes profiling there.</td></tr>
+          <tr><td>Data Governance and Catalog</td><td>Not used for the hands-on profile task in this lab.</td></tr>
+        </table>
+        <div class="callout-tip"><strong>CLAIRE:</strong> leave enabled. It can enrich profile output with semantic-type and pattern hints, but it does not replace the core profiling statistics.</div>
+      </div>
+    </details>
+  </div>
+
+  <!-- Part B -->
+  <div class="w3-container" style="margin-top:30px;margin-bottom:30px;">
+    <h2>Part B &mdash; Profile Salesforce CV1_Customer__c</h2>
+
+    <details>
+      <summary class="accordion">B1. Create the profile task</summary>
+      <div class="accordionDrop">
+        <p>1. Create a new profile task.</p>
+        <p>2. Name = PROF_CV1_SF_CUSTOMERS_RAW.</p>
+        <p>3. Source connection = CN_SF_CV1.</p>
+        <p>4. Source object = CV1_Customer__c.</p>
+        <p>5. Project = CV1_DATA_AI_WORKSHOP if prompted.</p>
+      </div>
+    </details>
+
+    <details>
+      <summary class="accordion">B2. Select the workshop fields</summary>
+      <div class="accordionDrop">
+        <p>Keep these 13 fields and uncheck Salesforce system/audit fields and the three empty MDM_* placeholders:</p>
+        <p>&bull; Source_System__c</p>
+        <p>&bull; Source_Record_ID__c</p>
+        <p>&bull; Full_Name__c</p>
+        <p>&bull; Email__c</p>
+        <p>&bull; Phone__c</p>
+        <p>&bull; Street__c</p>
+        <p>&bull; City__c</p>
+        <p>&bull; State__c</p>
+        <p>&bull; Postal_Code__c</p>
+        <p>&bull; Country__c</p>
+        <p>&bull; Last_Purchase_Date__c</p>
+        <p>&bull; Loyalty_Tier__c</p>
+        <p>&bull; Consent_Status__c</p>
+      </div>
+    </details>
+
+    <details>
+      <summary class="accordion">B3. Confirm the runtime in both required places</summary>
+      <div class="accordionDrop">
+        <div class="callout-important"><strong>Two-place runtime requirement:</strong> the connection and the profile task Schedule tab must both point to the working Secure Agent runtime.</div>
+        <p>6. Administrator &rarr; Connections &rarr; CN_SF_CV1 &rarr; verify Runtime Environment and Test Connection.</p>
+        <p>7. Repeat for CN_DBX_CV1.</p>
+        <p>8. Open PROF_CV1_SF_CUSTOMERS_RAW &rarr; Schedule.</p>
+        <p>9. Runtime Environment = the same Secure Agent.</p>
+        <p>10. Save.</p>
+      </div>
+    </details>
+
+    <details>
+      <summary class="accordion">B4. Run</summary>
+      <div class="accordionDrop">
+        <p>11. Click Run.</p>
+        <p>12. Wait for completion.</p>
+        <p>13. Open Results.</p>
+      </div>
+    </details>
+
+    <details>
+      <summary class="accordion">B5. Read the Salesforce profile</summary>
+      <div class="accordionDrop">
+        <table class="workshop-table">
+          <tr><th>Column</th><th>Profiler reports</th><th>What you should notice</th></tr>
+          <tr><td>Email__c</td><td>4 distinct values including 12345@abc</td><td>One value does not have a normal email structure. Later: email validity rule.</td></tr>
+          <tr><td>Phone__c</td><td>25% null; several formatting patterns</td><td>One value is missing and the others use inconsistent formatting. Later: completeness + standardization.</td></tr>
+          <tr><td>City__c</td><td>ATX, Austin, Houston</td><td>ATX is a non-standard city alias. Later: standardize.</td></tr>
+          <tr><td>State__c</td><td>TX, Texas</td><td>Two representations for the same state. Later: standardize.</td></tr>
+          <tr><td>Country__c</td><td>US, USA</td><td>Two representations for the same country. Later: standardize.</td></tr>
+          <tr><td>Last_Purchase_Date__c</td><td>Maximum in 2028</td><td>Future date requires an explicit business rule.</td></tr>
+          <tr><td>Postal_Code__c</td><td>No obvious workshop defect</td><td>No action required from this sample.</td></tr>
+          <tr><td>Full_Name__c</td><td>Several Sarah name variants plus Diego</td><td>Profiling shows the variation; MDM later determines which records belong to the same customer.</td></tr>
+        </table>
+        <div class="callout-tip"><strong>What the profiler did not do:</strong> it did not mark 12345@abc, ATX, Texas, USA, or 2028 as invalid. It reported the values and statistics; you interpreted them.</div>
+      </div>
+    </details>
+  </div>
+
+  <!-- Part C -->
+  <div class="w3-container" style="margin-top:30px;margin-bottom:30px;">
+    <h2>Part C &mdash; Profile Databricks customer_events</h2>
+
+    <div class="callout-tip"><strong>Use the view:</strong> the tested environment profiles v_customer_events rather than the raw table.</div>
+
+    <p>14. Create a new profile task.</p>
+    <p>15. Name = PROF_CV1_DBX_CUSTOMER_EVENTS_RAW.</p>
+    <p>16. Source = CN_DBX_CV1.</p>
+    <p>17. Object = cv1_workshop_catalog.cv1_workshop.v_customer_events.</p>
+    <p>18. Leave Project at its default location if that is how the tenant presents the Databricks profile task.</p>
+
+    <p>Profile these fields:</p>
+    <p>&bull; web_user_id</p>
+    <p>&bull; web_email</p>
+    <p>&bull; phone_hint</p>
+    <p>&bull; raw_location</p>
+    <p>&bull; event_ts</p>
+    <p>&bull; event_type</p>
+    <p>&bull; product_category</p>
+
+    <p>19. Schedule &rarr; Runtime Environment = Secure Agent &rarr; Save &rarr; Run.</p>
+
+    <table class="workshop-table">
+      <tr><th>Column</th><th>Profiler reports</th><th>What you should notice</th></tr>
+      <tr><td>web_email</td><td>One or more nulls; Sarah Gmail + enterprise email + Diego email</td><td>Sarah appears under more than one email across events; one event has no email.</td></tr>
+      <tr><td>phone_hint</td><td>Null plus 5550198, (555)0198, 5551234</td><td>Same real-world phone concept uses different formatting.</td></tr>
+      <tr><td>raw_location</td><td>AUS, Austin, Houston</td><td>AUS is a location alias that should be standardized.</td></tr>
+      <tr><td>web_user_id</td><td>WEB-1 and WEB-2</td><td>Useful source-system identifier linking events and transactions.</td></tr>
+    </table>
+  </div>
+
+  <!-- Part D -->
+  <div class="w3-container" style="margin-top:30px;margin-bottom:30px;">
+    <h2>Part D &mdash; Profile Databricks transactions</h2>
+
+    <div class="callout-tip"><strong>Use the view:</strong> the tested environment profiles v_transactions.</div>
+
+    <p>20. Create a new profile task.</p>
+    <p>21. Name = PROF_CV1_DBX_TRANSACTIONS_RAW.</p>
+    <p>22. Source = CN_DBX_CV1.</p>
+    <p>23. Object = cv1_workshop_catalog.cv1_workshop.v_transactions.</p>
+
+    <p>Profile these fields:</p>
+    <p>&bull; web_user_id</p>
+    <p>&bull; amount</p>
+    <p>&bull; product_category</p>
+    <p>&bull; size</p>
+    <p>&bull; transaction_ts</p>
+
+    <p>24. Schedule &rarr; Runtime Environment = Secure Agent &rarr; Save &rarr; Run.</p>
+
+    <table class="workshop-table">
+      <tr><th>Column</th><th>Profiler reports</th><th>What you should notice</th></tr>
+      <tr><td>amount</td><td>Minimum = -200.00; maximum = 250.50</td><td>A negative transaction needs an agreed business rule.</td></tr>
+      <tr><td>transaction_ts</td><td>Maximum in 2028</td><td>Future transaction date needs an agreed rule.</td></tr>
+      <tr><td>web_user_id</td><td>WEB-1 and WEB-2</td><td>Same identifier pattern used in customer_events.</td></tr>
+    </table>
+  </div>
+
+  <!-- Databricks-specific notes -->
+  <div class="w3-container" style="margin-top:30px;margin-bottom:30px;">
+    <h2>Databricks-Specific Notes</h2>
+    <p>&bull; If the connection cannot start the warehouse, open Databricks and start the SQL Warehouse, then retry.</p>
+    <p>&bull; Use the views in the tested environment. If the tenant behaves differently, preserve the same fields and profiling purpose.</p>
+  </div>
+
+  <!-- End-of-lab validation -->
+  <div class="w3-container" style="margin-top:30px;margin-bottom:30px;">
+    <h2>End-of-Lab Validation</h2>
+    <p>&bull; Three profile tasks completed successfully.</p>
+    <p>&bull; Salesforce profile shows the intentionally malformed/inconsistent values and the phone null.</p>
+    <p>&bull; customer_events profile shows AUS, email/phone nulls, and phone-format variation.</p>
+    <p>&bull; transactions profile shows -200.00 and a future transaction timestamp.</p>
+    <p>&bull; No source data was changed.</p>
+    <p>&bull; Databricks profiles ran against the tested views.</p>
+    <p>&bull; Keep the profile results available for the rule-design and scorecard labs.</p>
+  </div>
+
+  <!-- Illustrations -->
+  <div class="w3-container" style="margin-top:30px;margin-bottom:30px;">
+    <h2>Illustrations</h2>
+
+    <div class="w3-card w3-container w3-center w3-mobile"><img class="w3-image" src="img/slide17.jpeg" alt="Salesforce data preview showing 12345@abc, ATX, and Texas"></div>
+    <p class="img-caption">The data preview makes the issue visible: one Salesforce record contains 12345@abc, alongside apparently normal email values and other variations such as ATX and Texas. Profiling reports what is present; it does not yet decide which values violate a business rule.</p>
+    <p>&nbsp;</p>
+
+    <div class="w3-card w3-container w3-center w3-mobile"><img class="w3-image" src="img/slide18.jpeg" alt="Databricks raw_location values: Austin, AUS, Houston"></div>
+    <p class="img-caption">Databricks contains three distinct raw_location values across four rows: Austin, AUS and Houston. Informatica reports the values, nulls, distinct counts and structural patterns, but it does not know that AUS and Austin should represent the same city. That decision belongs to the business in Lab 3.</p>
+    <p>&nbsp;</p>
+
+    <div class="w3-card w3-container w3-center w3-mobile"><img class="w3-image" src="img/slide19.jpeg" alt="Transaction amount column with minimum value of -200.00"></div>
+    <p class="img-caption">The amount column has a minimum value of <strong>-200.00</strong>, so profiling tells us that negative transactions exist. It does not decide whether that value is wrong: the business must determine whether negatives represent legitimate activity such as refunds or should fail a quality rule.</p>
+    <p>&nbsp;</p>
+  </div>
+
+  <!-- What did we get out of this lab? -->
+  <div class="w3-container" style="margin-top:30px;margin-bottom:30px;">
+    <h2>What Did We Get Out of This Lab?</h2>
+    <p>We now have a factual picture of the raw data. We know which fields contain nulls, which values vary, and which numeric/date ranges look suspicious. We have not yet encoded any business judgment.</p>
+
+    <blockquote>Lab 2: observe the data<br>
+    |<br>
+    v<br>
+    Lab 3: agree what 'good' means<br>
+    |<br>
+    v<br>
+    Lab 4A: turn those standards into measured pass/fail rules</blockquote>
+  </div>
+
+  <!-- What's next -->
+  <div class="w3-container" style="margin-top:30px;margin-bottom:30px;">
+    <h2>What's Next</h2>
+    <p>Lab 3 converts these observations into agreed data-quality and standardization requirements. It is a planning lab: no data is changed and no rule executes yet.</p>
+  </div>
+
+  <!-- Footer -->
+  <div class="w3-container">
+    <div class="w3-bar w3-black">
+      <a href="index.html" class="w3-bar-item w3-button"><i class="fa fa-home fa-fw w3-margin-right"></i>Introduction</a>
+      <a href="lab-1.html" class="w3-bar-item w3-button"><i class="fa fa-book fa-fw w3-margin-right"></i>Lab 1</a>
+      <a href="lab-2.html" class="w3-bar-item w3-button"><i class="fa fa-search fa-fw w3-margin-right"></i>Lab 2</a>
+      <a href="lab-3.html" class="w3-bar-item w3-button"><i class="fa fa-check-square-o fa-fw w3-margin-right"></i>Lab 3</a>
+    </div>
+    <p>Trusted Data Foundation Workshop</p>
+  </div>
+
+  <p>&nbsp;</p>
+</div>
+
+<!-- Scripts -->
+<script src="nav.js"></script>
+<script>
+function w3_open() {
+  document.getElementById("mySidebar").style.display = "block";
+  document.getElementById("myOverlay").style.display = "block";
+}
+function w3_close() {
+  document.getElementById("mySidebar").style.display = "none";
+  document.getElementById("myOverlay").style.display = "none";
+}
+</script>
+</body>
+</html>

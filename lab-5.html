@@ -1,0 +1,1027 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Lab 5 - Master the Customer in MDM</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<style>
+body,h1,h2,h3,h4,h5,h6 {font-family: "Raleway", sans-serif}
+body {font-size: 17px;}
+.accordion {
+  background: #336699;
+  border: 1px solid #F1F0FF;
+  border-radius: 5px;
+  font-weight: 700;
+  margin: 10px;
+  margin-bottom: 15px;
+  padding: 10px 20px;
+  cursor: pointer;
+  font-size: 130%;
+  color: white;
+}
+.accordionDrop {
+  padding: 0px 30px;
+}
+::-webkit-details-marker {
+  display: none;
+}
+table.workshop-table {
+  border-collapse: collapse;
+  width: 100%;
+  margin: 15px 0;
+}
+table.workshop-table th, table.workshop-table td {
+  border: 1px solid #ddd;
+  padding: 10px 14px;
+  text-align: left;
+}
+table.workshop-table th {
+  background: #336699;
+  color: white;
+}
+table.workshop-table tr:nth-child(even) {
+  background: #f9f9f9;
+}
+blockquote {
+  border-left: 4px solid #336699;
+  margin: 15px 0;
+  padding: 10px 20px;
+  background: #f5f8fc;
+}
+code, pre {
+  background: #f4f4f4;
+  padding: 2px 6px;
+  border-radius: 3px;
+  font-size: 95%;
+}
+pre {
+  padding: 15px;
+  overflow-x: auto;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+}
+.img-caption {
+  text-align: center;
+  color: #555;
+  font-style: italic;
+  margin: 12px 40px 20px;
+  line-height: 1.5;
+}
+.callout-important {
+  background: #fff3cd;
+  border-left: 4px solid #ffc107;
+  padding: 12px 20px;
+  margin: 15px 0;
+}
+.callout-tip {
+  background: #d1ecf1;
+  border-left: 4px solid #17a2b8;
+  padding: 12px 20px;
+  margin: 15px 0;
+}
+.hero {
+  background: linear-gradient(135deg, #2b567f 0%, #336699 60%, #3d76ac 100%);
+  color: #fff;
+  padding: 40px 40px 34px;
+}
+.hero .hero-eyebrow {
+  margin: 0 0 4px;
+  font-size: 0.85em;
+  font-weight: 700;
+  letter-spacing: 2px;
+  color: #bcd6ef;
+  text-transform: uppercase;
+}
+.hero h1 {
+  margin: 0 0 22px;
+  font-size: 2.2em;
+  font-weight: 800;
+}
+.journey {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px;
+}
+.journey .step {
+  background: rgba(255,255,255,0.12);
+  border: 1px solid rgba(255,255,255,0.35);
+  border-radius: 20px;
+  padding: 7px 16px;
+  font-size: 0.92em;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.journey .arrow {
+  color: #bcd6ef;
+  font-size: 1.1em;
+  padding: 0 2px;
+}
+</style>
+</head>
+<body class="w3-content" style="max-width:1600px;">
+
+<!-- Sidebar/menu -->
+<nav class="w3-sidebar w3-collapse w3-white w3-animate-left" style="z-index:3;width:300px;overflow-y:auto;padding-bottom:50px;" id="mySidebar"><br></nav>
+
+<!-- Overlay effect when opening sidebar on small screens -->
+<div class="w3-overlay w3-hide-large w3-animate-opacity" onclick="w3_close()" style="cursor:pointer" title="close side menu" id="myOverlay"></div>
+
+<!-- PAGE CONTENT -->
+<div class="w3-main" style="margin-left:300px;border-left:1px solid #000000;">
+
+  <!-- Header -->
+  <header>
+    <span class="w3-button w3-hide-large w3-xxlarge w3-hover-text-grey" onclick="w3_open()"><i class="fa fa-bars"></i></span>
+    <div class="hero">
+      <p class="hero-eyebrow">Lab 5</p>
+      <h1>Master the Customer in MDM</h1>
+      <div class="journey">
+        <span class="step">Prepare clean files</span>
+        <span class="arrow"><i class="fa fa-long-arrow-right"></i></span>
+        <span class="step">Configure Person entity</span>
+        <span class="arrow"><i class="fa fa-long-arrow-right"></i></span>
+        <span class="step">Build email match</span>
+        <span class="arrow"><i class="fa fa-long-arrow-right"></i></span>
+        <span class="step">Import &amp; match sources</span>
+        <span class="arrow"><i class="fa fa-long-arrow-right"></i></span>
+        <span class="step">Merge the pair</span>
+        <span class="arrow"><i class="fa fa-long-arrow-right"></i></span>
+        <span class="step">Golden record</span>
+      </div>
+    </div>
+  </header>
+
+  <!-- Where we are -->
+  <div class="w3-container" style="margin-top:30px;margin-bottom:30px;">
+    <h2>Where we are</h2>
+    <p>The source data has already been cleaned and standardized. We now have customer records from Salesforce and Databricks that are ready to be compared.</p>
+    <p>The problem is that the two systems still do not know when their records refer to the same real person. This is the problem Master Data Management (MDM) solves.</p>
+  </div>
+
+  <!-- Goal of Lab 5 -->
+  <div class="w3-container" style="margin-top:30px;margin-bottom:30px;">
+    <h2>Goal of Lab 5</h2>
+    <p>Use Informatica Customer 360 SaaS to identify records that belong to the same customer, merge the records we confirm as the same person, and create one trusted golden record while preserving the link back to every contributing source record.</p>
+
+<pre>Salesforce record   Databricks record
+        \             /
+         \           /
+          +--- MATCH ---+
+                |
+                v
+          MERGE decision
+                |
+                v
+          SURVIVORSHIP
+      which source value wins?
+                |
+                v
+          GOLDEN RECORD</pre>
+
+    <blockquote><strong>In short:</strong> clean records from different systems go in; MDM determines which belong to the same customer and produces one trusted master record.</blockquote>
+  </div>
+
+  <!-- The three MDM ideas -->
+  <div class="w3-container" style="margin-top:30px;margin-bottom:30px;">
+    <h2>The three MDM ideas you need before starting</h2>
+    <table class="workshop-table">
+      <tr><th>Concept</th><th>Question it answers</th><th>What we do in this lab</th></tr>
+      <tr><td>Match</td><td>Do these two records describe the same person?</td><td>Compare Salesforce and Databricks records using exact email.</td></tr>
+      <tr><td>Merge</td><td>What should happen when a pair matches?</td><td>Use Manual merge so a person confirms the match before consolidation.</td></tr>
+      <tr><td>Survivorship</td><td>If the sources disagree, which value wins?</td><td>Rank Salesforce above Databricks for identity fields.</td></tr>
+    </table>
+
+<pre>Match answers:        SAME PERSON?
+Merge answers:        COMBINE THEM?
+Survivorship answers: WHICH VALUE WINS?</pre>
+  </div>
+
+  <!-- The two Informatica applications -->
+  <div class="w3-container" style="margin-top:30px;margin-bottom:30px;">
+    <h2>The two Informatica applications used in this lab</h2>
+    <table class="workshop-table">
+      <tr><th>Application</th><th>What it is used for here</th></tr>
+      <tr><td>Business 360 Console</td><td>Configure the MDM engine: Person model, searchable email, match model, source systems, and survivorship.</td></tr>
+      <tr><td>Customer 360</td><td>Work with the records: import files, inspect match results, search customers, merge records, and inspect the golden record.</td></tr>
+    </table>
+
+    <blockquote><strong>Navigation note:</strong> These are separate applications inside Informatica Data Management Cloud (IDMC). Use the app switcher at the top-left when a step tells you to move between them.</blockquote>
+  </div>
+
+  <!-- What you will do -->
+  <div class="w3-container" style="margin-top:30px;margin-bottom:30px;">
+    <h2>What you will do</h2>
+    <table class="workshop-table">
+      <tr><th>Part</th><th>Purpose</th><th>Where</th></tr>
+      <tr><td>A</td><td>Prepare two small CSV files containing the clean Salesforce and Databricks records.</td><td>Databricks</td></tr>
+      <tr><td>B</td><td>Configure the Person entity as Customer B2C so its MDM configuration tabs are available.</td><td>Business 360 Console</td></tr>
+      <tr><td>C</td><td>Make the email value searchable so matching can use it.</td><td>Business 360 Console</td></tr>
+      <tr><td>D</td><td>Create a custom match model that compares exact email.</td><td>Business 360 Console</td></tr>
+      <tr><td>E</td><td>Publish the match model and regenerate match keys.</td><td>Business 360 Console</td></tr>
+      <tr><td>F</td><td>Create Salesforce and Databricks as named source systems.</td><td>Business 360 Console</td></tr>
+      <tr><td>G</td><td>Set survivorship so Salesforce wins identity conflicts.</td><td>Business 360 Console</td></tr>
+      <tr><td>H</td><td>Import the Salesforce records as the first source.</td><td>Customer 360</td></tr>
+      <tr><td>I</td><td>Match and import the Databricks records against Salesforce.</td><td>Customer 360</td></tr>
+      <tr><td>J</td><td>Manually merge the confirmed Sarah pair.</td><td>Customer 360</td></tr>
+      <tr><td>K</td><td>Inspect the golden record, its source records, and its history.</td><td>Customer 360</td></tr>
+    </table>
+  </div>
+
+  <!-- Prerequisites -->
+  <div class="w3-container" style="margin-top:30px;margin-bottom:30px;">
+    <h2>Prerequisites</h2>
+    <p>&bull; The clean staging tables exist in Databricks: staging_sf_customer, dq_exception_sf, staging_dbx_customer, and dq_exception_dbx.</p>
+    <p>&bull; You can open Business 360 Console and Customer 360.</p>
+    <p>&bull; Your user has the Business 360 Console Designer role needed to create source-system assets and publish match models.</p>
+
+    <blockquote><strong>Job timing:</strong> Customer 360 import, indexing, and match jobs can take several minutes even for very small files. Monitor My Jobs and wait for Status = Success before assuming a step has failed.</blockquote>
+
+    <h3>Demo note if you are not rebuilding the workshop</h3>
+    <p>A later Lab 8 exercise recreated the Salesforce output tables. If you are demonstrating the exact Salesforce rows that originally fed MDM, use <code>cv1_workshop_catalog.cv1_workshop.staging_sf_customer_bkp_20260807</code> and <code>cv1_workshop_catalog.cv1_workshop.dq_exception_sf_bkp_20260807</code>. The Databricks staging_dbx_customer and dq_exception_dbx tables remain unchanged.</p>
+  </div>
+
+  <!-- Part A -->
+  <div class="w3-container" style="margin-top:30px;margin-bottom:30px;">
+    <h2>Part A &mdash; Prepare the two clean input files</h2>
+
+    <h3>What this part does</h3>
+    <p>Customer 360's File Import workflow reads CSV files. For the workshop, we export the already-cleaned records from Databricks so you can see exactly what enters MDM. In production, this manual export would normally be replaced by an automated ingestion pattern.</p>
+
+    <details>
+      <summary class="accordion">A1. Salesforce CSV &mdash; cv1_sf_for_mdm.csv</summary>
+      <div class="accordionDrop">
+        <p>In the Databricks SQL Editor, run:</p>
+<pre>SELECT Source_Record_ID__c AS source_pk,
+split_part(Full_Name__c,' ',1) AS first_name,
+split_part(Full_Name__c,' ',2) AS last_name,
+Full_Name__c AS full_name,
+Email__c AS email
+FROM cv1_workshop_catalog.cv1_workshop.staging_sf_customer;</pre>
+        <p>Download the result as CSV and save it as cv1_sf_for_mdm.csv.</p>
+        <blockquote><strong>Expected result:</strong> 2 rows &mdash; sf-003 Sarah Jenkens and sf-004 Diego Martinez.</blockquote>
+      </div>
+    </details>
+
+    <details>
+      <summary class="accordion">A2. Databricks CSV &mdash; cv1_dbx_for_mdm.csv</summary>
+      <div class="accordionDrop">
+        <p>The web-event rows do not contain first and last name fields. For the workshop, we add the known names so the records satisfy Person's required-name fields and can be compared cleanly.</p>
+<pre>SELECT event_id AS source_pk,
+CASE web_user_id WHEN 'WEB-1' THEN 'Sarah'
+WHEN 'WEB-2' THEN 'Diego' END AS first_name,
+CASE web_user_id WHEN 'WEB-1' THEN 'Jenkens'
+WHEN 'WEB-2' THEN 'Martinez' END AS last_name,
+CASE web_user_id WHEN 'WEB-1' THEN 'Sarah Jenkens'
+WHEN 'WEB-2' THEN 'Diego Martinez' END AS full_name,
+web_email AS email
+FROM cv1_workshop_catalog.cv1_workshop.staging_dbx_customer;</pre>
+        <p>Download the result and save it as cv1_dbx_for_mdm.csv.</p>
+        <blockquote><strong>Expected result:</strong> 3 rows &mdash; ev-001, ev-002, and ev-004. event_id is used as the unique source primary key.</blockquote>
+      </div>
+    </details>
+
+    <h3>Why the CSVs are deliberately minimal</h3>
+    <p>The Person entity uses field groups such as Address, Phone, and Email. Mapping into a field group activates that group's required child fields. The workshop data does not contain all required address or phone fields, so we do not map those groups.</p>
+
+<pre>We use:
+source primary key + first name + last name + full name + email
+
+We deliberately do NOT map:
+address or phone groups</pre>
+
+    <blockquote><strong>Part A result:</strong> You have one clean Salesforce file and one clean Databricks file ready for Customer 360.</blockquote>
+  </div>
+
+  <!-- Part B -->
+  <div class="w3-container" style="margin-top:30px;margin-bottom:30px;">
+    <h2>Part B &mdash; Configure the Person business entity</h2>
+
+    <details>
+      <summary class="accordion">Why this is needed</summary>
+      <div class="accordionDrop">
+        <p>Person is the prebuilt Customer 360 business entity for people. Before its Match and Survivorship configuration can be used, the entity must be associated with the correct subscribed record type. For this workshop, we are mastering natural persons, so the correct type is Customer B2C.</p>
+        <blockquote><strong>Subscribed Record Type means:</strong> the MDM data-domain classification used by Customer 360. It is not a Salesforce record type and it does not define the match logic.</blockquote>
+      </div>
+    </details>
+
+    <details>
+      <summary class="accordion">Steps</summary>
+      <div class="accordionDrop">
+        <p>1. Open Business 360 Console using the app switcher at the top-left.</p>
+        <p>2. Left navigation &rarr; Explore &rarr; open the Customer360 project &rarr; open the Person business entity.</p>
+        <p>3. If the yellow banner says the subscribed record type is not configured, open the three-dot menu at the top-right of the Person editor &rarr; Properties.</p>
+        <p>4. In Subscribed Record Type, select Customer B2C.</p>
+        <p>&bull; Do not select B2B, Healthcare Professional, Supporting Entity, or Custom Domain.</p>
+        <p>&bull; Leave Business ID = c360.person unchanged and leave the Business ID format unchanged.</p>
+        <p>5. Click OK.</p>
+        <p>6. Click Save.</p>
+        <p>7. Click the validation checkmark icon next to Save. Confirm the entity shows a green Valid status.</p>
+        <blockquote><strong>End-state check:</strong> The warning is gone and the Person editor exposes Model tabs including Attributes, Data Quality, Match, and Survivorship.</blockquote>
+      </div>
+    </details>
+  </div>
+
+  <!-- Part C -->
+  <div class="w3-container" style="margin-top:30px;margin-bottom:30px;">
+    <h2>Part C &mdash; Make email searchable</h2>
+
+    <details>
+      <summary class="accordion">Why this is needed</summary>
+      <div class="accordionDrop">
+        <p>The match model cannot efficiently compare email unless the actual email value field is indexed for search and match-key generation. In Person, the email value is the Electronic Address field inside the Email field group.</p>
+<pre>Email field group
+-&gt; Electronic Address &lt;-- actual email value we use
+-&gt; Default Indicator
+-&gt; Usage Type
+-&gt; Electronic Address Status</pre>
+      </div>
+    </details>
+
+    <details>
+      <summary class="accordion">Steps</summary>
+      <div class="accordionDrop">
+        <p>8. On the Person entity, open Model &rarr; Attributes.</p>
+        <p>9. Click the Email tile.</p>
+        <p>10. Click the down-arrow at the bottom of the Email tile to expand its child fields.</p>
+        <p>11. Select Electronic Address &mdash; the child field that stores the actual email value.</p>
+        <p>&bull; Do not select the Email group header, Default Indicator, Usage Type, or Electronic Address Status.</p>
+        <p>12. In the bottom Properties panel, confirm the title is Properties: Electronic Address. Open Search and Reports.</p>
+        <p>13. Select Searchable. Leave Auto Suggest and Facetable unselected.</p>
+        <p>14. Click Save.</p>
+        <p>15. In the Confirm Save dialog, click Save and Index.</p>
+        <p>This starts a background Reindex job. You do not need to wait before continuing, but the job must ultimately complete for the searchable field to be fully usable.</p>
+        <blockquote><strong>End-state check:</strong> Person remains Valid and Electronic Address shows Searchable = selected.</blockquote>
+        <table class="workshop-table">
+          <tr><th>Option</th><th>Meaning in this lab</th></tr>
+          <tr><td>Searchable</td><td>Indexes the field for search and match-key generation. Required.</td></tr>
+          <tr><td>Auto Suggest</td><td>Supports type-ahead suggestions. Not needed.</td></tr>
+          <tr><td>Facetable</td><td>Supports filter facets. Not needed.</td></tr>
+        </table>
+      </div>
+    </details>
+  </div>
+
+  <!-- Part D -->
+  <div class="w3-container" style="margin-top:30px;margin-bottom:30px;">
+    <h2>Part D &mdash; Build a custom email match model</h2>
+
+    <h3>Why a custom model is needed</h3>
+    <p>Customer 360 ships with a baseline Person deduplication model that uses name and address. That is not a good fit for the Databricks web-event records because they do not contain postal address. The reliable field shared by the workshop sources is email.</p>
+
+<pre>Salesforce Sarah: sarah.jenkins@gmail.com
+Databricks ev-001: sarah.jenkins@gmail.com
+        |
+        v
+Exact email match</pre>
+
+    <p>We therefore copy the built-in model and change the copy to use email for candidate selection and exact matching. The built-in model remains untouched.</p>
+
+    <details>
+      <summary class="accordion">D1. Copy the baseline match model</summary>
+      <div class="accordionDrop">
+        <p>16. On the Person entity, open the Match tab.</p>
+        <p>17. Locate Baseline Match Model for person Deduplication. Its status should be Published.</p>
+        <p>18. On that row, click the standalone Copy icon (document-stack icon).</p>
+        <p>&bull; In this tested build, Copy is not in the three-dot Actions menu.</p>
+        <p>&bull; If the Copy icon is not available, the + button can create a model from scratch; Copy is simply faster.</p>
+        <p>19. In the Copy dialog, enter:</p>
+        <p>&bull; Name: Person_Email_Match</p>
+        <p>&bull; Model Description: Match Person records on Electronic Address (email). Custom model for cross-source dedup where address is unavailable.</p>
+        <p>20. Click Copy. The new model opens in Draft status with Model Configuration and Directed AI Match Rules tabs.</p>
+        <blockquote><strong>Naming note:</strong> The source lab records that the model name cannot be renamed after publish, so choose the name deliberately.</blockquote>
+      </div>
+    </details>
+
+    <details>
+      <summary class="accordion">D2. Change Candidate Selection Criteria to email</summary>
+      <div class="accordionDrop">
+        <h3>What Candidate Selection Criteria does</h3>
+        <p>Candidate Selection Criteria (CSC) is the first stage of matching. It decides which record pairs are worth comparing. If email is not part of candidate selection, the later email rule may never receive the pair.</p>
+<pre>Candidate selection
+        |
+        v
+Which record pairs should be compared?
+        |
+        v
+Match rule evaluates those pairs</pre>
+        <p>21. On Model Configuration, click Edit.</p>
+        <p>22. In Candidate Selection Criteria, delete the inherited Person_Name / fullName row.</p>
+        <p>23. Click + to add a criterion.</p>
+        <p>24. Configure:</p>
+        <p>&bull; Field Type: Email</p>
+        <p>&bull; Field Name: Electronic Address</p>
+        <p>&bull; Filter Candidates By: leave blank</p>
+        <p>&bull; Key Generation Level: Standard</p>
+        <p>&bull; Candidate Search Level: Typical</p>
+        <p>25. Click Add.</p>
+        <p>26. Confirm the list now shows Email / Electronic Address / Standard / Typical.</p>
+        <p>27. Click Save in the Model Configuration edit controls.</p>
+        <div class="callout-important"><strong>If Electronic Address is not available in the Field Name picker:</strong> stop and verify the tenant configuration with your MDM administrator or Informatica support. Do not add an email rule without email candidate selection, because the records may never become candidate pairs.</div>
+      </div>
+    </details>
+
+    <details>
+      <summary class="accordion">D3. Replace the inherited rules with one exact email rule</summary>
+      <div class="accordionDrop">
+        <p>The copied model also contains inherited fuzzy name rules. We first add the new email rule, then remove the inherited rules so the model never temporarily has zero rules.</p>
+
+        <h3>D3a &mdash; Add the exact email rule</h3>
+        <p>28. Open Directed AI Match Rules. Confirm the inherited rules are visible.</p>
+        <p>29. Click Edit.</p>
+        <p>30. Click + to open Add Directed AI Match Rule.</p>
+        <p>31. Wizard Step 1 &mdash; Configure Properties and Thresholds:</p>
+        <p>&bull; Match Strategy: EXACT</p>
+        <p>&bull; Merge Strategy: Manual</p>
+        <p>&bull; Description: Exact match on Electronic Address (email)</p>
+        <p>&bull; Click Next.</p>
+        <p>32. Wizard Step 2 &mdash; Add Required Fields:</p>
+        <p>&bull; Under Exact Match Fields, click +.</p>
+        <p>&bull; Expand Email and select Electronic Address.</p>
+        <p>&bull; Confirm Comparison Outcome = Identical.</p>
+        <p>&bull; Click Next.</p>
+        <p>33. Wizard Step 3 &mdash; Configure Exact Match Field Properties:</p>
+        <p>&bull; Leave Field Properties = None.</p>
+        <p>&bull; Do not enable Segment Matching.</p>
+        <p>&bull; Do not enable Null Matching.</p>
+        <p>&bull; Click Add.</p>
+        <p>34. The new exact-email rule appears along with the inherited rules. Click Save.</p>
+
+        <h3>Why Manual merge?</h3>
+        <p>An exact email match is strong evidence, but email is not always unique to one human. Shared family addresses, recycled addresses, and other edge cases can create false positives. Using Manual merge means Customer 360 can identify the pair without silently consolidating it.</p>
+        <div class="callout-important"><strong>Important:</strong> Manual merge does not mean MDM cannot scale. Production MDM commonly combines automated high-confidence merges with manual review for ambiguous cases. The appendices explain the three merge patterns.</div>
+
+        <h3>Why Segment Matching and Null Matching stay off</h3>
+        <table class="workshop-table">
+          <tr><th>Option</th><th>Why it stays off</th></tr>
+          <tr><td>Null Matching</td><td>Two missing emails must not be treated as an exact match.</td></tr>
+          <tr><td>Segment Matching</td><td>An email should be compared as one complete value rather than split into segments.</td></tr>
+          <tr><td>Field Properties = None</td><td>Means no optional add-ons are enabled; the field is still fully configured for exact comparison.</td></tr>
+        </table>
+
+        <h3>D3b &mdash; Delete the inherited name-based rules</h3>
+        <p>35. Click Edit again.</p>
+        <p>36. Delete each inherited fuzzy/name-based rule one at a time.</p>
+        <p>37. Confirm only the EXACT email rule remains.</p>
+        <p>38. Click Save.</p>
+        <blockquote><strong>Part D result:</strong> Person_Email_Match is a Draft model whose candidate selection and only match rule both use email.</blockquote>
+      </div>
+    </details>
+  </div>
+
+  <!-- Part E -->
+  <div class="w3-container" style="margin-top:30px;margin-bottom:30px;">
+    <h2>Part E &mdash; Publish the match model and regenerate match keys</h2>
+
+    <details>
+      <summary class="accordion">Why this is needed</summary>
+      <div class="accordionDrop">
+        <p>The draft model is not active until it is published. Regenerating match keys rebuilds the matching index using the new email-based candidate criteria.</p>
+        <p>39. With Person_Email_Match open, click the green Publish button.</p>
+        <p>40. In Confirm Publish, click Publish and Regenerate Match Keys.</p>
+        <p>41. Confirm the success banners for model publication and Regenerate Match Keys.</p>
+        <p>The regeneration runs as a background job in My Jobs. You can proceed while it completes.</p>
+        <blockquote><strong>End-state check:</strong> Person_Email_Match = Published. Baseline Match Model for person Deduplication remains Published and untouched.</blockquote>
+      </div>
+    </details>
+  </div>
+
+  <!-- Part F -->
+  <div class="w3-container" style="margin-top:30px;margin-bottom:30px;">
+    <h2>Part F &mdash; Create Salesforce and Databricks source systems</h2>
+
+    <h3>Why this is needed</h3>
+    <p>MDM needs to know where each imported record originated. A source-system asset gives every record an origin such as Salesforce or Databricks. That origin is later used by survivorship.</p>
+
+<pre>Salesforce record -&gt; Source = Salesforce
+Databricks record -&gt; Source = Databricks
+
+Source identity is then available to Survivorship</pre>
+
+    <details>
+      <summary class="accordion">Steps</summary>
+      <div class="accordionDrop">
+        <p>42. In Business 360 Console, click New... (green + icon).</p>
+        <p>43. Select Source Systems on the left.</p>
+        <p>44. Select the Source System tile and click Create.</p>
+        <p>45. Create Salesforce:</p>
+        <p>&bull; Display Name: Salesforce</p>
+        <p>&bull; Internal ID: salesforce</p>
+        <p>&bull; Description: Salesforce CRM source records.</p>
+        <p>&bull; Location: CV1_DATA_AI_WORKSHOP</p>
+        <p>&bull; Click OK.</p>
+        <p>46. Repeat for Databricks:</p>
+        <p>&bull; Display Name: Databricks</p>
+        <p>&bull; Internal ID: databricks</p>
+        <p>&bull; Description: Databricks source records.</p>
+        <p>&bull; Location: CV1_DATA_AI_WORKSHOP</p>
+        <p>&bull; Click OK.</p>
+        <blockquote><strong>End-state check:</strong> Explore &rarr; CV1_DATA_AI_WORKSHOP shows Salesforce and Databricks as Source System assets.</blockquote>
+        <div class="callout-important"><strong>If Source Systems is missing:</strong> verify that the user has the Business 360 Console Designer role rather than trying to work around the missing control.</div>
+      </div>
+    </details>
+  </div>
+
+  <!-- Part G -->
+  <div class="w3-container" style="margin-top:30px;margin-bottom:30px;">
+    <h2>Part G &mdash; Configure survivorship: Salesforce wins</h2>
+
+    <h3>Why this is needed</h3>
+    <p>Matching tells MDM that two records belong to the same customer. Survivorship decides which value becomes the golden value when those source records disagree.</p>
+
+<pre>Salesforce value ----\
+                      +--&gt; Survivorship --&gt; Golden value
+Databricks value ----/
+
+Workshop policy: Salesforce has the highest rank for identity</pre>
+
+    <h3>Understand the Survivorship screen before editing</h3>
+    <table class="workshop-table">
+      <tr><th>UI item</th><th>What it means</th></tr>
+      <tr><td>Profile label: Rank 0 / Rank 1 / Rank 2</td><td>Name of a saved ranking preset. It is not the precedence of one source.</td></tr>
+      <tr><td>Rank column</td><td>The actual source precedence. 1 = highest trust.</td></tr>
+      <tr><td>Rank: dropdown</td><td>Loads a saved ranking preset.</td></tr>
+      <tr><td>Add</td><td>Adds an unranked source to the current preset.</td></tr>
+      <tr><td>Up / down arrows</td><td>Move a source within the precedence order.</td></tr>
+    </table>
+
+    <details>
+      <summary class="accordion">Steps</summary>
+      <div class="accordionDrop">
+        <p>47. On the Person entity, open Survivorship.</p>
+        <p>48. Select the top Person row at the entity level.</p>
+        <p>49. In Source Ranking, identify the preset where Informatica Customer 360 is position 1 and Salesforce, Databricks, and Default are unranked.</p>
+        <p>50. In the Rank: dropdown, select that preset (typically Rank 0 in the tested environment). Do not change the dropdown again.</p>
+        <p>51. Hover Salesforce &rarr; Add.</p>
+        <p>52. Hover Databricks &rarr; Add.</p>
+        <p>53. Hover Default &rarr; Add.</p>
+        <p>54. Confirm the temporary order is 1 = Informatica Customer 360, 2 = Salesforce, 3 = Databricks, 4 = Default.</p>
+        <p>55. Select Salesforce and move it up once.</p>
+        <p>56. Confirm the final order:</p>
+        <p>&bull; 1 = Salesforce</p>
+        <p>&bull; 2 = Informatica Customer 360</p>
+        <p>&bull; 3 = Databricks</p>
+        <p>&bull; 4 = Default</p>
+        <p>57. Click Apply.</p>
+        <p>58. Click Save. Confirm Person remains Valid.</p>
+      </div>
+    </details>
+
+    <h3>Why this ranking</h3>
+    <table class="workshop-table">
+      <tr><th>Rank</th><th>Source</th><th>Workshop rationale</th></tr>
+      <tr><td>1</td><td>Salesforce</td><td>Primary curated source for customer identity fields.</td></tr>
+      <tr><td>2</td><td>Informatica Customer 360</td><td>Direct steward edits in MDM.</td></tr>
+      <tr><td>3</td><td>Databricks</td><td>Behavioral / web-event source; useful context but lower authority for identity.</td></tr>
+      <tr><td>4</td><td>Default</td><td>Fallback for records without a more specific source.</td></tr>
+    </table>
+
+    <blockquote><strong>Part G result:</strong> When Salesforce and Databricks contribute different values to the same golden record, Salesforce has higher survivorship precedence for the fields covered by this ranking.</blockquote>
+  </div>
+
+  <!-- Part H -->
+  <div class="w3-container" style="margin-top:30px;margin-bottom:30px;">
+    <h2>Part H &mdash; Import the Salesforce records</h2>
+
+    <h3>Why Salesforce is imported first</h3>
+    <p>The first source establishes the initial Person records inside Customer 360. We therefore use Import All Data for Salesforce. The Databricks file in Part I will then be compared against those existing records.</p>
+
+<pre>Salesforce CSV
+     |
+     | Import All Data
+     v
+Customer 360 Person records
+
+No cross-source matching yet</pre>
+
+    <details>
+      <summary class="accordion">Steps</summary>
+      <div class="accordionDrop">
+        <p>59. Switch to Customer 360.</p>
+        <p>60. Open File Import.</p>
+        <p>61. Set the scope dropdown to Person.</p>
+        <p>62. Under Import All Data, click Start.</p>
+        <p>63. Upload cv1_sf_for_mdm.csv.</p>
+        <p>64. Configure:</p>
+        <p>&bull; Source System: Salesforce</p>
+        <p>&bull; Import Type: Create or overwrite records</p>
+        <p>&bull; Force Record Update: unselected</p>
+        <p>&bull; Leave auto-detected file settings unchanged.</p>
+        <p>65. Click Next.</p>
+        <p>66. On Map Fields, add Person as the Target Business Entity if the target panel is empty.</p>
+        <p>67. Verify Smart Mapping covers:</p>
+        <p>&bull; first_name &rarr; First Name*</p>
+        <p>&bull; last_name &rarr; Last Name*</p>
+        <p>&bull; full_name &rarr; Full Name</p>
+        <p>&bull; email &rarr; Electronic Address*</p>
+        <p>&bull; source_pk &rarr; Person Source Primary Key*</p>
+        <p>68. Add the required field-group key mapping manually:</p>
+        <p>&bull; source_pk &rarr; Email.Source Primary Key*</p>
+        <p>69. Click Next.</p>
+        <p>70. On Preview and Import File, save the field mapping as CV1_MAP_PERSON_EMAIL.</p>
+        <p>71. Click Import.</p>
+        <p>Wait for the File Import job to reach Status = Success.</p>
+        <blockquote><strong>Expected result:</strong> 2 Person records are loaded and tagged with Source System = Salesforce.</blockquote>
+        <div class="callout-important"><strong>If required-field errors appear:</strong> verify that source_pk is mapped to both the Person Source Primary Key and Email.Source Primary Key, and that no incomplete Address or Phone field group was accidentally mapped.</div>
+      </div>
+    </details>
+  </div>
+
+  <!-- Part I -->
+  <div class="w3-container" style="margin-top:30px;margin-bottom:30px;">
+    <h2>Part I &mdash; Match and import the Databricks records</h2>
+
+    <h3>What changes in this import</h3>
+    <p>This time the incoming records are not simply loaded. Customer 360 first compares them against the Salesforce Person records using Person_Email_Match.</p>
+
+<pre>Databricks CSV
+     |
+     v
+Person_Email_Match
+exact Electronic Address
+     |
+     +--&gt; matched pair -&gt; Manual Merge candidate
+     |
+     +--&gt; no match -&gt; separate Person</pre>
+
+    <details>
+      <summary class="accordion">Steps</summary>
+      <div class="accordionDrop">
+        <p>72. On File Import, click Start under Match and Import Selected Data.</p>
+        <p>73. Upload cv1_dbx_for_mdm.csv.</p>
+        <p>74. Configure:</p>
+        <p>&bull; Source System: Databricks</p>
+        <p>&bull; Import Type: Create or overwrite records</p>
+        <p>&bull; Leave the auto-detected file settings unchanged.</p>
+        <p>75. Click Next.</p>
+        <p>76. On Select Match Model:</p>
+        <p>&bull; Business Entity: Person</p>
+        <p>&bull; Match Model: Person_Email_Match</p>
+        <p>&bull; Version: Latest</p>
+        <p>&bull; Population for Matching: Usa</p>
+        <p>77. Click Next.</p>
+        <p>78. On Map Fields, verify the Person and Email mappings.</p>
+        <p>&bull; In the tested run, source_pk mapped to both Person Source Primary Key and Email Source Primary Key.</p>
+        <p>&bull; Verify full_name &rarr; Full Name; add it manually if Smart Mapping did not map it.</p>
+        <p>&bull; Electronic Address should show the match-model indicator because the model uses it.</p>
+        <p>79. Click Next.</p>
+        <p>80. On Preview Record Pairs, wait for matching to complete.</p>
+        <blockquote><strong>Expected matching result:</strong> 2 manual merges (66.67%), 0 automated merges, and 1 unmatched record (33.33%).</blockquote>
+        <table class="workshop-table">
+          <tr><th>Incoming DBX row</th><th>Salesforce pair</th><th>Expected result</th></tr>
+          <tr><td>ev-001 &mdash; sarah.jenkins@gmail.com</td><td>sf-003 &mdash; same email</td><td>Manual Merge, Score 100</td></tr>
+          <tr><td>ev-004 &mdash; diego.m@example.com</td><td>sf-004 &mdash; same email</td><td>Manual Merge, Score 100</td></tr>
+          <tr><td>ev-002 &mdash; s.jenkins@enterprise.com</td><td>No exact-email pair</td><td>Unmatched</td></tr>
+        </table>
+        <p>81. Optionally save the mapping as CV1_MAP_PERSON_EMAIL_DBX, then click Import Records.</p>
+        <p>82. In Select Records to Import, choose Select records now.</p>
+        <p>83. Select all three categories: manual merge, automated merge, and no matches.</p>
+        <p>84. Click OK.</p>
+        <p>Wait for the Match and Import Selected job to reach Status = Success.</p>
+      </div>
+    </details>
+
+    <h3>Why the matched records are still separate</h3>
+    <p>The match model correctly identified the Sarah and Diego pairs, but the rule's Merge Strategy is Manual. That means the records are not automatically combined. They remain separate until a person confirms the merge.</p>
+    <div class="callout-important"><strong>Important distinction:</strong> MATCH found the candidate pair. MERGE has not happened yet.</div>
+  </div>
+
+  <!-- Part J -->
+  <div class="w3-container" style="margin-top:30px;margin-bottom:30px;">
+    <h2>Part J &mdash; Merge the confirmed Sarah pair</h2>
+
+    <h3>What this part proves</h3>
+    <p>We now take the exact-email pair that MDM identified and perform the consolidation. The separate Databricks Sarah with a different email remains unmerged because the model did not prove it was the same person.</p>
+
+<pre>Salesforce Sarah sf-003
+MDM0000000002S
++
+Databricks Sarah ev-001
+same email
+     |
+     v
+MERGE
+     |
+     v
+Golden Sarah
+MDM0000000002S
+2 contributing source records</pre>
+
+    <h3>Records you should see</h3>
+    <table class="workshop-table">
+      <tr><th>Business ID</th><th>Record</th><th>What to do</th></tr>
+      <tr><td>MDM0000000002S</td><td>Salesforce Sarah, sf-003</td><td>Merge; keep as survivor.</td></tr>
+      <tr><td>MDM0000000005K</td><td>Databricks Sarah, ev-001, same Gmail address</td><td>Merge into the Salesforce Sarah.</td></tr>
+      <tr><td>MDM0000000005L</td><td>Databricks Sarah, ev-002, different enterprise email</td><td>Do not merge.</td></tr>
+    </table>
+
+    <details>
+      <summary class="accordion">Steps</summary>
+      <div class="accordionDrop">
+        <p>85. In Customer 360, open Search. Set scope = Person and search for Sarah.</p>
+        <p>86. Open each Sarah result as needed to verify Business ID and source.</p>
+        <p>87. On the Search results, select exactly two records:</p>
+        <p>&bull; MDM0000000002S &mdash; sf-003 Salesforce</p>
+        <p>&bull; MDM0000000005K &mdash; ev-001 Databricks</p>
+        <p>&bull; Leave MDM0000000005L unselected.</p>
+        <p>88. Open the 2 Selected menu and choose Merge Records.</p>
+        <p>89. On Merge Records, turn Survivorship details ON.</p>
+        <p>90. Confirm the Master Record uses Salesforce values for identity fields and the Survivorship Details show Source Ranking as the reason.</p>
+        <p>91. Click Merge.</p>
+        <p>92. In the success dialog, keep Close the Merge Records page = Yes and click Open Merged Record.</p>
+        <blockquote><strong>Expected result:</strong> Sarah's merged record keeps Business ID MDM0000000002S and now shows 2 of 2 source records: Salesforce sf-003 and Databricks ev-001.</blockquote>
+      </div>
+    </details>
+
+    <p>Diego is optional practice. Repeating the same merge adds no new concept, so the core lab can stop after Sarah.</p>
+  </div>
+
+  <!-- Part K -->
+  <div class="w3-container" style="margin-top:30px;margin-bottom:30px;">
+    <h2>Part K &mdash; Inspect the golden record</h2>
+
+    <h3>What makes this a golden record</h3>
+    <p>The result is not simply a cleaned row. It is a governed master record with a permanent MDM Business ID, surviving field values, links to every contributing source record, and an auditable history of the merge.</p>
+
+<pre>Golden Sarah
+MDM0000000002S
+     |
+     +--&gt; surviving customer values
+     +--&gt; Salesforce source record sf-003
+     +--&gt; Databricks source record ev-001
+     +--&gt; merge history / audit trail</pre>
+
+    <h3>Record Details</h3>
+    <p>Confirm First Name = Sarah, Last Name = Jenkens, Full Name = Sarah Jenkens, and Business ID = MDM0000000002S.</p>
+
+    <h3>Source Records</h3>
+    <p>Confirm the header shows 2 of 2 sources and lists sf-003 from Salesforce and ev-001 from Databricks. Survivorship details show which source supplied the surviving field value and why.</p>
+
+    <h3>History</h3>
+    <p>Confirm the merge is recorded with its timestamp and user. This is the audit trail for the consolidation decision.</p>
+
+    <h3>Hierarchy and Relationship Graph</h3>
+    <p>These remain empty for the workshop because no household, parent-child, or other relationship model is configured. They are not required for this lab.</p>
+
+    <blockquote><strong>Part K result:</strong> You can now answer three questions from the master record itself: who is the customer, which source records contributed to the master, and why a particular value survived.</blockquote>
+  </div>
+
+  <!-- What did we get out of this lab? -->
+  <div class="w3-container" style="margin-top:30px;margin-bottom:30px;">
+    <h2>What did we get out of this lab?</h2>
+    <p>We started with clean but separate Salesforce and Databricks records. Customer 360 used email to identify which records were likely to describe the same person, we confirmed the Sarah pair, and MDM consolidated it into one golden customer record.</p>
+
+<pre>Clean source records
+     |
+     v
+Exact email matching
+     |
+     v
+Human-confirmed merge
+     |
+     v
+Salesforce-ranked survivorship
+     |
+     v
+Golden customer + permanent MDM Business ID + source lineage</pre>
+
+    <blockquote>MDM does not just remove duplicates. It establishes a trusted identity, records which source data contributed to it, and preserves a permanent identifier that downstream systems can use.</blockquote>
+  </div>
+
+  <!-- Illustrations -->
+  <div class="w3-container" style="margin-top:30px;margin-bottom:30px;">
+    <h2>Illustrations</h2>
+
+    <div class="w3-card w3-container w3-center w3-mobile"><img class="w3-image" src="img/slide33.jpeg" alt="Person match model configuration - exact email match, Manual merge"></div>
+    <p class="img-caption">The Person match model uses an <strong>exact Electronic Address/email match</strong> to identify candidate records and a <strong>Manual</strong> merge strategy. Informatica can identify the likely match, but this workshop deliberately requires human confirmation before combining the Person records.</p>
+    <p>&nbsp;</p>
+
+    <div class="w3-card w3-container w3-center w3-mobile"><img class="w3-image" src="img/slide34.jpeg" alt="Person survivorship policy - source ranking"></div>
+    <p class="img-caption">The Person survivorship policy ranks <strong>Salesforce first, Informatica Customer 360 second, Databricks third and Default fourth</strong>. This is a broad source-ranking strategy: when multiple sources provide a value for the same Person attribute, Salesforce is preferred; another source can still contribute where Salesforce has no value. Production survivorship can be made more granular by field or field group.</p>
+    <p>&nbsp;</p>
+
+    <div class="w3-card w3-container w3-center w3-mobile"><img class="w3-image" src="img/slide35.jpeg" alt="Golden record with source records visible after merge"></div>
+    <p class="img-caption">Before the merge, the Salesforce and Databricks source records existed as separate Person records in MDM. After the confirmed merge, the surviving Person retains Business ID <strong>MDM0000000002S</strong>, while the original Salesforce sf-003 and Databricks ev-001 source records remain visible underneath. The result is one golden customer without losing source provenance</p>
+    <p>&nbsp;</p>
+  </div>
+
+  <!-- End-of-lab checklist -->
+  <div class="w3-container" style="margin-top:30px;margin-bottom:30px;">
+    <h2>End-of-lab checklist</h2>
+    <p>&bull; Person entity is Valid and Subscribed Record Type = Customer B2C.</p>
+    <p>&bull; Electronic Address is Searchable.</p>
+    <p>&bull; Person_Email_Match is Published with one EXACT rule on Electronic Address and Merge Strategy = Manual.</p>
+    <p>&bull; Salesforce and Databricks source-system assets exist.</p>
+    <p>&bull; Survivorship ranking is Salesforce 1, Informatica Customer 360 2, Databricks 3, Default 4.</p>
+    <p>&bull; Salesforce records were imported as Source = Salesforce.</p>
+    <p>&bull; Databricks records were matched/imported as Source = Databricks using Person_Email_Match.</p>
+    <p>&bull; Sarah MDM0000000002S has 2 source records: sf-003 and ev-001.</p>
+    <p>&bull; ev-002 remains separate because its email did not match.</p>
+    <p>&bull; Diego merge is optional.</p>
+  </div>
+
+  <!-- What's next -->
+  <div class="w3-container" style="margin-top:30px;margin-bottom:30px;">
+    <h2>What's next</h2>
+    <p>The golden record now exists inside Informatica MDM. The next architectural question is how other systems should receive or retrieve it.</p>
+
+<pre>Lab 5
+Create trusted golden customer
+     |
+     v
+Lab 6
+Choose how consumers get mastered data
+     |
+     v
+Lab 7
+Publish the mastered customer to Data 360
+and combine it with Databricks behavior</pre>
+
+    <p>Lab 6 compares scheduled bulk publishing, direct REST lookup, CAI orchestration, and Business 360 Events/Egress. Lab 7 then applies the publishing architecture to Salesforce Data 360: the mastered identity is sent directly to Data 360 through the Data 360 Ingestion API, while Databricks remains the zero-copy source for engagement and transaction data.</p>
+  </div>
+
+  <!-- Appendix A -->
+  <div class="w3-container" style="margin-top:30px;margin-bottom:30px;">
+    <h2>Appendix A &mdash; Three merge patterns</h2>
+    <p>The workshop manually merges Sarah so the participant can see the decision and the resulting golden record. Production MDM does not require people to merge every pair by hand.</p>
+    <table class="workshop-table">
+      <tr><th>Pattern</th><th>How it triggers</th><th>Human effort</th><th>Best fit</th></tr>
+      <tr><td>Automated Merge</td><td>A high-confidence match rule qualifies the pair for automatic consolidation.</td><td>None per pair.</td><td>Very high-confidence identity evidence where unattended merge is acceptable.</td></tr>
+      <tr><td>Manual / governed merge</td><td>The match engine identifies a pair for review and workflow tasks are generated for stewards.</td><td>Review only the ambiguous subset.</td><td>Good-but-not-perfect evidence such as fuzzy name, email alone, or phone alone.</td></tr>
+      <tr><td>User-initiated merge</td><td>A steward searches for records and explicitly chooses Merge Records.</td><td>One action per edge case.</td><td>Cases where human knowledge or authority exceeds what the model can prove.</td></tr>
+    </table>
+    <p>In this workshop, the match model uses Merge Strategy = Manual, but the final Sarah merge is performed directly from Search so the golden-record mechanics are visible without building the full production workflow.</p>
+    <blockquote><strong>Scaling point:</strong> At large volume, high-confidence pairs can be automated, ambiguous pairs can be routed to steward review, and user-initiated merge is reserved for exceptions.</blockquote>
+    <p>Email remains Manual in this workshop because an exact email can still be shared, recycled, or otherwise fail to uniquely identify a human.</p>
+  </div>
+
+  <!-- Appendix B -->
+  <div class="w3-container" style="margin-top:30px;margin-bottom:30px;">
+    <h2>Appendix B &mdash; When user-initiated merge is appropriate</h2>
+    <table class="workshop-table">
+      <tr><th>Scenario</th><th>Why a human merge can be appropriate</th></tr>
+      <tr><td>Steward has knowledge the model does not</td><td>The steward knows two records are the same person even though the available data cannot prove it.</td></tr>
+      <tr><td>Acquisition / onboarding exceptions</td><td>Batch matching handles most records; analysts manually resolve a small number of obvious exceptions.</td></tr>
+      <tr><td>Correcting a missed match</td><td>A typo or unusual data condition prevented the model from linking two records.</td></tr>
+      <tr><td>Customer-requested consolidation</td><td>A customer explicitly asks for two accounts to be consolidated.</td></tr>
+      <tr><td>VIP / high-value governance</td><td>Policy requires named-steward approval for sensitive master changes.</td></tr>
+      <tr><td>Small-volume MDM</td><td>The dataset is small enough that manual review may be a deliberate precision choice.</td></tr>
+      <tr><td>Model validation</td><td>Engineers establish ground truth while testing a new match model.</td></tr>
+    </table>
+    <blockquote><strong>Boundary:</strong> User-initiated merge is an exception-handling tool, not the primary mechanism for first-pass mastering of large datasets.</blockquote>
+  </div>
+
+  <!-- Appendix C -->
+  <div class="w3-container" style="margin-top:30px;margin-bottom:30px;">
+    <h2>Appendix C &mdash; Governed manual review workflow</h2>
+    <p>A production manual-review pattern separates match discovery from task creation. The workshop does not execute this flow, but it is useful to understand how manual matching scales.</p>
+
+<pre>Match and Merge job
+     |
+     v
+Manual-review record pairs
+     |
+     v
+Generate Merge Tasks job
+     |
+     v
+Workflow Inbox
+     |
+     v
+Steward review</pre>
+
+    <h3>Why Workflow Inbox may be empty immediately after Match and Import</h3>
+    <p>The external Match and Import workflow can identify matching pairs without creating workflow review tasks. A Generate Merge Tasks job is a separate step.</p>
+
+    <h3>Match and Merge job &mdash; reference steps</h3>
+    <p>93. In Business 360 Console, click New...</p>
+    <p>94. Under Jobs, select Match and Merge and click Create.</p>
+    <p>95. Enter a name such as PERSON_EMAIL_MATCH_RUN.</p>
+    <p>96. Choose a project/location.</p>
+    <p>97. Select the Person business entity.</p>
+    <p>98. Select Person_Email_Match and the required version.</p>
+    <p>99. Select Match and Merge as the process type.</p>
+    <p>100. Save and run the job.</p>
+    <p>101. Monitor My Jobs until it succeeds.</p>
+    <p>Afterward, inspect the Sarah record's Source Records / Record pairs area to confirm the internal pair exists.</p>
+
+    <h3>Generate Merge Tasks job &mdash; reference steps</h3>
+    <p>102. In Business 360 Console, click New...</p>
+    <p>103. Under Jobs, select Generate Merge Tasks and click Create.</p>
+    <p>104. Enter a name such as PERSON_GENERATE_MERGE_TASKS.</p>
+    <p>105. Choose the project/location.</p>
+    <p>106. If requested, select process MDMGenerateMergeTasks.</p>
+    <p>107. Add the Person business entity.</p>
+    <p>108. Optionally configure a maximum task count.</p>
+    <p>109. Save and run.</p>
+    <p>110. After success, open Customer 360 &rarr; Workflow Inbox.</p>
+    <p>Task visibility also depends on workflow routing and user privileges. A role needs the relevant Person read/merge permissions and the user must be an eligible task participant.</p>
+
+    <h3>Merge-threshold design</h3>
+    <p>A production match strategy often separates high-confidence automated matches from a lower-confidence review band. The exact scoring and threshold design is implementation-specific. This workshop uses one Manual email rule to keep the behavior transparent.</p>
+  </div>
+
+  <!-- Appendix D -->
+  <div class="w3-container" style="margin-top:30px;margin-bottom:30px;">
+    <h2>Appendix D &mdash; Delete a saved File Import mapping</h2>
+    <p>Saved File Import mappings are managed from the File Import workflow rather than from the Business 360 asset list.</p>
+    <p>111. Open Customer 360 &rarr; File Import.</p>
+    <p>112. Start Import All Data or Match and Import Selected Data.</p>
+    <p>113. Upload a suitable CSV.</p>
+    <p>114. Complete Map Fields sufficiently to proceed.</p>
+    <p>115. On Preview and Import File, select Overwrite an existing mapping.</p>
+    <p>116. Select the saved mapping such as CV1_MAP_PERSON_EMAIL.</p>
+    <p>117. Click Delete and confirm.</p>
+    <blockquote><strong>Effect:</strong> Deleting the saved mapping removes only the reusable column-mapping definition. It does not delete imported Person records, entities, source systems, or match models.</blockquote>
+  </div>
+
+  <!-- Appendix E -->
+  <div class="w3-container" style="margin-top:30px;margin-bottom:30px;">
+    <h2>Appendix E &mdash; What happens to an unmapped CSV column</h2>
+    <p>An ordinary optional CSV column can remain unmapped. Its value is not written to Customer 360 and does not participate in matching. The import can still proceed as long as all required target mappings are satisfied and mapped values are valid.</p>
+    <p>For example, full_name can be left unmapped if the required Person and Email fields are otherwise mapped correctly. The required-field exception is different: missing Source Primary Key or required field-group keys can block or fail the import.</p>
+  </div>
+
+  <!-- Appendix F -->
+  <div class="w3-container" style="margin-top:30px;margin-bottom:30px;">
+    <h2>Appendix F &mdash; Person required-field behavior</h2>
+    <p>The Person entity has root required fields and field-group-specific required fields. The group-specific requirements become relevant when you map into that group.</p>
+    <table class="workshop-table">
+      <tr><th>Area</th><th>Required fields relevant to the workshop</th></tr>
+      <tr><td>Person root</td><td>Source Primary Key, First Name, Last Name</td></tr>
+      <tr><td>Email group</td><td>Email.Source Primary Key and Electronic Address</td></tr>
+      <tr><td>Address group</td><td>Additional required address fields become necessary if you map into Address</td></tr>
+      <tr><td>Phone group</td><td>Additional required phone fields become necessary if you map into Phone</td></tr>
+    </table>
+    <blockquote><strong>Correct minimal email-matching mapping:</strong> source_pk &rarr; Person Source Primary Key; source_pk &rarr; Email.Source Primary Key; first_name &rarr; First Name; last_name &rarr; Last Name; email &rarr; Electronic Address. full_name &rarr; Full Name is optional but useful for display consistency.</blockquote>
+  </div>
+
+  <!-- Appendix G -->
+  <div class="w3-container" style="margin-top:30px;margin-bottom:30px;">
+    <h2>Appendix G &mdash; Glossary of the UI terms used in this lab</h2>
+    <table class="workshop-table">
+      <tr><th>Term</th><th>Meaning</th></tr>
+      <tr><td>Business entity</td><td>The mastered object, such as Person. Its fields and field groups form the data model.</td></tr>
+      <tr><td>Match model</td><td>Configuration that determines whether two records appear to represent the same entity.</td></tr>
+      <tr><td>Candidate Selection Criteria</td><td>The coarse first stage that generates pairs worth comparing.</td></tr>
+      <tr><td>Directed AI Match Rule</td><td>The rule that evaluates candidate pairs and produces the match outcome.</td></tr>
+      <tr><td>Merge Strategy</td><td>What happens after a pair qualifies: automated, manual, or another configured outcome.</td></tr>
+      <tr><td>Survivorship / Best Version of the Truth</td><td>Rules that determine which source value becomes the golden value.</td></tr>
+      <tr><td>Business ID</td><td>The permanent MDM identifier for a master record, such as MDM0000000002S.</td></tr>
+      <tr><td>Subscribed Record Type</td><td>The MDM domain classification, Customer B2C in this lab.</td></tr>
+      <tr><td>Source System asset</td><td>Identifies the origin of imported records, such as Salesforce or Databricks.</td></tr>
+      <tr><td>Field Properties = None</td><td>No optional Segment Matching or Null Matching add-ons are enabled.</td></tr>
+      <tr><td>Rank 0 / Rank 1 profile label</td><td>Name of a saved survivorship ranking preset; the actual source precedence is the Rank column.</td></tr>
+    </table>
+  </div>
+
+  <!-- Appendix H -->
+  <div class="w3-container" style="margin-top:30px;margin-bottom:30px;">
+    <h2>Appendix H &mdash; End-of-lab tenant state</h2>
+    <table class="workshop-table">
+      <tr><th>Business ID</th><th>Person</th><th>Sources</th><th>Notes</th></tr>
+      <tr><td>MDM0000000002S</td><td>Sarah Jenkens</td><td>2: sf-003 Salesforce + ev-001 Databricks</td><td>Merged golden record. Salesforce wins identity survivorship.</td></tr>
+      <tr><td>MDM0000000002T</td><td>Diego Martinez</td><td>1: sf-004 Salesforce</td><td>Unmerged unless optional Diego merge is completed.</td></tr>
+      <tr><td>MDM0000000005L</td><td>Sarah Jenkens</td><td>1: ev-002 Databricks</td><td>Correctly remains separate because the email differs.</td></tr>
+      <tr><td>TBD</td><td>Diego Martinez</td><td>1: ev-004 Databricks</td><td>Unmerged unless optional Diego merge is completed.</td></tr>
+    </table>
+
+    <p>Reusable configuration at the end of the lab:</p>
+    <p>&bull; Match model: Person_Email_Match &mdash; Published, exact Electronic Address, Manual merge.</p>
+    <p>&bull; Source systems: Salesforce and Databricks, plus the built-in Default and Informatica Customer 360 sources.</p>
+    <p>&bull; Survivorship: Salesforce 1 &gt; Informatica Customer 360 2 &gt; Databricks 3 &gt; Default 4.</p>
+    <p>&bull; Saved File Import mapping: CV1_MAP_PERSON_EMAIL.</p>
+
+    <p>Downstream labs consume the resulting master record and its Business ID. They do not depend on whether the merge was automated, governed through workflow, or user-initiated.</p>
+  </div>
+
+  <!-- Footer -->
+  <div class="w3-container">
+    <div class="w3-bar w3-black">
+      <a href="index.html" class="w3-bar-item w3-button"><i class="fa fa-home fa-fw w3-margin-right"></i>Introduction</a>
+      <a href="lab-4b.html" class="w3-bar-item w3-button"><i class="fa fa-book fa-fw w3-margin-right"></i>Lab 4B</a>
+      <a href="lab-6.html" class="w3-bar-item w3-button"><i class="fa fa-book fa-fw w3-margin-right"></i>Lab 6</a>
+    </div>
+    <p>Trusted Data Foundation Workshop</p>
+  </div>
+
+  <p>&nbsp;</p>
+</div>
+
+<!-- Scripts -->
+<script src="nav.js"></script>
+<script>
+function w3_open() {
+  document.getElementById("mySidebar").style.display = "block";
+  document.getElementById("myOverlay").style.display = "block";
+}
+function w3_close() {
+  document.getElementById("mySidebar").style.display = "none";
+  document.getElementById("myOverlay").style.display = "none";
+}
+</script>
+</body>
+</html>
